@@ -1,0 +1,393 @@
+{% comment %}
+  Blog Tabs with Hero Image Switch
+{% endcomment %}
+
+<section class="blog-tabs-section ug-container-blogs">
+  <div class="blog-title">{{ section.settings.blog_title }}</div>
+  <!-- ================= HERO ================= -->
+  <div class="blog-tabs-hero">
+    {% for block in section.blocks %}
+      <div
+        class="blog-tabs-hero__slide{% if forloop.first %} is-active{% endif %}"
+        data-tab="{{ block.settings.tab_tag }}"
+      >
+        {% if block.settings.hero_image or block.settings.hero_image_mobile %}
+          <picture>
+            {% if block.settings.hero_image_mobile %}
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ block.settings.hero_image_mobile | img_url: '800x' }}"
+              >
+            {% endif %}
+            {% if block.settings.hero_image %}
+              <img alt="{{ block.settings.hero_image.alt | escape }}" class="hs-lazyload hs-id-888f0a1a" loading="lazy" src="{{ block.settings.hero_image | img_url: '1400x' }}"/>
+            {% endif %}
+          </picture>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- ================= TABS ================= -->
+  <div class="blog-tabs">
+    {% for block in section.blocks %}
+      <button
+        class="blog-tab{% if forloop.first %} is-active{% endif %}"
+        data-tab="{{ block.settings.tab_tag }}"
+      >
+        {{ block.settings.tab_label }}
+      </button>
+    {% endfor %}
+  </div>
+
+  <!-- ================= ARTICLES ================= -->
+  <div class="article-list-blog article-layout--columns-blog">
+    {% for article in blog.articles %}
+      <article
+        class="article blog-tab-article"
+        data-tags="{{ article.tags | join: ',' }}"
+      >
+        {% if article.tags.size > 0 %}
+          <div class="article-tags">
+            {% for tag in article.tags %}
+              <span class="article-tag">{{ tag }}</span>
+              {%- unless forloop.last %}, {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="article__inner">
+          {% if article.image %}
+            <a href="{{ article.url }}" class="article-image">
+              {% render 'image',
+                image: article.image,
+                sizes: '(min-width: 1024px) 440px, 100vw',
+                loading: 'lazy',
+                custom_aspect_ratio: 1,
+                custom_crop: 'center'
+              %}
+            </a>
+          {% endif %}
+
+          <h3>
+            <a href="{{ article.url }}">{{ article.title }}</a>
+          </h3>
+
+          {% if section.settings.show_excerpts %}
+            <div class="rte">
+              {% if article.excerpt != blank %}
+                {{ article.excerpt | strip_html | truncatewords: 20 }}
+              {% else %}
+                {{ article.content | strip_html | truncatewords: 20 }}
+              {% endif %}
+              <a href="{{ article.url }}" class="read-more-link">Read More</a>
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+      /* ================= HERO ================= */
+      .blog-tabs-hero {
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 35px;
+      }
+
+      .blog-tabs-hero__slide {
+        display: none;
+      }
+
+      .blog-tabs-hero__slide.is-active {
+        display: block;
+      }
+
+      /* ================= TABS ================= */
+      .blog-tabs {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        background: #f7f7f7;
+        max-width: 940px;
+    margin: 0 auto;
+      border-radius: 2px;
+
+      }
+
+      @media(max-width:640px){
+        .blog-tabs{
+            gap: 2px !important;
+        }
+        .blog-tab {
+        padding: 5px 10px !important;
+      }
+      }
+
+
+      .blog-tab {
+        padding: 14px 22px;
+        border-radius: 4px;
+        cursor: pointer;
+     font-family: "Poppins" !important;
+      font-weight: 600;
+      font-size: 12px;    }
+
+      .blog-tab.is-active {
+        background: #000;
+        color: #fff;
+        border-color: #000;
+      }
+
+      /* ================= ARTICLES ================= */
+  @media (min-width: 1000px) {
+      .blog-tabs-hero {
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 1280px;
+      height: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+      .blog-tabs-hero__slide img {
+      width: 100%;
+   height:100%;
+       object-fit: cover;
+      display: block;
+    }
+  }
+
+  @media (max-width: 1000px) {
+      .blog-tabs-hero {
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 203px;
+    }
+
+    .blog-tabs-hero__slide img {
+      width: 100%;
+   height: 203px;
+       object-fit: cover;
+      display: block;
+    }
+  }
+    .blog-title{
+        font-family: "Poppins" !important;
+      font-weight: 600;
+      font-size: 44px;
+      margin-bottom:10px;
+      color: rgb(0, 0, 0) !important;
+    }
+
+    /* ================= BLOG CARD UI UPDATES ================= */
+  .article__inner{
+    background: #f7f7f7;
+    border-radius: 0.25rem;
+    border: 0.2px solid #d5d5d5;
+    padding-bottom:12px;
+  }
+
+  /* Ensure tags sit outside card styling */
+  .blog-tab-article .article-tags {
+    margin-bottom: 8px;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Blog Image Height */
+  @media (min-width: 768px) {
+  .blog-tab-article .article-image img {
+    height: 410px !important;
+    width: 100%;
+    object-fit: cover;
+  border-radius: 0.25rem 0.25rem 0 0;
+  margin-bottom:5px;
+  } }
+  /* Blog Image Height */
+  @media (max-width: 768px) {
+  .blog-tab-article .article-image img {
+
+  border-radius: 0.25rem 0.25rem 0 0;
+  margin-bottom:5px;
+  } }
+
+
+
+  /* Blog Title */
+  .blog-tab-article h3 a {
+    font-family: "Poppins" !important;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.1px;
+  color: rgb(0, 0, 0) !important;
+    margin-bottom: -16px !important;
+    margin-top: 6px;
+    display: inline-block;
+    padding: 0 15px;
+  }
+
+  .blog-tab-article h3  {
+
+    margin-bottom: -6px !important;
+
+  }
+
+
+  /* Blog Description */
+  .blog-tab-article .rte {
+     font-family: "Poppins" !important;
+    font-weight: 300 !important;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    color: rgb(0, 0, 0) !important;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding: 0 15px;
+  }
+
+
+  /* Read More Button */
+  .read-more-link {
+    color: rgb(104, 159, 255);
+     font-family: "Poppins" !important;
+    font-weight: 300;
+    font-size: 14px;
+    text-decoration: underline;
+    text-decoration-color: rgb(155, 189, 248) !important;
+    cursor: pointer;
+  }
+  .read-more-link:hover {
+    text-decoration-color: rgb(104, 159, 255) !important;
+  }
+
+  /* Tags */
+  .article-tag {
+     font-family: "Poppins" !important;
+    font-weight: 600;
+    font-size: 20px;
+    color: rgb(0, 0, 0) !important;
+  }
+  .article-list-blog.article-layout--columns-blog {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, 1fr); /* Desktop 3 columns */
+    margin-bottom: calc(-1 * var(--section-padding));
+    margin-top:40px
+  }
+
+  /* Tablet (2 columns) */
+  @media (max-width: 1024px) {
+    .article-list-blog.article-layout--columns-blog {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile (1 column) */
+  @media (max-width: 640px) {
+    .article-list-blog.article-layout--columns-blog {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.blog-tab');
+    const slides = document.querySelectorAll('.blog-tabs-hero__slide');
+    const articles = document.querySelectorAll('.blog-tab-article');
+
+    function activateTab(tag) {
+      // Tabs
+      tabs.forEach((tab) => {
+        tab.classList.toggle('is-active', tab.dataset.tab === tag);
+      });
+
+      // Hero image
+      slides.forEach((slide) => {
+        slide.classList.toggle('is-active', slide.dataset.tab === tag);
+      });
+
+      // Articles
+      articles.forEach((article) => {
+        const tags = article.dataset.tags.split(',');
+        article.style.display = tag === 'all' || tags.includes(tag) ? 'block' : 'none';
+      });
+    }
+
+    // Click handling
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        activateTab(tab.dataset.tab);
+      });
+    });
+
+    // Initial state → FIRST TAB (All)
+    if (tabs.length) {
+      activateTab(tabs[0].dataset.tab);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Blog tabs with slider",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_excerpts",
+      "label": "Show article excerpts",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "blog_title",
+      "label": "Blog Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "All"
+        },
+        {
+          "type": "text",
+          "id": "tab_tag",
+          "label": "Blog tag (use 'all' for All tab)",
+          "default": "all"
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Hero image (desktop for this tab)"
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_image_mobile",
+          "label": "Hero image (mobile for this tab)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog tabs with hero (4 tabs)"
+    }
+  ]
+}
+{% endschema %}

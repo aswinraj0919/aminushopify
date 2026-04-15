@@ -1,0 +1,209 @@
+{% if section.settings.video_shopify != blank or section.settings.video_external != blank %}
+  {% liquid
+    assign using_video_tag = false
+    if section.settings.video_shopify != blank
+      assign using_video_tag = true
+    endif
+
+    if section.settings.placeholder_image
+      assign placeholder_image = section.settings.placeholder_image
+    elsif section.settings.video_shopify
+      assign placeholder_image = section.settings.video_shopify.preview_image
+    endif
+  %}
+
+  <div id="section-{{ section.id }}" class="{% unless section.settings.full_width %}container{% endunless %} unico-video">
+    <div class="unico-video__wrapper">
+      {% if using_video_tag %}
+        {{ section.settings.video_shopify | video_tag:
+          playsinline: true,
+          autoplay: true,
+          muted: true,
+          loop: true,
+          controls: false,
+          poster: placeholder_image
+        | replace: '<img ', '<img loading="lazy" hidden ' }}
+      {% else %}
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          controls="false"
+          poster="{{ placeholder_image | img_url: 'master' }}"
+        >
+          <source src="{{ section.settings.video_external }}" type="video/mp4">
+        </video>
+      {% endif %}
+    </div>
+  </div>
+
+  <style>
+    #section-{{ section.id }} {
+      {% unless section.settings.full_width %}
+      max-width: 100%;
+      {% endunless %}
+    }
+    
+    #section-{{ section.id }} .unico-video__wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #section-{{ section.id }} video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* DESKTOP STYLES */
+    {% if section.settings.full_height %}
+      /* Full height mode - Desktop */
+      #section-{{ section.id }} .unico-video__wrapper {
+        height: 100vh;
+      }
+      #section-{{ section.id }} video {
+        height: 100%;
+      }
+    {% else %}
+      /* Custom height - Desktop */
+      #section-{{ section.id }} .unico-video__wrapper {
+        height: {{ section.settings.custom_height }}px;
+      }
+      #section-{{ section.id }} video {
+        height: 100%;
+      }
+    {% endif %}
+
+    /* ----------- MOBILE SETTINGS WITH 16:9 RATIO ----------- */
+    @media (max-width: 768px) {
+      #section-{{ section.id }} .unico-video__wrapper {
+        width: 100% !important;
+        position: relative;
+        padding-bottom: 56.25% !important; /* 16:9 Aspect Ratio */
+        height: 0 !important;
+        overflow: hidden;
+      }
+      
+      #section-{{ section.id }} video {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+      }
+      
+      /* Special handling for full height on mobile */
+      {% if section.settings.mobile_full_height %}
+        #section-{{ section.id }} .unico-video__wrapper {
+          padding-bottom: 0 !important;
+          height: 100vh !important;
+        }
+        #section-{{ section.id }} video {
+          position: relative !important;
+          height: 100vh !important;
+        }
+      {% elsif section.settings.mobile_custom_height %}
+        /* Custom height with 16:9 ratio */
+        #section-{{ section.id }} .unico-video__wrapper {
+          padding-bottom: 56.25% !important;
+          height: 0 !important;
+        }
+        /* OR use fixed height */
+        /*
+        #section-{{ section.id }} .unico-video__wrapper {
+          padding-bottom: 0 !important;
+          height: {{ section.settings.mobile_custom_height }}px !important;
+        }
+        */
+      {% endif %}
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      /* Optional: Tablet-specific adjustments */
+      #section-{{ section.id }} .unico-video__wrapper {
+        {% unless section.settings.full_height %}
+        height: {{ section.settings.custom_height | times: 0.9 | round }}px;
+        {% endunless %}
+      }
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Unico Video",
+  "settings": [
+    {
+      "id": "video_shopify",
+      "type": "video",
+      "label": "Shopify hosted video"
+    },
+    {
+      "id": "video_external",
+      "type": "text",
+      "label": "External video URL",
+      "info": "Upload mp4 or paste direct mp4 URL (not YouTube/Vimeo)"
+    },
+    {
+      "id": "placeholder_image",
+      "type": "image_picker",
+      "label": "Poster image (optional)"
+    },
+    {
+      "id": "full_width",
+      "type": "checkbox",
+      "label": "Full page width",
+      "default": true
+    },
+    {
+      "id": "full_height",
+      "type": "checkbox",
+      "label": "Full screen height (Desktop)",
+      "default": false
+    },
+    {
+      "id": "custom_height",
+      "type": "range",
+      "label": "Custom video height (Desktop px)",
+      "min": 200,
+      "max": 1000,
+      "step": 50,
+      "default": 500
+    },
+    {
+      "id": "mobile_full_height",
+      "type": "checkbox",
+      "label": "Full screen height (Mobile)",
+      "default": false,
+      "info": "If checked, video will be full height on mobile"
+    },
+    {
+      "id": "mobile_custom_height",
+      "type": "range",
+      "label": "Custom video height (Mobile px)",
+      "min": 150,
+      "max": 800,
+      "step": 50,
+      "default": 350,
+      "info": "Or use fixed height for mobile"
+    },
+    {
+      "id": "maintain_aspect_ratio",
+      "type": "checkbox",
+      "label": "Maintain 16:9 aspect ratio on mobile",
+      "default": true,
+      "info": "Keep video in proper 16:9 ratio on mobile devices"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Unico Video"
+    }
+  ]
+}
+{% endschema %}

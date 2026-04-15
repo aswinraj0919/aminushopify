@@ -1,0 +1,223 @@
+<div 
+  class="infinite-slider-wrapper
+  {% if section.settings.enable_top_border %} has-top-border{% endif %}
+  {% if section.settings.enable_bottom_border %} has-bottom-border{% endif %}"
+  style="background-color: {{ section.settings.background_color1 }};">
+  <div class="marquee">
+    <div class="marquee-track">
+      {% for block in section.blocks %}
+        <div class="slide-item">
+          {% if block.settings.infinite_slider_image != blank %}
+            <img
+              class="slide-image"
+              src="{{ block.settings.infinite_slider_image | image_url: width: 96 }}"
+              width="48"
+              height="48"
+              loading="lazy"
+              alt="{{ block.settings.infinite_slider_text | escape }}"
+            >
+          {% endif %}
+          <span class="marquee-text">{{ block.settings.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <div class="slide-item">
+          {% if block.settings.infinite_slider_image != blank %}
+            <img
+              class="slide-image"
+              src="{{ block.settings.infinite_slider_image | image_url: width: 96 }}"
+              width="48"
+              height="48"
+              loading="lazy"
+              alt="{{ block.settings.infinite_slider_text | escape }}"
+            >
+          {% endif %}
+          <span class="marquee-text">{{ block.settings.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.infinite-slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  height:60px;
+}
+
+/* Conditional borders */
+.infinite-slider-wrapper.has-top-border {
+  border-top: 1px solid black;
+}
+
+.infinite-slider-wrapper.has-bottom-border {
+  border-bottom: 1px solid black;
+}
+
+
+  .marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .slide-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+    padding: 0 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .slide-item {
+      padding: 0 5.5rem;
+    }
+  }
+
+  /* Image style */
+  .slide-image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    opacity: 1;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+  }
+
+  /* Text style */
+  .marquee-text {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 43.2px;
+    vertical-align: middle;
+    color: black;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Smooth continuous animation */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    .marquee-text {
+      font-size: 18px;
+      line-height: 32px;
+    }
+    
+    .slide-image {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .marquee-track {
+      animation-duration: 30s;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Infinite Slider",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color1",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation Speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "s",
+      "info": "Higher value = slower speed"
+    },
+    {
+  "type": "checkbox",
+  "id": "enable_top_border",
+  "label": "Enable Top Border",
+  "default": true
+},
+{
+  "type": "checkbox",
+  "id": "enable_bottom_border",
+  "label": "Enable Bottom Border",
+  "default": true
+}
+
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "infinite_slider_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "infinite_slider_text",
+          "label": "Text",
+          "default": "Slide Text Here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Slider",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "First Item"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "Second Item"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "Third Item"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

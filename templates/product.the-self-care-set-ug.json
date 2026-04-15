@@ -1,0 +1,444 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_ecQFGe": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>\n\n<style>\n#sm-widget-btn.snap_emi_txt {\nmargin-top:0px!important\n}\n</style>"
+      }
+    },
+    "odyssey_trunk_product_page_ug-import": {
+      "type": "odyssey_trunk_product_page_ug",
+      "blocks": {
+        "rotated_text_ywMkB8": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "bright"
+          }
+        },
+        "rotated_text_aCqbhA": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "soft"
+          }
+        },
+        "rotated_text_CCh7Gr": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "smooth"
+          }
+        },
+        "rotated_text_FNGXPn": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "nourished"
+          }
+        },
+        "varient_image_7jY48M": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/glow_essentials_1_85cfcbdf-92a6-4500-a247-44d76ba42c2b.jpg"
+          }
+        },
+        "varient_image_jnQkii": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/glow_essentials_5.jpg"
+          }
+        },
+        "varient_image_Yqi7gD": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/glow_essentials_2.jpg"
+          }
+        },
+        "varient_image_e4iTmK": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/glow_essentials_3.jpg"
+          }
+        },
+        "varient_image_Kxh4y8": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/pouch.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "rotated_text_ywMkB8",
+        "rotated_text_aCqbhA",
+        "rotated_text_CCh7Gr",
+        "rotated_text_FNGXPn",
+        "varient_image_7jY48M",
+        "varient_image_jnQkii",
+        "varient_image_Yqi7gD",
+        "varient_image_e4iTmK",
+        "varient_image_Kxh4y8"
+      ],
+      "custom_css": [],
+      "settings": {
+        "collection": "copper-peptides",
+        "product": "the-glow-essentials",
+        "url": "HOME // THE GLOW ESSENTIALS",
+        "signTitle": "rise and shine with",
+        "bestVariant": 2,
+        "rating": 5,
+        "reviews": 268,
+        "moon_icon": "shopify://shop_images/am___pm.webp",
+        "subDiscription": "We are here to make your skin feel",
+        "phoneProductDiscription": "This ritual set brings glow, softness, & just the right amount of indulgence to your everyday body care. While the exfoliating A-HA Body Wash clears congestion & smooths rough patches, the Vit C Body Oil locks in hydration & leaves your skin nourished. Together, they elevate your routine — turning rinse-and-repeat into something you’ll actually look forward to.",
+        "main_video": "",
+        "trunk_contain": "<p>This set contains: <br/><a href=\"https://www.aminu.life/products/a-ha-body-wash\" target=\"_blank\" title=\"https://www.aminu.life/products/a-ha-body-wash\">- A-HA Body Wash 150 ml x 1 <br/>(₹1650)</a><br/><a href=\"https://www.aminu.life/products/vit-c-body-oil\" target=\"_blank\" title=\"https://www.aminu.life/products/vit-c-body-oil\">- Vit C Body Oil 100 ml x 1 <br/>(₹1350)</a> <br/><br/></p>",
+        "save_text": "SAVE 10%",
+        "free_text": "<p>+ Get A Carry-All Pouch (worth Rs. 1250) Free!</p>"
+      }
+    },
+    "odyssey_trunk_accordion": {
+      "type": "odyssey_trunk_accordion",
+      "blocks": {
+        "how_to_use_NDGH6m": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/2_Aha_Body_Wash_25bb0035-7a81-4bae-bc0d-15c192973fd2.jpg",
+            "title": "<p><strong>STEP 1</strong></p>",
+            "description": "<p><strong>HOW: </strong>Take a pump of product, gently massage onto damp body, rinse with water & pat dry. <br/>*The presence of AHAs may cause some tingling or redness.<br/><br/><strong>WHERE: </strong>Entire body<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+          }
+        },
+        "how_to_use_YEjUFF": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/body_oil.jpg",
+            "title": "<p><strong>STEP 2</strong></p>",
+            "description": "<p><strong>HOW:</strong> Pump a few drops into your palms, warm it up, and massage into your moist skin. Enjoy your healthy, radiant glow!<br/><br/><strong>WHERE:</strong> Entire Body<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+          }
+        },
+        "pro_tips_qq6Nfi": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_1_dc15e708-202b-4d9a-8c80-81435eb01f9a.png",
+            "description": "When used together, the blend of refreshing mint & pine in the body wash, and the calming scents in the body oil, will soothe both mind & body equally!"
+          }
+        },
+        "pro_tips_44GEXY": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_2_4b48a6ee-967d-473e-9f35-fb16d8f83613.png",
+            "description": "Dry skin benefits from exfoliation too! As the body wash gently clears dead cells, the body oil locks in moisture, making skin soft, smooth, & strong over time."
+          }
+        },
+        "pro_tips_g9AhLG": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_3_b2685ae2-21c7-4244-b581-2edda329f891.png",
+            "description": "Before your next special occasion, make sure your body glows as much as your face! Use this duo to exfoliate & nourish, leaving your skin ready to shine."
+          }
+        },
+        "why_you_need_this_dgb8hi": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Designed for Real Life",
+            "description": "As we move more, do more, & navigate daily stressors, our skin needs a little extra care. Whether it’s post-workout skin, city pollution, or simply the need to wind down — this duo helps replenish & support the skin’s barrier, without overwhelming it."
+          }
+        },
+        "why_you_need_this_3qYQk6": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Thoughtful Formulas, Tangible Results",
+            "description": "While body care has long been associated with feel-good, self-care moments, there’s now more intention behind it. This ritual goes beyond surface-level softness — gently exfoliating, hydrating, & brightening to help with uneven texture, dark spots, & dullness — all while still feeling deeply indulgent."
+          }
+        },
+        "why_you_need_this_LXqDdY": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Everyday Care, Elevated",
+            "description": "From dryness & ingrown hair to uneven tone & texture, this ritual helps smooth, replenish, and restore — turning daily body care into some thing both purposeful and deeply rewarding."
+          }
+        },
+        "product_details_n6ERB7": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN MOODS",
+            "description": "Suitable for all — including dry, tanned, & mature skin. Especially great for skin that’s feeling rough, dull, or uneven in tone or texture."
+          }
+        },
+        "product_details_Qg3rEE": {
+          "type": "product_details",
+          "settings": {
+            "title": "GOOD FOR",
+            "description": "Exfoliating & nourishing to smooth texture, fade tan & dark spots, calm body acne, & reduce ingrown hair and strawberry legs."
+          }
+        },
+        "product_details_8rjfqT": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN GOALS",
+            "description": "Vegan, Cruelty-free, Multi-Functional, Balanced, Pregnancy-Safe"
+          }
+        },
+        "product_details_pEJQQY": {
+          "type": "product_details",
+          "settings": {
+            "title": "CARE THAT CARES",
+            "description": "Dermatologically tested, Australian certified Made-Safe, Vegan, Cruelty-Free"
+          }
+        }
+      },
+      "block_order": [
+        "how_to_use_NDGH6m",
+        "how_to_use_YEjUFF",
+        "pro_tips_qq6Nfi",
+        "pro_tips_44GEXY",
+        "pro_tips_g9AhLG",
+        "why_you_need_this_dgb8hi",
+        "why_you_need_this_3qYQk6",
+        "why_you_need_this_LXqDdY",
+        "product_details_n6ERB7",
+        "product_details_Qg3rEE",
+        "product_details_8rjfqT",
+        "product_details_pEJQQY"
+      ],
+      "settings": {
+        "application_video_poster_image": "shopify://shop_images/glow_essentials_thumbnail.jpg",
+        "application_video_url": "https://cdn.shopify.com/videos/c/o/v/6051b7d716d9427f9fbd8a3d51a14438.mp4",
+        "why_you_need_video_des": "Skincare shouldn’t stop at your collarbone — and this ritual set makes sure it doesn’t. With a brightening body wash & a nourishing vitamin C body oil, it brings thoughtfulness and efficacy to your body routine, leaving the skin soft, smooth, & glowing every time.",
+        "carousel_title": "<p><strong>STEP 1</strong></p>",
+        "carousel_description": "<p><strong>HOW: </strong>Take a pump of product, gently massage onto damp body, rinse with water & pat dry. <br/>*The presence of AHAs may cause some tingling or redness.<br/><br/><strong>WHERE: </strong>Entire body<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+      }
+    },
+    "ug-eye-scrum-pairs-well": {
+      "type": "ug-eye-scrum-pairs-well",
+      "blocks": {
+        "product_pairs_well_cRiPR8": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "better-aging-bundle"
+          }
+        },
+        "product_pairs_well_kewrhR": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "double-cleansing-duo"
+          }
+        },
+        "product_pairs_well_TDiqTD": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "daily-care-set"
+          }
+        },
+        "product_pairs_well_teGJKh": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-core-four"
+          }
+        }
+      },
+      "block_order": [
+        "product_pairs_well_cRiPR8",
+        "product_pairs_well_kewrhR",
+        "product_pairs_well_TDiqTD",
+        "product_pairs_well_teGJKh"
+      ],
+      "settings": {
+        "title": "Other Ritual Sets"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "full_width": true
+      }
+    },
+    "unico-landing-More-in-one-import": {
+      "type": "unico-landing-More-in-one",
+      "blocks": {
+        "feature_JTEKTg": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Melting_Balm_Cleanser_copy_2.png",
+            "title": "Melting Balm Cleanser",
+            "description": "Your skin’s first defense against oil-based impurities, dirt, and makeup, it works well solo or as the first step of a double cleanse."
+          }
+        },
+        "feature_fNVqJY": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Eye_Serum.png",
+            "title": "Eye Serum",
+            "description": "Thoughtfully crafted to nourish & protect, this is the daily & travel essential your eyes will thank you for."
+          }
+        },
+        "feature_hn4APq": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Radiance_Face_Oil_3.png",
+            "title": "Radiance Face Oil",
+            "description": "This high-powered moisturiser will leave your skin glowing, soft, and radiant every time. It also acts as the perfect base under makeup!"
+          }
+        },
+        "feature_Vhq4ax": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Vit_c_Body_Oil__2.png",
+            "title": "Vitamin C Body Oil",
+            "description": "As perfect for the beach as the mountains, it brightens, revitalizes, and tones the skin in one go, keeping it smooth & healthy!"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JTEKTg",
+        "feature_fNVqJY",
+        "feature_hn4APq",
+        "feature_Vhq4ax"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "A trunk full of treasures!",
+        "description": "",
+        "underLineText": "Simply put, it's an investment in your skin health for now and for the long run."
+      }
+    },
+    "unico-landing-community-says-import": {
+      "type": "unico-landing-community-says",
+      "blocks": {
+        "blogs_MKcxz6": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ankita_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/534b291c72fc47599764c0de5d205f6a.mp4",
+            "review_title": "copper peptide is something you should include",
+            "review_summary": "If you're serious about long term skin health.",
+            "review_author": "Ankita"
+          }
+        },
+        "blogs_tpRTGB": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ruchika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f20417e2fe4647329b3257fbc2e64393.mp4",
+            "review_title": "The best investment",
+            "review_summary": "Treat the signs of ageing even before they start appearing.",
+            "review_author": "Ruchika"
+          }
+        },
+        "blogs_Xay8kG": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/prarthanajagan_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/02ca921dc7764fcc86a0a8c2195b1174.mp4",
+            "review_title": "It will sit well with your skin",
+            "review_summary": "This serum has a lot of skin loving ingredients",
+            "review_author": "Prarthanajagan"
+          }
+        },
+        "blogs_WQ9w8N": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mihika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/ea41fe6715cd41988031f35974bd11be.mp4",
+            "review_title": "Incredible benefits all in one bottle.",
+            "review_summary": "Makes my skin barrier firmer, hydrated, and reduces the texture on it.",
+            "review_author": "Mihika"
+          }
+        },
+        "blogs_T3Map3": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mahek_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/29034781ee224cb8b6e258f433b4ad68.mp4",
+            "review_title": "I finished more than half the bottle",
+            "review_summary": "This serum has been an incredible experience for me",
+            "review_author": "Mahek"
+          }
+        },
+        "blogs_7n8XxW": {
+          "type": "blogs",
+          "settings": {
+            "video_url": "",
+            "review_title": "",
+            "review_summary": "",
+            "review_author": ""
+          }
+        }
+      },
+      "block_order": [
+        "blogs_MKcxz6",
+        "blogs_tpRTGB",
+        "blogs_Xay8kG",
+        "blogs_WQ9w8N",
+        "blogs_T3Map3",
+        "blogs_7n8XxW"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "See What Our Community Is Saying!"
+      }
+    },
+    "unico-landing-how-works-import": {
+      "type": "unico-landing-how-works",
+      "disabled": true,
+      "settings": {
+        "title": "Why You Need This",
+        "description": "The Odyssey Trunk is your ultimate skincare companion, thoughtfully curated to deliver top-to-toe care with maximum benefits. \n<br><br>\n<b>New year, fresh look, same beloved products!</b><br>\nAs we step into 2025, we’re leveling up & taking you along on the journey. With the Odyssey Trunk, be among the first to experience our refreshed look! \n<br><br>\n<b>Everything You Need, Anywhere You Go</b><br>\nCrafted to suit all skin moods, you can cleanse with the Melting Balm Cleanser, hydrate and brighten with the Eye Serum, nourish your face with the Radiance Face Oil, and the body with the Vitamin C Body Oil.\n<br><br>\n<b>Ready. Set. Glow.</b><br>\nWith the Aminu Passport to help you understand your products & double as a travel checklist, and the Glow-Trotter luggage tag, you will be prepared, no matter where life takes you.",
+        "more_text": "",
+        "video_poster_image": "shopify://shop_images/cover_picture_trunk_5a075d66-333b-4d84-aeda-7b7c38037857.jpg",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/d679171f9f534eaca12e1adbaaa50e0c.mp4"
+      }
+    },
+    "unico-landing-easy-to-use-import": {
+      "type": "unico-landing-easy-to-use",
+      "disabled": true,
+      "settings": {
+        "heading": "Super Easy to Use",
+        "image": "shopify://shop_images/5_Odyssey_Trunk.jpg",
+        "how": "<p><strong>WHEN:</strong> AM & PM, depending on your skin's mood & needs<br/><br/><strong>ORDER OF APPLICATION</strong> </p><p>Cleanse -&gt; Apply Eye Serum -&gt; Radiance Face Oil -&gt; Vit C Body Oil<br/><br/>For detailed instructions on how to use the cleanser, <a href=\"https://www.aminu.life/products/melting-balm-cleanser\" target=\"_blank\">click below:</a> </p>",
+        "where": "",
+        "when": "",
+        "hiddenText": "<p><strong>PRO-TIP:</strong> </p><p>When using the Melting Balm Cleanser, don’t forget to massage the cleansing balm near your hairline and along your jawline, as these are often-overlooked areas.</p><p>The Eye Serum can be used under eye makeup to keep skin hydrated & prevent creasing/ caking & the Radiance Face Oil can function as a primer too. </p><p>Apply the Vit C Body Oil before shaving for a smooth glide and a closer shave!</p>",
+        "readMore": "Read More",
+        "readLess": "Read Less"
+      }
+    },
+    "172665683430a3f5a4": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_AJyPkx": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_AJyPkx"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_ecQFGe",
+    "odyssey_trunk_product_page_ug-import",
+    "odyssey_trunk_accordion",
+    "ug-eye-scrum-pairs-well",
+    "main",
+    "unico-landing-More-in-one-import",
+    "unico-landing-community-says-import",
+    "unico-landing-how-works-import",
+    "unico-landing-easy-to-use-import",
+    "172665683430a3f5a4"
+  ]
+}

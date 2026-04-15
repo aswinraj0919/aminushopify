@@ -1,0 +1,257 @@
+<!-- Load CSS from CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+>
+
+<style>
+  /* ===== SECTION MAIN WRAPPER ===== */
+  .featured-nutrients {
+    margin-bottom: 30px;
+    {% comment %} max-width:90%;
+    margin:auto; {% endcomment %}
+  }
+
+  /* ===== HEADING ===== */
+  @media (min-width: 640px) {
+
+  .featured-nutrients h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+      margin-top: 20px;
+    font-size: 24px;
+
+  }
+  }
+  @media (max-width: 640px) {
+    .featured-nutrients h2 {
+      font-size: 18px;
+        font-weight: 600;
+    }
+  }
+
+  /* ===== DESKTOP GRID ===== */
+  .desktop-grid {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .desktop-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .desktop-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .desktop-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ===== CARD ===== */
+  .nutrient-card {
+    background: #F7F7F7;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .nutrient-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* TEXT AREA */
+  .nutrient-content {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .nutrient-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .nutrient-content p {
+    font-size: 14px;
+    font-weight: 300;
+    flex-grow: 1;
+  }
+
+  /* BUTTON */
+  .nutrient-content a {
+    display: inline-block;
+    background: black;
+    color: white;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 20px auto 15px;
+    text-align: center;
+    font-weight:400;
+  }
+
+  /* ===== DIVIDER ===== */
+  .desktop-divider {
+    border-top: 1px solid black;
+    margin: 25px 0;
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .desktop-divider {
+      display: block;
+    }
+  }
+
+  /* ===== MOBILE CAROUSEL ===== */
+  @media (min-width: 640px) {
+    .mobile-only {
+      display: none;
+    }
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .mobile-owl .nutrient-card {
+    width: 100vw;
+    margin: auto;
+  }
+
+  /* Fix for Owl Carousel */
+  .owl-carousel .owl-stage {
+    display: flex;
+  }
+
+  .owl-carousel .owl-item {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<section class="featured-nutrients ug-container-ing">
+  <h2>Our featured nutrients.</h2>
+
+  <!-- DESKTOP GRID -->
+  <div class="desktop-grid">
+    {% for block in section.blocks %}
+      <div class="nutrient-card">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | img_url: 'master' }}"
+            alt="{{ block.settings.title | escape }}"
+            width="400"
+            height="300"
+            loading="lazy"
+          >
+        {% endif %}
+
+        <div class="nutrient-content">
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+
+          <a href="{{ block.settings.link }}" class="ug-btn-hover"> See Products with This Ingredient </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="desktop-divider"></div>
+
+  <!-- MOBILE CAROUSEL -->
+  <div class="mobile-only">
+    <div class="mobile-owl owl-carousel owl-theme">
+      {% for block in section.blocks %}
+        <div class="nutrient-card">
+          {% if block.settings.image %}
+            <img
+              src="{{ block.settings.image | img_url: 'master' }}"
+              alt="{{ block.settings.title | escape }}"
+              width="400"
+              height="300"
+              loading="lazy"
+            >
+          {% endif %}
+
+          <div class="nutrient-content">
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+
+            <a href="{{ block.settings.link }}"> See Products with This Ingredient </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Load jQuery and Owl Carousel from CDN with defer -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
+
+<!-- Initialize Carousel -->
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Wait for jQuery and Owl Carousel to load
+    function initializeCarousel() {
+      if (window.jQuery && typeof window.jQuery.fn.owlCarousel !== 'undefined') {
+        $('.mobile-owl').owlCarousel({
+          items: 1,
+          margin: 16,
+          loop: false,
+          dots: true,
+          nav: false,
+          responsive: {
+            0: {
+              items: 1,
+            },
+            480: {
+              items: 1,
+            },
+          },
+        });
+      } else {
+        // Retry after a short delay if not loaded yet
+        setTimeout(initializeCarousel, 100);
+      }
+    }
+
+    initializeCarousel();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Featured Nutrients",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "nutrient",
+      "name": "Nutrient",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Featured Nutrients", "category": "Custom Sections" }]
+}
+{% endschema %}

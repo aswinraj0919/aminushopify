@@ -1,0 +1,519 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_ecQFGe": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>\n\n<style>\n#sm-widget-btn.snap_emi_txt {\nmargin-top:0px!important\n}\n</style>"
+      }
+    },
+    "odyssey_trunk_product_page_ug-import": {
+      "type": "odyssey_trunk_product_page_ug",
+      "blocks": {
+        "rotated_text_ywMkB8": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "bright"
+          }
+        },
+        "rotated_text_aCqbhA": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "clean"
+          }
+        },
+        "rotated_text_CCh7Gr": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "even-toned"
+          }
+        },
+        "rotated_text_FNGXPn": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "nourished"
+          }
+        },
+        "varient_image_x3bkj7": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Holographic_sky_shot.jpg"
+          }
+        },
+        "varient_image_jnQkii": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/product_with_Holographic_pouch.jpg"
+          }
+        },
+        "varient_image_Yqi7gD": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Artboard_15.jpg"
+          }
+        },
+        "varient_image_qMCqAw": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Hplographic_pouch_lifestyle.jpg"
+          }
+        },
+        "varient_image_R4FFCf": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Melting_balm_the_ones_who_make_it_happen.jpg"
+          }
+        },
+        "varient_image_8etqjn": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Melting_Balm_Cleanser_Texture_gif.gif"
+          }
+        },
+        "varient_image_teteF7": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/WhatsApp_Image_2025-07-24_at_12.26.44.jpg"
+          }
+        },
+        "varient_image_8yci4T": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/AHA_Face_wash_the_ones_that_happen_04bc87c0-531d-444e-b642-577478be435d.jpg"
+          }
+        },
+        "varient_image_BgzpDJ": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/AHA_Face_Wash_Texture.gif"
+          }
+        },
+        "varient_image_7jY48M": {
+          "type": "varient_image",
+          "disabled": true,
+          "settings": {
+            "varient_images": "shopify://shop_images/Product_image.jpg"
+          }
+        },
+        "varient_image_rgjBPT": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/holographicpouch-ezgif.com-optimize.gif"
+          }
+        },
+        "varient_image_png76q": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/4_07af596f-8de2-457a-ae2f-942e95497454.jpg"
+          }
+        },
+        "varient_image_bGDKke": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Holographic_pouch.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "rotated_text_ywMkB8",
+        "rotated_text_aCqbhA",
+        "rotated_text_CCh7Gr",
+        "rotated_text_FNGXPn",
+        "varient_image_x3bkj7",
+        "varient_image_jnQkii",
+        "varient_image_Yqi7gD",
+        "varient_image_qMCqAw",
+        "varient_image_R4FFCf",
+        "varient_image_8etqjn",
+        "varient_image_teteF7",
+        "varient_image_8yci4T",
+        "varient_image_BgzpDJ",
+        "varient_image_7jY48M",
+        "varient_image_rgjBPT",
+        "varient_image_png76q",
+        "varient_image_bGDKke"
+      ],
+      "custom_css": [],
+      "settings": {
+        "collection": "copper-peptides",
+        "product": "double-cleansing-duo",
+        "url": "HOME // DOUBLE CLEANSING DUO",
+        "signTitle": "the dream team",
+        "bestVariant": 2,
+        "rating": 5,
+        "reviews": 268,
+        "moon_icon": "shopify://shop_images/am___pm.webp",
+        "subDiscription": "We are here to make your skin feel",
+        "phoneProductDiscription": "Double cleansing isn’t just an extra step — it’s the one that takes your routine from functional to foundational. While the balm cleanser breaks down sunscreen, pollution, & makeup, the AHA Face Wash exfoliates gently, clearing buildup from deep within the pores. Together, they set the stage for healthy, resilient skin — supporting your barrier, calming inflammation, & preventing breakouts over time. So, are you ready to upgrade the way you cleanse?",
+        "main_video": "",
+        "trunk_contain": "<p>This set contains: <br/><a href=\"https://www.aminu.life/products/melting-balm-cleanser\" target=\"_blank\" title=\"https://www.aminu.life/products/melting-balm-cleanser\">- Melting Balm Cleanser 50 ml x 1<br/>(₹1200)</a><br/><a href=\"https://www.aminu.life/products/a-ha-face-wash\" target=\"_blank\" title=\"https://www.aminu.life/products/a-ha-face-wash\">- A-HA Face Wash 100 ml x 1<br/>(₹1450)</a><br/>+ a limited edition holographic pouch </p>",
+        "save_text": "SAVE 13%",
+        "free_text": "<p><em><strong>+ get a limited edition holographic pouch free!</strong></em></p><p><em><strong>+ 5% off on prepay<br/>+ </strong></em><strong>an extra 10% off with code HELLO10</strong> <em>(applicable on your first order)<br/></em></p>"
+      }
+    },
+    "odyssey_trunk_accordion": {
+      "type": "odyssey_trunk_accordion",
+      "blocks": {
+        "how_to_use_NDGH6m": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/melting_balm_step_1.jpg",
+            "title": "<p><strong>For Evening Routine: </strong>Melting Balm Cleanser</p>",
+            "description": "<p><strong><br/>HOW: </strong>Scoop out a small amount of product & massage it onto dry face for about 40secs. Take a little water to emulsify and rinse it off.<br/>*Works easily and efficiently to remove heavy makeup too.<br/><br/><strong>WHERE:</strong> Entire face<br/><br/><strong>WHEN: </strong>PM</p>"
+          }
+        },
+        "how_to_use_dtibGz": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/2_Aha_Face_Wash_with_Texture.jpg",
+            "title": "<p><strong>Morning Routine: </strong>AHA Face Wash</p>",
+            "description": "<p><strong><br/>HOW: </strong>Squeeze a little amount of product, gently massage onto wet skin, rinse off with water & pat dry. Follow up with your routine and sunscreen in the day.<br/><strong><br/>WHERE:</strong> Face & Neck<br/><strong><br/>WHEN:</strong> AM and PM</p>"
+          }
+        },
+        "how_to_use_HNjDp9": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Copper_Peptide_Serum_1.webp",
+            "title": "<p><strong>STEP 3: </strong>Serum</p>",
+            "description": "<p><br/><strong>HOW:</strong> Apply a few drops evenly on clean skin, with your fingertips. Avoid touching the glass dropper directly to your skin.<br/><br/><strong>WHEN: </strong>AM & PM<br/><br/><strong>WHERE: </strong>Face & Neck</p>"
+          }
+        },
+        "how_to_use_eaXtGK": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Bio_Retinol_fc5acc00-4881-423d-84dd-c638736a7a9d.jpg",
+            "title": "<p><strong>STEP 4:</strong> Moisturiser</p>",
+            "description": "<p><br/><strong>HOW:</strong> Pump a small amount and massage onto clean skin in upward, circular motions.<br/><br/><strong>WHERE:</strong> Face & Neck<br/><br/><strong>WHEN:</strong> AM and PM</p>"
+          }
+        },
+        "pro_tips_qq6Nfi": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_1_021ebd4b-c626-416a-aa25-3f56768b7f9c.png",
+            "description": "Double cleansing in the evening clears away makeup & buildup, leaving your skin feeling fresh & ready to absorb other products!"
+          }
+        },
+        "pro_tips_44GEXY": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_2_afdcec09-1d01-46c7-9ce5-69090e255336.png",
+            "description": "Massage the balm cleanser into your skin for two minutes for  best results. Additionally, when left on dry skin for 3-4 minutes, the A-HA Face Wash acts as a gentle exfoliating mask!"
+          }
+        },
+        "pro_tips_g9AhLG": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_3_369f7b49-6d0d-4fb1-85d9-2af8453775d5.png",
+            "description": "Don’t forget to cleanse & mask along your hairline and jawline, as these often-overlooked areas can be prone to breakouts!"
+          }
+        },
+        "why_you_need_this_dgb8hi": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Effortless Makeup Removal",
+            "description": "Double cleansing with this duo leaves no trace behind, effortlessly removing makeup (even the stubborn, waterproof kind), ensuring the pores don't clog and the skin feels nourished."
+          }
+        },
+        "why_you_need_this_tTE3Ht": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Deep Clean, Deeper Care",
+            "description": "Not into makeup but love squeaky-clean skin? This set removes oil and water-based impurities, letting your skin breathe and helping your skincare absorb better and work harder."
+          }
+        },
+        "why_you_need_this_BJTGKc": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Balanced, Restored Barrier",
+            "description": "This dynamic duo deeply cleanses while restoring and strengthening your skin’s barrier, keeping it hydrated, resilient, and balanced."
+          }
+        },
+        "product_details_n6ERB7": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN MOODS",
+            "description": "Ideal for all skin moods from dry, normal, combination to oily"
+          }
+        },
+        "product_details_Qg3rEE": {
+          "type": "product_details",
+          "settings": {
+            "title": "GOOD FOR",
+            "description": "Deep cleansing, maintaining pore health, clearing congestion, reducing tan & for healthy skin"
+          }
+        },
+        "product_details_8rjfqT": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN GOALS",
+            "description": "Comfortably clean, even, healthy skin"
+          }
+        },
+        "product_details_pEJQQY": {
+          "type": "product_details",
+          "settings": {
+            "title": "CARE THAT CARES",
+            "description": "Vegan, Cruelty-free, Multi-Functional, Balanced"
+          }
+        }
+      },
+      "block_order": [
+        "how_to_use_NDGH6m",
+        "how_to_use_dtibGz",
+        "how_to_use_HNjDp9",
+        "how_to_use_eaXtGK",
+        "pro_tips_qq6Nfi",
+        "pro_tips_44GEXY",
+        "pro_tips_g9AhLG",
+        "why_you_need_this_dgb8hi",
+        "why_you_need_this_tTE3Ht",
+        "why_you_need_this_BJTGKc",
+        "product_details_n6ERB7",
+        "product_details_Qg3rEE",
+        "product_details_8rjfqT",
+        "product_details_pEJQQY"
+      ],
+      "settings": {
+        "application_video_poster_image": "shopify://shop_images/timeless_era_youtube_0724ab01-28c7-4107-b9e8-cdcf77fb482a.jpg",
+        "application_video_url": "https://cdn.shopify.com/videos/c/o/v/aba236276b6f47ab8c5731daca8312ff.mp4",
+        "why_you_need_video_des": "Double cleansing is the perfect solution for clogged pores, breakouts, dehydration, & a weak skin barrier. By following up an oil-based cleanser with a water-based one, you target all impurities, leaving your skin clean as can be.",
+        "carousel_title": "<p><strong>STEP 1: </strong>Oil Cleanse</p>",
+        "carousel_description": "<p><strong><br/>HOW: </strong>Scoop out a small amount of product & massage it onto dry face for about one minute. Take a little water to emulsify and rinse it off.<br/>*Works easily and efficiently to remove heavy makeup too.<br/><br/><strong>WHERE:</strong> Entire face<br/><br/><strong>WHEN:</strong> PM</p>"
+      }
+    },
+    "ug-eye-scrum-pairs-well": {
+      "type": "ug-eye-scrum-pairs-well",
+      "blocks": {
+        "product_pairs_well_7r8H6V": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "better-aging-bundle"
+          }
+        },
+        "product_pairs_well_mYRYXT": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-glow-essentials"
+          }
+        },
+        "product_pairs_well_NRDqcD": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "daily-care-set"
+          }
+        },
+        "product_pairs_well_nDHy8g": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-core-four"
+          }
+        }
+      },
+      "block_order": [
+        "product_pairs_well_7r8H6V",
+        "product_pairs_well_mYRYXT",
+        "product_pairs_well_NRDqcD",
+        "product_pairs_well_nDHy8g"
+      ],
+      "settings": {
+        "title": "Other Ritual Sets"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "full_width": true
+      }
+    },
+    "unico-landing-More-in-one-import": {
+      "type": "unico-landing-More-in-one",
+      "blocks": {
+        "feature_JTEKTg": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Melting_Balm_Cleanser_copy_2.png",
+            "title": "Melting Balm Cleanser",
+            "description": "Your skin’s first defense against oil-based impurities, dirt, and makeup, it works well solo or as the first step of a double cleanse."
+          }
+        },
+        "feature_fNVqJY": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Eye_Serum.png",
+            "title": "Eye Serum",
+            "description": "Thoughtfully crafted to nourish & protect, this is the daily & travel essential your eyes will thank you for."
+          }
+        },
+        "feature_hn4APq": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Radiance_Face_Oil_3.png",
+            "title": "Radiance Face Oil",
+            "description": "This high-powered moisturiser will leave your skin glowing, soft, and radiant every time. It also acts as the perfect base under makeup!"
+          }
+        },
+        "feature_Vhq4ax": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Vit_c_Body_Oil__2.png",
+            "title": "Vitamin C Body Oil",
+            "description": "As perfect for the beach as the mountains, it brightens, revitalizes, and tones the skin in one go, keeping it smooth & healthy!"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JTEKTg",
+        "feature_fNVqJY",
+        "feature_hn4APq",
+        "feature_Vhq4ax"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "A trunk full of treasures!",
+        "description": "",
+        "underLineText": "Simply put, it's an investment in your skin health for now and for the long run."
+      }
+    },
+    "unico-landing-community-says-import": {
+      "type": "unico-landing-community-says",
+      "blocks": {
+        "blogs_MKcxz6": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ankita_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/534b291c72fc47599764c0de5d205f6a.mp4",
+            "review_title": "copper peptide is something you should include",
+            "review_summary": "If you're serious about long term skin health.",
+            "review_author": "Ankita"
+          }
+        },
+        "blogs_tpRTGB": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ruchika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f20417e2fe4647329b3257fbc2e64393.mp4",
+            "review_title": "The best investment",
+            "review_summary": "Treat the signs of ageing even before they start appearing.",
+            "review_author": "Ruchika"
+          }
+        },
+        "blogs_Xay8kG": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/prarthanajagan_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/02ca921dc7764fcc86a0a8c2195b1174.mp4",
+            "review_title": "It will sit well with your skin",
+            "review_summary": "This serum has a lot of skin loving ingredients",
+            "review_author": "Prarthanajagan"
+          }
+        },
+        "blogs_WQ9w8N": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mihika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/ea41fe6715cd41988031f35974bd11be.mp4",
+            "review_title": "Incredible benefits all in one bottle.",
+            "review_summary": "Makes my skin barrier firmer, hydrated, and reduces the texture on it.",
+            "review_author": "Mihika"
+          }
+        },
+        "blogs_T3Map3": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mahek_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/29034781ee224cb8b6e258f433b4ad68.mp4",
+            "review_title": "I finished more than half the bottle",
+            "review_summary": "This serum has been an incredible experience for me",
+            "review_author": "Mahek"
+          }
+        },
+        "blogs_7n8XxW": {
+          "type": "blogs",
+          "settings": {
+            "video_url": "",
+            "review_title": "",
+            "review_summary": "",
+            "review_author": ""
+          }
+        }
+      },
+      "block_order": [
+        "blogs_MKcxz6",
+        "blogs_tpRTGB",
+        "blogs_Xay8kG",
+        "blogs_WQ9w8N",
+        "blogs_T3Map3",
+        "blogs_7n8XxW"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "See What Our Community Is Saying!"
+      }
+    },
+    "unico-landing-how-works-import": {
+      "type": "unico-landing-how-works",
+      "disabled": true,
+      "settings": {
+        "title": "Why You Need This",
+        "description": "The Odyssey Trunk is your ultimate skincare companion, thoughtfully curated to deliver top-to-toe care with maximum benefits. \n<br><br>\n<b>New year, fresh look, same beloved products!</b><br>\nAs we step into 2025, we’re leveling up & taking you along on the journey. With the Odyssey Trunk, be among the first to experience our refreshed look! \n<br><br>\n<b>Everything You Need, Anywhere You Go</b><br>\nCrafted to suit all skin moods, you can cleanse with the Melting Balm Cleanser, hydrate and brighten with the Eye Serum, nourish your face with the Radiance Face Oil, and the body with the Vitamin C Body Oil.\n<br><br>\n<b>Ready. Set. Glow.</b><br>\nWith the Aminu Passport to help you understand your products & double as a travel checklist, and the Glow-Trotter luggage tag, you will be prepared, no matter where life takes you.",
+        "more_text": "",
+        "video_poster_image": "shopify://shop_images/cover_picture_trunk_5a075d66-333b-4d84-aeda-7b7c38037857.jpg",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/d679171f9f534eaca12e1adbaaa50e0c.mp4"
+      }
+    },
+    "unico-landing-easy-to-use-import": {
+      "type": "unico-landing-easy-to-use",
+      "disabled": true,
+      "settings": {
+        "heading": "Super Easy to Use",
+        "image": "shopify://shop_images/5_Odyssey_Trunk.jpg",
+        "how": "<p><strong>WHEN:</strong> AM & PM, depending on your skin's mood & needs<br/><br/><strong>ORDER OF APPLICATION</strong> </p><p>Cleanse -&gt; Apply Eye Serum -&gt; Radiance Face Oil -&gt; Vit C Body Oil<br/><br/>For detailed instructions on how to use the cleanser, <a href=\"https://www.aminu.life/products/melting-balm-cleanser\" target=\"_blank\">click below:</a> </p>",
+        "where": "",
+        "when": "",
+        "hiddenText": "<p><strong>PRO-TIP:</strong> </p><p>When using the Melting Balm Cleanser, don’t forget to massage the cleansing balm near your hairline and along your jawline, as these are often-overlooked areas.</p><p>The Eye Serum can be used under eye makeup to keep skin hydrated & prevent creasing/ caking & the Radiance Face Oil can function as a primer too. </p><p>Apply the Vit C Body Oil before shaving for a smooth glide and a closer shave!</p>",
+        "readMore": "Read More",
+        "readLess": "Read Less"
+      }
+    },
+    "172665683430a3f5a4": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_AJyPkx": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_AJyPkx"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_ecQFGe",
+    "odyssey_trunk_product_page_ug-import",
+    "odyssey_trunk_accordion",
+    "ug-eye-scrum-pairs-well",
+    "main",
+    "unico-landing-More-in-one-import",
+    "unico-landing-community-says-import",
+    "unico-landing-how-works-import",
+    "unico-landing-easy-to-use-import",
+    "172665683430a3f5a4"
+  ]
+}

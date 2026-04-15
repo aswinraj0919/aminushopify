@@ -1,0 +1,49 @@
+<!-- Text Content Section -->
+<section
+>
+  <div class="ug-container">
+    <p
+      class="font-[400] md:text-[18px] text-[15px] md:leading-[30px] leading-[20px] sm:mt-6 italic"
+    >
+      {{ section.settings.subtitle }}
+    </p>
+    <h2
+      class="font-[600] md:text-[44px] text-[30px] sm:mb-4 mb-2  mt-5 md:leading-[32px] leading-[28px]"
+    >
+      {{ section.settings.title }}
+    </h2>
+    <p
+      class="font-[400] md:text-[18px] text-[15px] md:leading-[30px] leading-[20px] sm:mt-6 mt-3"
+    >
+      {{ section.settings.description }}
+    </p>
+  </div>
+</section>
+{% comment %}
+  <hr class="my-5 bg-black h-[0.9px] sm:block hidden">
+  <hr class="my-5 bg-black h-[0.9px] block sm:hidden">
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "About us hero section",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "About Title",
+      "default": "We Are All About Skin Health!"
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "label": "About Sub-Title"
+    },
+    {
+      "id": "description",
+      "type": "textarea",
+      "label": "Description"
+    }
+  ]
+}
+{% endschema %}

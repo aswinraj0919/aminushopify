@@ -1,0 +1,284 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_with_text_overlay_ymMnLE": {
+      "type": "image-with-text-overlay",
+      "name": "Image with text overlay",
+      "settings": {
+        "image": "shopify://shop_images/Collectionbanner.jpg",
+        "mobile_image": "shopify://shop_images/Collection_Page_mobile_banner.webp",
+        "height": "fixed",
+        "height_desktop": 340,
+        "height_mobile": 220,
+        "image_link": "",
+        "full_width": true,
+        "text_alignment": "center center",
+        "mobile_overlay_under": false,
+        "overlay_style": "shadow"
+      }
+    },
+    "scrolling_banner_kgCYhi": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_eb9f4L": {
+          "type": "text",
+          "settings": {
+            "text": "MUD + CLAY",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_8AJNiC": {
+          "type": "text",
+          "settings": {
+            "text": "ECTOIN",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_JQCzU6": {
+          "type": "text",
+          "settings": {
+            "text": "CERAMIDES",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_mEU9Wy": {
+          "type": "text",
+          "settings": {
+            "text": "TRADITIONAL HERBS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_hkE9cB": {
+          "type": "text",
+          "settings": {
+            "text": "BAKUCHIOL",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_8fnT6q": {
+          "type": "text",
+          "settings": {
+            "text": "BIOACTIVE GLUCOSIDES",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_7BxYPn": {
+          "type": "text",
+          "settings": {
+            "text": "COPPER PEPTIDES",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_Tttk3e": {
+          "type": "text",
+          "settings": {
+            "text": "MARINE ALGAE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_TwKieC": {
+          "type": "text",
+          "settings": {
+            "text": "MINERALS + VITAMINS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_eb9f4L",
+        "text_8AJNiC",
+        "text_JQCzU6",
+        "text_mEU9Wy",
+        "text_hkE9cB",
+        "text_8fnT6q",
+        "text_7BxYPn",
+        "text_Tttk3e",
+        "text_TwKieC"
+      ],
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 16,
+        "vertical_padding": 16,
+        "speed": 10,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_title": true,
+        "show_image_behind_heading": false,
+        "heading_image_height": "medium",
+        "overlay_style": "full image-overlay--bg-shadow",
+        "coll_desc_pos": "above",
+        "coll_num_per_page_int": 24,
+        "grid": 3,
+        "show_vendor": false,
+        "show_total": true,
+        "enable_filtering": true,
+        "collapse_tag_sidebar_by_default": false,
+        "collapse_filters_method": "all",
+        "show_filter_counts": false,
+        "filter_two_columns": false,
+        "button_grid_filter_name": "Size,Taille,Größe",
+        "auto_apply_hide_unavailable": false,
+        "enable_sticky_filter": true,
+        "show_sort": true,
+        "sort_show_featured": false,
+        "sort_show_best": true,
+        "sort_show_alpha": true,
+        "sort_show_price": true,
+        "sort_show_date": true,
+        "related_collections": [],
+        "related_collections_style": "buttons",
+        "rel_coll_gall_aspect_ratio": "1",
+        "image_position": "center center",
+        "rel_coll_gall_enable_margin": true,
+        "rel_coll_gall_full_width": false,
+        "rel_coll_gall_overlay_style": "shadow",
+        "rel_coll_gall_text_alignment": "center center",
+        "rel_coll_grid_mobile": "2"
+      }
+    },
+    "scrolling_banner_wPAmNz": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_RqpfQD": {
+          "type": "text",
+          "settings": {
+            "text": "FOR YOUR SKIN NEEDS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_xPzHUH": {
+          "type": "text",
+          "settings": {
+            "text": "FOR YOUR SKIN MOODS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_Djf6Ai": {
+          "type": "text",
+          "settings": {
+            "text": "FOR YOUR SKIN GOALS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_gmL3cL": {
+          "type": "text",
+          "settings": {
+            "text": "FOR THE SKIN YOU ARE IN",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_RqpfQD",
+        "text_xPzHUH",
+        "text_Djf6Ai",
+        "text_gmL3cL"
+      ],
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 16,
+        "vertical_padding": 12,
+        "speed": 10,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": false,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "chat_with_experts_jrMerB": {
+      "type": "chat-with-experts",
+      "name": "Chat with Skin Experts",
+      "settings": {
+        "whatsapp_number": "+919324752679",
+        "heading_text": "Confused?Chat with our Skin Experts!",
+        "button_label": "Chat with us"
+      }
+    }
+  },
+  "order": [
+    "image_with_text_overlay_ymMnLE",
+    "scrolling_banner_kgCYhi",
+    "main",
+    "scrolling_banner_wPAmNz",
+    "chat_with_experts_jrMerB"
+  ]
+}

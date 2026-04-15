@@ -1,0 +1,153 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_8Bc8de": {
+      "type": "custom-liquid",
+      "custom_css": [
+        ".breadcrumb-margin {margin-top: 25px; margin-bottom: 10px;}"
+      ],
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": false,
+        "show_space": false,
+        "code": "<div class=\"breadcrumb breadcrumb-margin\">\n              {% render 'breadcrumbs' %}\n            </div>"
+      }
+    },
+    "blog_tabs_slider_A8Hy6B": {
+      "type": "blog-tabs-slider",
+      "blocks": {
+        "tab_UfiUjj": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "All",
+            "tab_tag": "all",
+            "hero_image": "shopify://shop_images/All..png",
+            "hero_image_mobile": "shopify://shop_images/All.png"
+          }
+        },
+        "tab_tUUaij": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Lab Stories",
+            "tab_tag": "Lab stories",
+            "hero_image": "shopify://shop_images/Lab_stories_Desktop.jpg",
+            "hero_image_mobile": "shopify://shop_images/Lab_stories_Desktop.jpg"
+          }
+        },
+        "tab_JkNYmb": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Skincare",
+            "tab_tag": "Skincare",
+            "hero_image": "shopify://shop_images/Skincare_Desktop.jpg",
+            "hero_image_mobile": "shopify://shop_images/Skincare_Mobile.jpg"
+          }
+        },
+        "tab_zeEnnq": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "We Care",
+            "tab_tag": "We care",
+            "hero_image": "shopify://shop_images/we_care_Desktop.jpg",
+            "hero_image_mobile": "shopify://shop_images/We_care_mobile.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "tab_UfiUjj",
+        "tab_tUUaij",
+        "tab_JkNYmb",
+        "tab_zeEnnq"
+      ],
+      "name": "Blog tabs with hero slider",
+      "settings": {
+        "show_excerpts": true,
+        "blog_title": "Blogs"
+      }
+    },
+    "infinite_slider_y3nYbR": {
+      "type": "infinite-slider",
+      "blocks": {
+        "slide_tRN6f4": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "loved"
+          }
+        },
+        "slide_RzjPQB": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "precious"
+          }
+        },
+        "slide_xBRfWJ": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "cared"
+          }
+        },
+        "slide_ikXrYB": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "BEAUTIFUL"
+          }
+        },
+        "slide_JkLzde": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "HEARD"
+          }
+        },
+        "slide_P7TGNU": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "RARE"
+          }
+        },
+        "slide_EMYbLY": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "NOW"
+          }
+        }
+      },
+      "block_order": [
+        "slide_tRN6f4",
+        "slide_RzjPQB",
+        "slide_xBRfWJ",
+        "slide_ikXrYB",
+        "slide_JkLzde",
+        "slide_P7TGNU",
+        "slide_EMYbLY"
+      ],
+      "name": "Infinite Slider",
+      "settings": {
+        "background_color1": "#ffffff",
+        "animation_speed": 40,
+        "enable_top_border": true,
+        "enable_bottom_border": true
+      }
+    },
+    "blog_tagline_9cmP4k": {
+      "type": "blog-tagline",
+      "name": "Blog tagline",
+      "settings": {
+        "tagline": "Come back here every day for more love and connection"
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_8Bc8de",
+    "blog_tabs_slider_A8Hy6B",
+    "infinite_slider_y3nYbR",
+    "blog_tagline_9cmP4k"
+  ]
+}

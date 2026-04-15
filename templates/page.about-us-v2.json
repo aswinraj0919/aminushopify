@@ -1,0 +1,393 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_nVp76j": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "show_space": false,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>"
+      }
+    },
+    "unico_video_PGy4Wq": {
+      "type": "unico-video",
+      "name": "Unico Video",
+      "settings": {
+        "video_external": "",
+        "full_width": true,
+        "full_height": false,
+        "custom_height": 600,
+        "mobile_full_height": false,
+        "mobile_custom_height": 350,
+        "maintain_aspect_ratio": true
+      }
+    },
+    "about-us-hero-section-import": {
+      "type": "about-us-hero-section",
+      "settings": {
+        "title": "About Aminu!",
+        "subtitle": "pronounced as uh-mee-nu.",
+        "description": "Aminu brings together the best of science and art to give you the healthiest skin\npossible. We're inspired by everything, from the nutritional richness of superfoods to the captivating intricacies of microbiology, and material sciences to art and culture. \nOur goal is to make skincare easy and effective for you, no matter your level of expertise.<br>\nWith Aminu, you get a individual skincare expert in every bottle! We carefully blend\nmultiple advanced ingredients and traditional wisdom to give you visibly healthy,\nradiant skin. In addition, our artful packaging and unique experiences make you feel healthy & confident, every time you use Aminu!"
+      }
+    },
+    "about_us_image_with_text_f6UQG9": {
+      "type": "about-us-image-with-text",
+      "name": "About Us Image With Text",
+      "settings": {
+        "section_title": "The Journey Behind Aminu",
+        "text": "<p>At Aminu, our journey is deeply rooted in personal experiences and the profound understanding of the intricacies of skin health. Every product we formulate carries a story - a story of compassion, confidence, and a promise to deliver visibly healthy skin</p>",
+        "about_image": "shopify://shop_images/about_aminu_a6994360-6989-4d11-922a-2e304b333abb.jpg",
+        "image_position": "right"
+      }
+    },
+    "about_us_image_with_text_DqU4NE": {
+      "type": "about-us-image-with-text",
+      "name": "About Us Image With Text",
+      "settings": {
+        "section_title": "Every Number Has a Story",
+        "text": "<ul><li>10+ Innovations & Technologies – Targeted delivery for optimal skin results.</li><li>40+ Countries of Origin – Finest ingredients from top labs worldwide.</li><li>150+ Editorial Features – Award-winning solutions trusted by leading publications.</li><li>250+ High-Performing Ingredients – Clinically proven actives for healthy skin.</li><li>1,000+ Aestheticians Trained – Experts delivering the signature “Aminu Touch.”</li><li>1,350+ Harsh Ingredients Avoided – Gentle on skin and planet.</li><li>45,000+ Treatments Delivered – Restoring balance and radiance, one treatment at a time.</li></ul>",
+        "about_image": "shopify://shop_images/Double_cleansing_duo_b068d344-9c24-454d-80a5-b2f9c2821809.jpg",
+        "image_position": "left"
+      }
+    },
+    "about_us_image_with_text_imyLq6": {
+      "type": "about-us-image-with-text",
+      "name": "About Us Image With Text",
+      "settings": {
+        "section_title": "Skin solutions that truly understand",
+        "text": "<ul><li>what your skin needs. </li><li>what it needs now. what it will need tomorrow. </li><li>what it needs season to season. what it needs in the morning, </li><li>what it needs at night. </li><li>what it needs when things go wrong and .</li><li>when it needs special care. when it needs something for no reason at all. </li></ul>",
+        "about_image": "shopify://shop_images/glow_essentials.jpg",
+        "image_position": "right"
+      }
+    },
+    "about_us_our_founders_KbThtm": {
+      "type": "about-us-our-founders",
+      "blocks": {
+        "founder_ffrRdL": {
+          "type": "founder",
+          "settings": {
+            "founder_image": "shopify://shop_images/prachi_bhandari.webp",
+            "founder_name": "Prachi Bhandari",
+            "founder_bio": "<p>Combining my passion for art, science, and skincare, I have created a range of products that promote radiant skin health. My journey began when I helped my father recover from a rare infection, inspiring me to open a clinical spa focused on holistic skin treatments.<br/>After 8 years of caring for clients' skin needs, I decided to take my passion to the next level by developing skincare solutions that feature the best ingredients from labs across the world and award-winning innovations. This unwavering dedication sets Aminu apart, and you can experience it in every bottle and jar we offer!</p>"
+          }
+        },
+        "founder_xh7P34": {
+          "type": "founder",
+          "settings": {
+            "founder_image": "shopify://shop_images/aman_mohanta.webp",
+            "founder_name": "Aman Mohunta",
+            "founder_bio": "<p>Educated at IIT Kanpur and University of Chicago Booth School of Business, Aman has worked as a macro researcher at Nomura and Ministry of Finance, Government of India and macro trader at Bank of America. His pursuit to make an impact in the real world took him to Tranzmute where he scaled young companies.<br/>At Aminu, his cumulative experiences and his global network has inculcated this unique ability to build and scale an organisation using the 'first principles' approach. You will find this first principles approach in everything we do at Aminu.</p>"
+          }
+        },
+        "founder_YcCDjA": {
+          "type": "founder",
+          "settings": {
+            "founder_image": "shopify://shop_images/Sanjay_joshi.webp",
+            "founder_name": "Sanjay Doshi",
+            "founder_bio": "<p>A seasoned businessman with thirty years of experience in navigating the labyrinth called Indian manufacturing<br/>sector, Sanjay swears by the mantra \"never say never\". He is also our in-house mentor that every 30 something start up founder needs!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "founder_ffrRdL",
+        "founder_xh7P34",
+        "founder_YcCDjA"
+      ],
+      "name": "Our Founders",
+      "settings": {
+        "section_heading": "Our Founders"
+      }
+    },
+    "about_us_blogs_aW8x4g": {
+      "type": "about-us-approach",
+      "blocks": {
+        "approach_card_Ceb3zE": {
+          "type": "approach_card",
+          "settings": {
+            "card_image": "shopify://shop_images/gentle_formulas_558103f2-ecb8-4013-a4af-4afeb151ce29.jpg",
+            "card_title": "GENTLE FORMULAS // a better path to healthy skin",
+            "card_description": "We're all about balance here! We carefully select our ingredients to make sure our formulas are gentle and easy on all skin moods. Plus, we have a list of over 1,350 not-so-friendly ingredients that we never use!",
+            "button_link": ""
+          }
+        },
+        "approach_card_Yz3GaN": {
+          "type": "approach_card",
+          "settings": {
+            "card_image": "shopify://shop_images/CLINICAL_PROVEN_INGREDIENTS_TECHNOLOGIES_3e86ad21-149a-4a79-895d-33e8e5eaffce.jpg",
+            "card_title": "CLINICAL PROVEN INGREDIENTS +TECHNOLOGIES // more results, less effort",
+            "card_description": "We take skincare's best ingredients and innovations to create\nhigh-performance formulas that offer multiple benefits, simplifies your\nskincare routine and brings a smile to your face.",
+            "button_link": ""
+          }
+        },
+        "approach_card_rjPPBK": {
+          "type": "approach_card",
+          "settings": {
+            "card_image": "shopify://shop_images/CONSCIOUS_CARE_a2ac45a2-de7f-42c5-88bb-4fe2381e5e9a.jpg",
+            "card_title": "CONSCIOUS CARE // w-holistic solutions for all",
+            "card_description": "Our skin has different needs at different times, so we've crafted\nmulti-functional solutions that are good for you, the planet, and even your\nfurry friends.",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "approach_card_Ceb3zE",
+        "approach_card_Yz3GaN",
+        "approach_card_rjPPBK"
+      ],
+      "name": "About us Blog Posts",
+      "settings": {
+        "title": "Our Approach"
+      }
+    },
+    "scrolling_banner_eJFLgB": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_dEyEre": {
+          "type": "text",
+          "settings": {
+            "text": "VEGAN",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_fXQGWg": {
+          "type": "text",
+          "settings": {
+            "text": "MEDICERT AWARDED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_eCFVGd": {
+          "type": "text",
+          "settings": {
+            "text": "ZERO PLASTIC INSIDE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_79HB9J": {
+          "type": "text",
+          "settings": {
+            "text": "ANIMAL TEST FREE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_8AYFwy": {
+          "type": "text",
+          "settings": {
+            "text": "MADE SAFE CERTIFIED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_3TLqkT": {
+          "type": "text",
+          "settings": {
+            "text": "DERMATOLOGICALLY TESTED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_dEyEre",
+        "text_fXQGWg",
+        "text_eCFVGd",
+        "text_79HB9J",
+        "text_8AYFwy",
+        "text_3TLqkT"
+      ],
+      "disabled": true,
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 16,
+        "vertical_padding": 20,
+        "speed": 10,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "about_us_magazine_media_JzTeiM": {
+      "type": "about-us-magazine-media",
+      "blocks": {
+        "media_item_BK3pLd": {
+          "type": "media_item",
+          "settings": {
+            "image": "shopify://shop_images/Milky_Mineral_Sunscreen_1.png",
+            "caption": "COSMOPOLITAN |  Melting Balm Cleanser",
+            "product_link": "",
+            "article_link": ""
+          }
+        },
+        "media_item_awyNBX": {
+          "type": "media_item",
+          "settings": {
+            "image": "shopify://shop_images/Aha_-face-wash.jpg",
+            "caption": "COSMOPOLITAN |  Melting Balm Cleanser",
+            "product_link": "",
+            "article_link": ""
+          }
+        },
+        "media_item_fiY4By": {
+          "type": "media_item",
+          "settings": {
+            "image": "shopify://shop_images/INGREDIENTS_TECHNOLOGIES.jpg",
+            "caption": "COSMOPOLITAN |  Melting Balm Cleanser",
+            "product_link": "",
+            "article_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "media_item_BK3pLd",
+        "media_item_awyNBX",
+        "media_item_fiY4By"
+      ],
+      "disabled": true,
+      "name": "Magazine & Media",
+      "settings": {
+        "title": "Magazine & Media"
+      }
+    },
+    "column-cards-load": {
+      "type": "column-cards",
+      "blocks": {
+        "card_7NitzC": {
+          "type": "card",
+          "settings": {
+            "card_title": "CLINICAL PROVEN INGREDIENTS + TECHNOLOGIES",
+            "card_text": "We take skincare's best ingredients and innovations to create high-performance formulas that offer multiple benefits, simplifies your skincare routine and brings a smile to your face.",
+            "card_image": "shopify://shop_images/CLINICAL_PROVEN_INGREDIENTS_TECHNOLOGIES.jpg"
+          }
+        },
+        "card_ceN7mh": {
+          "type": "card",
+          "settings": {
+            "card_title": "GENTLE FORMULAS",
+            "card_text": "We're all about balance here! We carefully select our ingredients to make sure our formulas are gentle and easy on al skin moods. Plus, we have a list of over 1,350 not-so-friendly ingredients that we never use!",
+            "card_image": "shopify://shop_images/GENTLE_FORMULAS.jpg"
+          }
+        },
+        "card_e6wXaq": {
+          "type": "card",
+          "settings": {
+            "card_title": "CONSCIOUS CARE",
+            "card_text": "Our skin has different needs at different times, so we've crafted multi-functional solutions that are good for you, the planet, and even your furry friends.",
+            "card_image": "shopify://shop_images/CONSCIOUS_CARE.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "card_7NitzC",
+        "card_ceN7mh",
+        "card_e6wXaq"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "icons_container_rbyeMT": {
+      "type": "icons-container",
+      "blocks": {
+        "icon_block_zPaimf": {
+          "type": "icon_block",
+          "settings": {
+            "icon_text": "VEGAN",
+            "icon_path": "shopify://shop_images/vegan_6b84da70-cb25-41d0-9a71-f647ff498229.png"
+          }
+        },
+        "icon_block_PBdYrb": {
+          "type": "icon_block",
+          "settings": {
+            "icon_text": "MULTI-FUNCTIONAL",
+            "icon_path": "shopify://shop_images/multi_functional_new.png"
+          }
+        },
+        "icon_block_MkrcWN": {
+          "type": "icon_block",
+          "settings": {
+            "icon_text": "MADE SAFE",
+            "icon_path": "shopify://shop_images/made_safe_acda6462-888a-4ecc-b94f-75f8acb069a2.png"
+          }
+        },
+        "icon_block_YbbpgX": {
+          "type": "icon_block",
+          "settings": {
+            "icon_text": "CRUELTY-FREE",
+            "icon_path": "shopify://shop_images/cruelty_free_new_4fa4f0a6-33f3-4808-a338-d963c9e1ca0e.png"
+          }
+        }
+      },
+      "block_order": [
+        "icon_block_zPaimf",
+        "icon_block_PBdYrb",
+        "icon_block_MkrcWN",
+        "icon_block_YbbpgX"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "16552648261e38805b": {
+      "type": "instagram",
+      "settings": {
+        "followus": "Follow us",
+        "title": "Meet our community",
+        "text": "<p>Join the #AminuLife and share your voice with us</p>",
+        "info": "<p>INSTAGRAM<br/>@aminu.life</p>",
+        "show_nesletter": true,
+        "newsletter-title": "Let’s be friends, over the internet!!",
+        "code": "<div id=\"insta-feed\"></div>"
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_nVp76j",
+    "unico_video_PGy4Wq",
+    "about-us-hero-section-import",
+    "about_us_image_with_text_f6UQG9",
+    "about_us_image_with_text_DqU4NE",
+    "about_us_image_with_text_imyLq6",
+    "about_us_our_founders_KbThtm",
+    "about_us_blogs_aW8x4g",
+    "scrolling_banner_eJFLgB",
+    "about_us_magazine_media_JzTeiM",
+    "column-cards-load",
+    "icons_container_rbyeMT",
+    "16552648261e38805b"
+  ]
+}

@@ -1,0 +1,473 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_ecQFGe": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>\n\n<style>\n#sm-widget-btn.snap_emi_txt {\nmargin-top:0px!important\n}\n</style>"
+      }
+    },
+    "odyssey_trunk_product_page_ug-import": {
+      "type": "odyssey_trunk_product_page_ug",
+      "blocks": {
+        "rotated_text_ywMkB8": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "fresh"
+          }
+        },
+        "rotated_text_aCqbhA": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "even-toned"
+          }
+        },
+        "rotated_text_CCh7Gr": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "rested"
+          }
+        },
+        "rotated_text_FNGXPn": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "resilient"
+          }
+        },
+        "varient_image_jnQkii": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/The_Bounce_Back_Kit.jpg"
+          }
+        },
+        "varient_image_Yqi7gD": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/4_Eye_Serum_ingredients_detail_1_1.jpg"
+          }
+        },
+        "varient_image_7jY48M": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/The_Bounce_Back_Kit_2.jpg"
+          }
+        },
+        "varient_image_UtUWn4": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/the_ones_that_make_it_happen_-_overnight_peel.jpg"
+          }
+        },
+        "varient_image_8q9gA4": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/Correcting_Concentrate_Ingredients_-_900x1200_344a07e5-96b6-4eb2-b519-8ddc4ddd46f3.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "rotated_text_ywMkB8",
+        "rotated_text_aCqbhA",
+        "rotated_text_CCh7Gr",
+        "rotated_text_FNGXPn",
+        "varient_image_jnQkii",
+        "varient_image_Yqi7gD",
+        "varient_image_7jY48M",
+        "varient_image_UtUWn4",
+        "varient_image_8q9gA4"
+      ],
+      "custom_css": [],
+      "settings": {
+        "collection": "copper-peptides",
+        "product": "the-bounce-back-kit",
+        "url": "HOME // THE BOUNCE BACK KIT",
+        "signTitle": "limited edition",
+        "bestVariant": 2,
+        "rating": 5,
+        "reviews": 268,
+        "moon_icon": "shopify://shop_images/am___pm.webp",
+        "subDiscription": "We are here to make your skin feel",
+        "phoneProductDiscription": "If your skin’s been through it — UV, humidity, that patchy post-summer thing you can’t quite name… and, well, life, this is the trio for you. It does the quiet repair work with a resurfacer to smooth, a brightener to even things out, & an undereye fixer to take care of the rest. It’s everything your skin needs to bounce back — no extras, no overthinking!",
+        "main_video": "",
+        "trunk_contain": "<p>This set contains: <br/><br/><a href=\"https://www.aminu.life/products/eye-serum\" target=\"_blank\" title=\"https://www.aminu.life/products/eye-serum\">Eye Serum (10 ml) x 1<br/></a><a href=\"https://www.aminu.life/products/correcting-concentrate\" target=\"_blank\" title=\"https://www.aminu.life/products/correcting-concentrate\">Correcting Concentrate (30 ml) x 1</a><br/><a href=\"https://www.aminu.life/products/overnight-peel\" target=\"_blank\" title=\"https://www.aminu.life/products/overnight-peel\">Overnight Peel (10 ml) x 1</a><br/><a href=\"https://www.aminu.life/products/vit-c-body-oil\" target=\"_blank\" title=\"https://www.aminu.life/products/vit-c-body-oil\"><br/></a></p>",
+        "save_text": "SAVE 25%",
+        "free_text": "<p>+ Get A Carry-All Pouch (worth Rs. 1250) Free!</p>"
+      }
+    },
+    "odyssey_trunk_accordion": {
+      "type": "odyssey_trunk_accordion",
+      "blocks": {
+        "how_to_use_NDGH6m": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Step_1_-_Cleanse.jpg",
+            "title": "<p><strong>STEP 1: </strong>Cleanse</p>",
+            "description": "<p><strong>HOW: </strong>Take a pump of product, gently massage onto wet skin, rinse off with water & pat dry.<br/><br/><strong>WHERE: </strong>Face & Neck<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+          }
+        },
+        "how_to_use_dtibGz": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Step_2_-_Eye_Serum_option.jpg",
+            "title": "<p><strong>STEP 2: </strong>Eye Serum</p>",
+            "description": "<p><strong>HOW: </strong>Gently tap <strong>one drop </strong>of product from the inner corner along the under-eye & up to the brow bone. Repeat for the other eye.<br/><br/><strong>WHERE: </strong>Swipe once under the eye, then above the brow, & apply the remaining serum on the eyelid for all-around care.<br/><br/><strong>WHEN: </strong>AM and/or PM</p>"
+          }
+        },
+        "how_to_use_YEjUFF": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Correcting_Concentrate_1.jpg",
+            "title": "<p><strong>STEP 3: </strong>Correcting Concentrate </p>",
+            "description": "<p><strong>HOW:</strong> Apply a few drops evenly on clean skin, with your fingertips. Avoid touching the glass dropper directly to your skin.<br/><br/><strong>WHEN: </strong>AM & PM<br/><br/><strong>WHERE: </strong>Face & Neck</p>"
+          }
+        },
+        "how_to_use_A9Cd4G": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Overnight_Peel_1.jpg",
+            "title": "<p><strong>STEP 4: </strong>Overnight Peel</p>",
+            "description": "<p><strong>HOW:</strong> Apply a few drops evenly on clean skin, with your fingertips. Avoid touching the glass dropper directly to your skin.<br/><br/><strong>WHEN: </strong>PM (1-2 times a week) <br/>*Do not apply correcting concentrate in the same routine<br/><br/><strong>WHERE: </strong>Face & Neck</p>"
+          }
+        },
+        "how_to_use_yw4EdR": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Bio_Retinol.png",
+            "title": "<p><strong>STEP 5: </strong>Moisturiser</p>",
+            "description": "<p><strong>HOW: </strong>Warm up one pump of product between your fingertips and massage it in using light pressure.<br/><br/><strong>WHERE: </strong>Face & Neck<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+          }
+        },
+        "how_to_use_cQwhrm": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Step_5_-_sunscreen.jpg",
+            "title": "<p><strong>STEP 6: </strong>Sunscreen (in day)</p>",
+            "description": "<p><strong>HOW: </strong>Take 3-4 drops of SPF and apply evenly over your face<br/><br/><strong>WHEN: </strong>AM<br/><br/><strong>WHERE: </strong>Face and Neck</p>"
+          }
+        },
+        "pro_tips_qq6Nfi": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_1_9ca74111-8a52-4cc8-9fe9-7085c095715a.png",
+            "description": "Brightening & fading discoloration take time, but the results are worth it! Don't forget to support your skin with good food, sleep, hydration, & some sun protection!"
+          }
+        },
+        "pro_tips_44GEXY": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_3_7c1ab022-750d-466a-bd24-221410c41c2d.png",
+            "description": "Do not use Correcting Concentrate & Overnight Peel in the same routine. Use Correcting Concentrate daily (AM + PM), swapping it out with Overnight Peel just 1-2 nights a week."
+          }
+        },
+        "pro_tips_g9AhLG": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_2_ddf88541-d1bd-46d2-bf13-e1fcead4f9ab.png",
+            "description": "If you're new to exfoliants, start with Overnight Peel 1x a week & gradually increase. Always follow up with moisturiser & SPF in the morning."
+          }
+        },
+        "why_you_need_this_dgb8hi": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Brighten, Smooth & Even Out",
+            "description": "From dark circles & puffiness to pigmentation, patchiness, & rough texture — it helps dial down the visible signs of skin stress. It evens out tone, fades discoloration, & leaves your face (under-eyes included) looking clearer, brighter & rested."
+          }
+        },
+        "why_you_need_this_TQDQ8G": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Rebalance What You Can’t",
+            "description": "Under the surface, this set helps reset your skin’s rhythm. It calms flare-ups, regulates oil, boosts hydration, and supports a healthy barrier — so your skin feels less reactive, more consistent, and just… steady."
+          }
+        },
+        "why_you_need_this_z6nbfQ": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Gentle, effective, always looking ahead.",
+            "description": "With regular use, this set strengthens your skin, reducing spots, unevenness, & breakouts— while maintaining its natural balance and health."
+          }
+        },
+        "product_details_n6ERB7": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN MOODS",
+            "description": "All skin types — dry, normal, combination, oily, including sensitive skin. Ideal for stressed or inconsistent skin that needs a reset."
+          }
+        },
+        "product_details_Qg3rEE": {
+          "type": "product_details",
+          "settings": {
+            "title": "GOOD FOR",
+            "description": "Post-sun recovery, skin fatigue, breakouts, uneven tone, hyperpigmentation, dullness & refining under eye concerns"
+          }
+        },
+        "product_details_8rjfqT": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN GOALS",
+            "description": "Brighter, calmer, smoother skin that looks well-rested, feels even, & stays clear through stress, travel, and seasonal changes."
+          }
+        },
+        "product_details_pEJQQY": {
+          "type": "product_details",
+          "settings": {
+            "title": "CARE THAT CARES",
+            "description": "Vegan, Cruelty-free, Multi-Functional, Science-Driven, Gentle-but-Effective"
+          }
+        }
+      },
+      "block_order": [
+        "how_to_use_NDGH6m",
+        "how_to_use_dtibGz",
+        "how_to_use_YEjUFF",
+        "how_to_use_A9Cd4G",
+        "how_to_use_yw4EdR",
+        "how_to_use_cQwhrm",
+        "pro_tips_qq6Nfi",
+        "pro_tips_44GEXY",
+        "pro_tips_g9AhLG",
+        "why_you_need_this_dgb8hi",
+        "why_you_need_this_TQDQ8G",
+        "why_you_need_this_z6nbfQ",
+        "product_details_n6ERB7",
+        "product_details_Qg3rEE",
+        "product_details_8rjfqT",
+        "product_details_pEJQQY"
+      ],
+      "name": "accordion",
+      "settings": {
+        "application_video_url": "https://cdn.shopify.com/videos/c/o/v/d9b57ad51fa74070bed126e360731375.mp4",
+        "why_you_need_video_des": "When your skin is acting up — or just not acting like itself — this is your bounce-back plan. Designed to correct the visible signs of damage while preventing new ones from settling in, it gives targeted results without overwhelming the skin — It’s not just a reset, it’s reinforcement.",
+        "carousel_title": "<p><strong>STEP 1: </strong>Cleanse</p>",
+        "carousel_description": "<p><strong>HOW: </strong>Take a pump of product, gently massage onto wet skin, rinse off with water & pat dry.<br/><br/><strong>WHERE: </strong>Face & Neck<br/><br/><strong>WHEN: </strong>AM and PM</p>"
+      }
+    },
+    "ug-eye-scrum-pairs-well": {
+      "type": "ug-eye-scrum-pairs-well",
+      "blocks": {
+        "product_pairs_well_7r8H6V": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-long-game-set"
+          }
+        },
+        "product_pairs_well_mYRYXT": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-core-four"
+          }
+        },
+        "product_pairs_well_nDHy8g": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "double-cleansing-duo"
+          }
+        }
+      },
+      "block_order": [
+        "product_pairs_well_7r8H6V",
+        "product_pairs_well_mYRYXT",
+        "product_pairs_well_nDHy8g"
+      ],
+      "settings": {
+        "title": "Other Ritual Sets"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "full_width": true
+      }
+    },
+    "unico-landing-More-in-one-import": {
+      "type": "unico-landing-More-in-one",
+      "blocks": {
+        "feature_JTEKTg": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Melting_Balm_Cleanser_copy_2.png",
+            "title": "Melting Balm Cleanser",
+            "description": "Your skin’s first defense against oil-based impurities, dirt, and makeup, it works well solo or as the first step of a double cleanse."
+          }
+        },
+        "feature_fNVqJY": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Eye_Serum.png",
+            "title": "Eye Serum",
+            "description": "Thoughtfully crafted to nourish & protect, this is the daily & travel essential your eyes will thank you for."
+          }
+        },
+        "feature_hn4APq": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Radiance_Face_Oil_3.png",
+            "title": "Radiance Face Oil",
+            "description": "This high-powered moisturiser will leave your skin glowing, soft, and radiant every time. It also acts as the perfect base under makeup!"
+          }
+        },
+        "feature_Vhq4ax": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Vit_c_Body_Oil__2.png",
+            "title": "Vitamin C Body Oil",
+            "description": "As perfect for the beach as the mountains, it brightens, revitalizes, and tones the skin in one go, keeping it smooth & healthy!"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JTEKTg",
+        "feature_fNVqJY",
+        "feature_hn4APq",
+        "feature_Vhq4ax"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "A trunk full of treasures!",
+        "description": "",
+        "underLineText": "Simply put, it's an investment in your skin health for now and for the long run."
+      }
+    },
+    "unico-landing-community-says-import": {
+      "type": "unico-landing-community-says",
+      "blocks": {
+        "blogs_MKcxz6": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ankita_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/534b291c72fc47599764c0de5d205f6a.mp4",
+            "review_title": "copper peptide is something you should include",
+            "review_summary": "If you're serious about long term skin health.",
+            "review_author": "Ankita"
+          }
+        },
+        "blogs_tpRTGB": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ruchika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f20417e2fe4647329b3257fbc2e64393.mp4",
+            "review_title": "The best investment",
+            "review_summary": "Treat the signs of ageing even before they start appearing.",
+            "review_author": "Ruchika"
+          }
+        },
+        "blogs_Xay8kG": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/prarthanajagan_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/02ca921dc7764fcc86a0a8c2195b1174.mp4",
+            "review_title": "It will sit well with your skin",
+            "review_summary": "This serum has a lot of skin loving ingredients",
+            "review_author": "Prarthanajagan"
+          }
+        },
+        "blogs_WQ9w8N": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mihika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/ea41fe6715cd41988031f35974bd11be.mp4",
+            "review_title": "Incredible benefits all in one bottle.",
+            "review_summary": "Makes my skin barrier firmer, hydrated, and reduces the texture on it.",
+            "review_author": "Mihika"
+          }
+        },
+        "blogs_T3Map3": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mahek_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/29034781ee224cb8b6e258f433b4ad68.mp4",
+            "review_title": "I finished more than half the bottle",
+            "review_summary": "This serum has been an incredible experience for me",
+            "review_author": "Mahek"
+          }
+        },
+        "blogs_7n8XxW": {
+          "type": "blogs",
+          "settings": {
+            "video_url": "",
+            "review_title": "",
+            "review_summary": "",
+            "review_author": ""
+          }
+        }
+      },
+      "block_order": [
+        "blogs_MKcxz6",
+        "blogs_tpRTGB",
+        "blogs_Xay8kG",
+        "blogs_WQ9w8N",
+        "blogs_T3Map3",
+        "blogs_7n8XxW"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "See What Our Community Is Saying!"
+      }
+    },
+    "unico-landing-how-works-import": {
+      "type": "unico-landing-how-works",
+      "disabled": true,
+      "settings": {
+        "title": "Why You Need This",
+        "description": "The Odyssey Trunk is your ultimate skincare companion, thoughtfully curated to deliver top-to-toe care with maximum benefits. \n<br><br>\n<b>New year, fresh look, same beloved products!</b><br>\nAs we step into 2025, we’re leveling up & taking you along on the journey. With the Odyssey Trunk, be among the first to experience our refreshed look! \n<br><br>\n<b>Everything You Need, Anywhere You Go</b><br>\nCrafted to suit all skin moods, you can cleanse with the Melting Balm Cleanser, hydrate and brighten with the Eye Serum, nourish your face with the Radiance Face Oil, and the body with the Vitamin C Body Oil.\n<br><br>\n<b>Ready. Set. Glow.</b><br>\nWith the Aminu Passport to help you understand your products & double as a travel checklist, and the Glow-Trotter luggage tag, you will be prepared, no matter where life takes you.",
+        "more_text": "",
+        "video_poster_image": "shopify://shop_images/cover_picture_trunk_5a075d66-333b-4d84-aeda-7b7c38037857.jpg",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/d679171f9f534eaca12e1adbaaa50e0c.mp4"
+      }
+    },
+    "unico-landing-easy-to-use-import": {
+      "type": "unico-landing-easy-to-use",
+      "disabled": true,
+      "settings": {
+        "heading": "Super Easy to Use",
+        "image": "shopify://shop_images/5_Odyssey_Trunk.jpg",
+        "how": "<p><strong>WHEN:</strong> AM & PM, depending on your skin's mood & needs<br/><br/><strong>ORDER OF APPLICATION</strong> </p><p>Cleanse -&gt; Apply Eye Serum -&gt; Radiance Face Oil -&gt; Vit C Body Oil<br/><br/>For detailed instructions on how to use the cleanser, <a href=\"https://www.aminu.life/products/melting-balm-cleanser\" target=\"_blank\">click below:</a> </p>",
+        "where": "",
+        "when": "",
+        "hiddenText": "<p><strong>PRO-TIP:</strong> </p><p>When using the Melting Balm Cleanser, don’t forget to massage the cleansing balm near your hairline and along your jawline, as these are often-overlooked areas.</p><p>The Eye Serum can be used under eye makeup to keep skin hydrated & prevent creasing/ caking & the Radiance Face Oil can function as a primer too. </p><p>Apply the Vit C Body Oil before shaving for a smooth glide and a closer shave!</p>",
+        "readMore": "Read More",
+        "readLess": "Read Less"
+      }
+    },
+    "172665683430a3f5a4": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_AJyPkx": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_AJyPkx"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_ecQFGe",
+    "odyssey_trunk_product_page_ug-import",
+    "odyssey_trunk_accordion",
+    "ug-eye-scrum-pairs-well",
+    "main",
+    "unico-landing-More-in-one-import",
+    "unico-landing-community-says-import",
+    "unico-landing-how-works-import",
+    "unico-landing-easy-to-use-import",
+    "172665683430a3f5a4"
+  ]
+}

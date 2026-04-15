@@ -1,0 +1,321 @@
+<style>
+.before-after-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+
+  /* Desktop Top (default = true) */
+  {% if product.metafields.custom.show_before_after_border != false %}
+    border-top: 1px solid #000000;
+  {% else %}
+    border-top: none;
+  {% endif %}
+
+  /* Desktop Bottom (default = true) */
+  {% if product.metafields.custom.show_before_after_bottom_border != false %}
+    border-bottom: 1px solid #000000;
+  {% else %}
+    border-bottom: none;
+  {% endif %}
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .before-after-section {
+
+    /* Mobile Top (default = true) */
+    {% if product.metafields.custom.show_before_after_border != false %}
+      border-top: 0.5px solid #000000;
+    {% else %}
+      border-top: none;
+    {% endif %}
+
+    /* Mobile Bottom (default = true) */
+    {% if product.metafields.custom.show_before_after_bottom_border != false %}
+      border-bottom: 0.5px solid #000000;
+    {% else %}
+      border-bottom: none;
+    {% endif %}
+
+  }
+}
+
+    .before-after-heading {
+      color: #000000;
+      text-align: left;
+      font-size: 40px;
+      line-height: 40px;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 430px) {
+      .before-after-heading {
+        font-size: 30px !important;
+      }
+    }
+
+    /* Slider Container */
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0;
+      gap: 0.5rem;
+    }
+
+    /* Tablet Optimization (640px–1024px) */
+    @media (min-width: 640px) and (max-width: 1024px) {
+      .slider-wrapper {
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 0 1rem;
+        gap: 1rem;
+      }
+
+      .main-slide-wrapper {
+        width: 360px;
+        height: 360px;
+      }
+
+      .side-img {
+        width: 180px;
+        height: 180px;
+      }
+
+      .nav-btn {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .slider-wrapper {
+        padding: 0 2.5rem;
+        gap: 1rem;
+      }
+    }
+
+    /* Nav Buttons */
+    .nav-btn {
+      border: 1px solid black;
+      cursor: pointer;
+      z-index: 10;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s ease;
+          border-radius: 4px !important;
+    }
+
+    .nav-btn:hover {
+      background-color: #f5f5f5;
+    }
+
+    @media (max-width: 639px) {
+      .nav-btn {
+        border: 1px solid black;
+        padding: 0.3rem;
+        height: 26px;
+        width: 26px;
+      }
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Slides */
+    .slides {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .desktop-slides {
+      display: none;
+    }
+
+    .mobile-slides {
+      display: block;
+    }
+
+    @media (min-width: 640px) {
+      .desktop-slides {
+        display: flex;
+      }
+      .mobile-slides {
+        display: none;
+      }
+    }
+
+    /* Images */
+    .side-img {
+      position: relative;
+      opacity: 0.4;
+      width: 256px;
+      height: 256px;
+    }
+
+    .slide-img {
+      object-fit: cover;
+      border-radius: 4px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .main-slide-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    @media (min-width: 640px) {
+      .main-slide-wrapper {
+        width: 480px;
+        height: 480px;
+      }
+    }
+
+    .main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+</style>
+
+{% if product.metafields.custom.before_and_after_section_hide == true %}
+  <section class="before-after-section">
+    <div class="ug-container">
+      <h2 class="before-after-heading">
+        {{ product.metafields.custom.comparison_slider_title }}
+      </h2>
+
+      <div class="slider-wrapper">
+        <button id="prevBtn" class="nav-btn prev-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+            class="icon"
+          >
+            <path d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+
+        <!-- Desktop Slides -->
+        <div class="slides desktop-slides">
+          <div class="side-img">
+            <img id="leftImg" src="" alt="Left Preview" class="slide-img">
+          </div>
+
+          <div class="main-slide-wrapper">
+            <img id="desktopMainImg" src="" alt="Main Slide" class="main-img">
+          </div>
+
+          <div class="side-img">
+            <img id="rightImg" src="" alt="Right Preview" class="slide-img">
+          </div>
+        </div>
+
+        <!-- Mobile Slides -->
+        <div class="slides mobile-slides">
+          <div class="main-slide-wrapper">
+            <img id="mobileMainImg" src="" alt="Main Slide" class="main-img">
+          </div>
+        </div>
+
+        <button id="nextBtn" class="nav-btn next-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+            class="icon"
+          >
+            <path d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const IMAGE_URLS = [
+        {% for image in product.metafields.custom.comparison_images.value %}
+          "{{ image | img_url: '800x' }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ];
+
+      let currentIndex = 0;
+
+      const desktopMainImg = document.getElementById('desktopMainImg');
+      const mobileMainImg = document.getElementById('mobileMainImg');
+      const leftImg = document.getElementById('leftImg');
+      const rightImg = document.getElementById('rightImg');
+      const mainWrappers = document.querySelectorAll('.main-slide-wrapper');
+
+      function updateImages() {
+        const leftIndex = (currentIndex - 1 + IMAGE_URLS.length) % IMAGE_URLS.length;
+        const rightIndex = (currentIndex + 1) % IMAGE_URLS.length;
+
+        if (desktopMainImg) desktopMainImg.src = IMAGE_URLS[currentIndex];
+        if (mobileMainImg) mobileMainImg.src = IMAGE_URLS[currentIndex];
+        if (leftImg) leftImg.src = IMAGE_URLS[leftIndex];
+        if (rightImg) rightImg.src = IMAGE_URLS[rightIndex];
+      }
+
+      document.getElementById('prevBtn').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + IMAGE_URLS.length) % IMAGE_URLS.length;
+        updateImages();
+      });
+
+      document.getElementById('nextBtn').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % IMAGE_URLS.length;
+        updateImages();
+      });
+
+      let startX = 0;
+      let isDragging = false;
+
+      function handleSwipe(endX) {
+        const diff = endX - startX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            currentIndex = (currentIndex - 1 + IMAGE_URLS.length) % IMAGE_URLS.length;
+          } else {
+            currentIndex = (currentIndex + 1) % IMAGE_URLS.length;
+          }
+          updateImages();
+        }
+      }
+
+      mainWrappers.forEach(wrapper => {
+        wrapper.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        wrapper.addEventListener('touchend', e => handleSwipe(e.changedTouches[0].clientX));
+        wrapper.addEventListener('mousedown', e => {
+          startX = e.clientX;
+          isDragging = true;
+        });
+        wrapper.addEventListener('mouseup', e => {
+          if (isDragging) {
+            handleSwipe(e.clientX);
+            isDragging = false;
+          }
+        });
+        wrapper.addEventListener('mouseleave', () => isDragging = false);
+      });
+
+      updateImages();
+    </script>
+  </section>
+{% endif %}

@@ -1,0 +1,109 @@
+{% schema %}
+{
+  "name": "More-in-one Serum",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+    },
+     {
+      "type": "text",
+      "id": "underLineText",
+      "label": "Under Line Text",
+    },
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feature Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Feature Description",
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "More-in-one Serum",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section
+  class="bg-[#F6F6F6] c-border sm:pt-12 pt-6 sm:pb-16 pb-8"
+>
+  <div class="lg:max-w-[1350px] max-w-[90%] m-auto">
+    <h2 class="sm:text-[44px] text-[32px] sm:leading-[44px] leading-[42px] font-[600] mb-4">
+      {{ section.settings.heading }}
+    </h2>
+
+    <h2 class="sm:text-[20px] text-[14px] font-[400] sm:leading-[32px] leading-[19px] mb-4 w-full">
+      {{ section.settings.description }}
+    </h2>
+
+    <p
+      class="sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px] text-[#0066CB] font-[600] mb-8 italic underline"
+    >
+      {{ section.settings.underLineText }}
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for block in section.blocks %}
+        <div class="flex">
+          <div class="mr-4 w-[60px] h-[60px]">
+            <img
+              src="{{ block.settings.image | image_url }}"
+              alt="{{ block.settings.title }}"
+              class="object-cover"
+              width="100%"
+              height="100%"
+            >
+          </div>
+          <div>
+            <h3 class="text-[20px] sm:leading-[27px] leading-[24px] font-[500]">
+              {{ block.settings.title }}
+            </h3>
+            <p class="sm:text-[14px] text-[13px] sm:leading-[21px] leading-[19px] font-[300] mt-2">
+              {{ block.settings.description }}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<style>
+    .c-border {
+    border-bottom: 0.2px solid black;
+    border-top: 0.2px solid black;
+  }
+
+  @media (min-width: 640px) {
+    .c-border {
+      border-bottom: 0.5px solid black;
+        border-top: 0.5px solid black;
+
+    }
+  }
+</style>

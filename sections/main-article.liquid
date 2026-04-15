@@ -1,0 +1,657 @@
+{% if section.settings.show_featured_image and article.image != blank %}
+  <div class="article-image article-image--large align-center {% unless section.settings.full_width_image %}container{% endunless %}">
+    {% if section.settings.featured_image_height == 'natural' %}
+      <div class="page-header page-header--with-background {% if section.settings.enable_title_overlay %}image-overlay image-overlay--bg-{{ section.settings.overlay_style }}{% endif %}">
+        <div class="rimage-background-wrapper lazyload--placeholder">
+          <div
+            class="rimage-outer-wrapper rimage-background lazyload fade-in"
+            data-bgset="{% render 'bgset', image: article.image %}"
+            data-sizes="auto"
+            data-parent-fit="cover"
+          >
+            <div
+              class="rimage-wrapper"
+              style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%"
+            ></div>
+            <noscript>
+              <div
+                class="rimage-wrapper"
+                style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%"
+              >
+                <img
+                  src="{{ article.image | img_url: '1024x1024' }}"
+                  alt="{{ article.image.alt | escape }}"
+                  class="rimage__image"
+                >
+              </div>
+            </noscript>
+          </div>
+        </div>
+
+        {% if section.settings.enable_title_overlay %}
+          <div
+            class="overlay-text overlay--v-center overlay--h-center image-overlay__over"
+            data-cc-animate
+            data-cc-animate-delay="0.2s"
+          >
+            <div class="overlay-text__inner">
+              <div class="overlay-text__text">
+                <h1 class="overlay-text__title super-large-text">{{ article.title | escape }}</h1>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+    {% else %}
+      <div class="page-header page-header--with-background {% if section.settings.enable_title_overlay %}image-overlay image-overlay--bg-{{ section.settings.overlay_style }}{% endif %} page-header--padded-{{ section.settings.featured_image_height }} rimage-wrapper">
+        <div
+          class="rimage-background lazyload fade-in"
+          data-bgset="{% render 'bgset', image: article.image %}"
+          data-sizes="auto"
+          data-parent-fit="cover"
+        ></div>
+
+        {% if section.settings.enable_title_overlay %}
+          <div
+            class="overlay-text overlay-text--inline overlay--v-center overlay--h-center image-overlay__over"
+            data-cc-animate
+            data-cc-animate-delay="0.2s"
+          >
+            <div class="overlay-text__inner">
+              <div class="overlay-text__text">
+                <h1 class="overlay-text__title super-large-text">{{ article.title | escape }}</h1>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="overlay-text overlay-text--inline">{% comment %}For padding{% endcomment %}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if section.settings.enable_title_overlay == false
+  or section.settings.show_featured_image == false
+  or article.image == blank
+%}
+  <div class="" data-cc-animate>
+    <div class="blog-tags hidden-mobile">
+      <div class="container">
+        <div class="blog-tags-list ">
+          {% for tag in blog.all_tags %}
+            <a
+              href="{{ tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first }}"
+              class="{% if current_tags contains tag %} tag--active{% endif %}"
+            >
+              {{- tag -}}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class=" blog-header">
+      <div class="container">
+        <div class="subtitle">
+          <div class="breadcrumb">
+            {% render 'breadcrumbs' %}
+          </div>
+          <div class="article-title">
+            <h2 class="h2-styles">{{ article.title | escape }}</h2>
+          </div>
+          <div class="article-meta">
+            <span class="iconmeta time">
+              {% if section.settings.show_date %}
+              {% endif %}
+              {% if section.settings.show_author %}
+                <span class="author">{{ article.author }}</span>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- /.pagetitle -->
+{% endif %}
+
+<div class="article">
+  <div class="">
+    <div class="article-left blogs-container">
+      <div class="suggested-text spaced-row" data-cc-animate>
+        {{ article.content }}
+      </div>
+    </div>
+
+    <div class="disclaimerDiv">
+      <span
+        style=" color: #8B8B8B; font-style: italic   "
+        class="responsive-text md:text-[12px] text-[11px] md:leading-[20px] leading-[15px];"
+      >
+        {{ article.metafields.custom.disclaimer }}
+      </span>
+    </div>
+
+    <div class="article-right related-articles">
+      {% assign related_posts = '' %}
+      {% assign current_tag = '' %}
+      {% for tag in article.tags %}
+        {% assign current_tag = tag %}
+      {% endfor %}
+      {% assign count = 0 %}
+      {% for article in blog.articles %}
+        {% if article.tags contains current_tag %}
+          {% if count < 3 %}
+            {% capture post %}
+      <li > <div class="related-article "><span class="meta-time">  {{ article.published_at | date: "%Y-%m-%d" }}</span>
+                  <h2 class="article-title h6-style"> {{ article.title | link_to: article.url }} </h2>
+            <div class="rte cf suggested-para">
+              {{ article.excerpt_or_content | strip_html | truncate: 150}}
+            </div>
+      </div>
+      </li>
+    {% endcapture %}
+            {% assign related_posts = related_posts | append: post %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% if related_posts.size > 0 %}
+        <h2 class="suggested-title">Suggested Reads</h2>
+        <ul class="bg-related-article">
+          {{ related_posts }}
+        </ul>
+      {% else %}
+        No related posts!
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="pagination-row pagination-row-tabular left-link-blog" data-cc-animate>
+    <div class="inner">
+      <span class="prev prev-style">
+        {% if blog.previous_article %}
+          <a href="/blogs/collections" class="eee run_wild-font"
+            ><span class="icon--small icon-natcol">{% render 'svg-chevron-left' %}</span> <span>Back to Blogs</span></a
+          >
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+<!-- /.article -->
+
+{% if blog.comments_enabled? %}
+  {% paginate article.comments by 50 %}
+    {% if article.comments != blank %}
+      <div id="comments" class="container cf padded-row" data-cc-animate>
+        <h4 class="align-centre">{{ 'blogs.comments.title' | t }}</h4>
+
+        {% comment %} Show a comment that was *just* submitted {% endcomment %}
+        {% if comment and comment.status != 'published' %}
+          <div class="comment spaced-row">
+            <p class="author">{{ 'blogs.comments.author_meta_said' | t: author: comment.author }}</p>
+            <div class="text">{{ comment.content }}</div>
+          </div>
+        {% endif %}
+
+        {% comment %} Loop through approved comments: {% endcomment %}
+        {% for comment in article.comments %}
+          <div class="comment spaced-row {% if forloop.first %}first{% endif %}">
+            <p class="author">{{ 'blogs.comments.author_meta_said' | t: author: comment.author }}</p>
+            <div class="text">{{ comment.content }}</div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- /#comments -->
+
+      <div class="container pagination-row" data-cc-animate>{% render 'pagination-control', paginate: paginate %}</div>
+    {% endif %}
+  {% endpaginate %}
+
+  <div id="template" class="form container container--reading-width" data-cc-animate>
+    {% form article %}
+      <h4 id="add-comment-title">{{ 'blogs.comments.form_title' | t }}</h4>
+
+      {% if form.posted_successfully? %}
+        <p>{{ 'blogs.comments.success' | t }}</p>
+      {% endif %}
+
+      {% if blog.moderated? %}
+        <p>{{ 'blogs.comments.moderated' | t }}</p>
+      {% endif %}
+
+      {% if form.errors %}
+        <ul class="errors">
+          {% for field in form.errors %}
+            <li>
+              {{ field | capitalize }}
+              {{ form.errors.messages[field] }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div class="input-row {% if form.errors contains 'author' %}has-error{% endif %}">
+        <label for="comment_author">{{ 'blogs.comments.name' | t }}</label>
+        <input type="text" id="comment_author" name="comment[author]" size="40" value="{{form.author}}">
+      </div>
+      <div class="input-row {% if form.errors contains 'email' %}has-error{% endif %}">
+        <label for="comment_email">{{ 'blogs.comments.email' | t }}</label>
+        <input type="text" id="comment_email" name="comment[email]" size="40" value="{{form.email}}">
+      </div>
+      <div class="input-row {% if form.errors contains 'body' %}has-error{% endif %}">
+        <label for="comment_body">{{ 'blogs.comments.message' | t }}</label>
+        <textarea id="comment_body" name="comment[body]" cols="40" rows="5">{{form.body}}</textarea>
+      </div>
+
+      <div class="action_bottom">
+        <button type="submit" id="comment-submit" class="btn">{{ 'blogs.comments.post' | t }}</button>
+      </div>
+    {% endform %}
+  </div>
+  <!-- /.form -->
+{% endif %}
+
+{% render 'structured-data-article', article: article %}
+
+{% schema %}
+{
+  "name": "Article pages",
+  "class": "blogs-margin",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_tags",
+      "label": "Show article tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sharing_icons",
+      "label": "Show social sharing icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Featured image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_image",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "featured_image_height",
+      "label": "Height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Compact"
+        },
+        {
+          "value": "medium",
+          "label": "Small"
+        },
+        {
+          "value": "large",
+          "label": "Medium"
+        },
+        {
+          "value": "huge",
+          "label": "Large"
+        },
+        {
+          "value": "natural",
+          "label": "Natural"
+        }
+      ],
+      "default": "huge"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_title_overlay",
+      "label": "Show title over featured image",
+      "default": false
+    },
+    {
+      "id": "overlay_style",
+      "type": "select",
+      "label": "Overlay style",
+      "default": "shadow",
+      "options": [
+        {
+          "value": "full",
+          "label": "Tint"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        },
+        {
+          "value": "shadow",
+          "label": "Text shadow"
+        },
+        {
+          "value": "full image-overlay--bg-shadow",
+          "label": "Text shadow and tint"
+        },
+        {
+          "value": "no_background",
+          "label": "No background"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+      body.template-article .mob_only {
+        display: block;
+    }
+     body.template-article .blog-tags.hidden-mobile {
+        display: none;
+    }
+      body.template-article section.featureicon_rotating.features-area.isolate {
+        /* border-top: none !important; */
+    }
+      body.template-article .article .container {
+            display: flex;
+            padding: 0;
+            flex-direction: column;
+        }
+
+      body.template-article .article-left , body.template-article .article .container {
+        border: none !important;
+    }
+      body.template-article .container.cf {
+        max-width: 1280px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+      .blog-title.custom_hidden_bs.cc-animate-init.-in.cc-animate-complete {
+        display: none;
+    }
+
+       body.template-article .blog-header {
+        border: none;
+    }
+       body.template-article .article-left {
+        padding-left: 0 !IMPORTANT;
+    }
+      body.template-article .article-title h2 {
+         font-family: "Poppins" !important;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    line-height: 30px !important;
+    color: rgb(0, 0, 0);
+        max-width: 58%;
+    }
+      span.iconmeta.time span.author {
+        font-style: italic;
+    }
+
+    body.template-article li.breadcrumbs-list__item:last-child a:before {
+
+        font-size: 14px;
+    }
+    .icons_text_bs_ss p {
+        margin-bottom: 0;
+    }
+    .icons_text_bs_ss {
+        display: flex;
+        align-items: center;
+    }
+      .icons_text_bs_ss img {
+        margin-bottom: 0 !important;
+    }
+
+      body.template-article span , body.template-article p , body.template-article h2 , body.template-article h3 , body.template-article a , body.template-article li {
+        font-family: Poppins;
+      }
+      span.iconmeta.time {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+      .article-left p span {
+        margin-top: 0;
+        color: #000;
+        font-family: "Poppins";
+        font-size: 18px !important;
+        font-weight: 300;
+        line-height: 30px !important;
+    }
+      @media (max-width: 640px) {
+          .article-left p span {
+        margin-top: 0;
+        color: #000;
+        font-family: "Poppins";
+        font-size: 15px !important;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 25px !important;
+    }
+      }
+      .article-left img {
+        float: none;
+        margin-left: 0 !important;
+    }
+      .article .article-right.related-articles {
+            width: 95%;
+        }
+      {% comment %} .article-right.related-articles {
+        border-radius: 0.5rem;
+        background: #F2F2F2;
+    } {% endcomment %}
+    .bg-related-article{
+
+        background: #F2F2F2;
+        padding-top:25px ;
+              padding-bottom:5px ;
+
+        padding-left:20px;
+        padding-right:20px;
+       border-radius: 0.5rem;
+    }
+    .article-right{
+       border-radius: 0.5rem;
+    }
+      .related-article span.meta-time {
+        display: none;
+    }
+      .article-right.related-articles li {
+        padding-bottom: 1rem !important;
+        border-bottom: 0.2px solid #cfcfcf;
+        margin-bottom:25px;
+    }
+      .template-article .blog-header .article-title {
+
+        margin-top: 16px;
+    }
+
+      h2.h1.run_wild-font span {
+        font-family: 'a Accountant Signature', sans-serif;
+    }
+      .article-left p {
+        font-weight: 300;
+          font-size: 18px;
+        line-height: 30px;
+    }
+      .related-article .rte.cf {
+            line-height: normal !important;
+            font-weight: 300;
+        }
+    @media only screen and (max-width: 768px) {
+    .related-article .rte.cf {
+            font-size: 13px !important;
+            line-height: normal !important;
+            font-weight: 300;
+        }
+
+      .article-left p , .article-left li {
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 25px;
+    }
+
+      body.template-article.cc-animate-enabled.jdgm-buyer-badge--removed.jdgm--leex-script-loaded .container.cf {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+      body.template-article .article {
+        border: none;
+    }
+      .template-article .blog-header .article-title {
+        margin-top: 1rem;
+    }
+      body.template-article .article-title h2 {
+        max-width: 100%;
+        color: #000;
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 600;
+            line-height: 24px !important;
+            font-size:18px !important;
+
+    }
+        body.template-article .subtitle {
+        padding-left: 0 !important;
+              border: none !important;
+    }
+      body.template-article .blog-title.custom_hidden_bs {
+        display: none;
+    }
+      body.template-article nav.breadcrumbs {
+        padding-left: 0;
+    }
+      body.template-article .article-left ol {
+        margin-left: 22px;
+    }
+      body.template-article section.featureicon_rotating.features-area.isolate {
+            border-top: 1px solid black !important;
+    }
+      .pagination-row.pagination-row-tabular > .inner > * {
+            display: block;
+            width: 100%;
+            order: 1;
+        }
+    }
+      @media (max-width: 640px) {
+      .responsive-text {
+        font-size: 11px !important;
+      line-height: 15px !important;
+        font-family: "Poppins";
+      }
+    }
+
+    .disclaimerDiv {
+      margin-bottom:40px !important;
+      max-width: 95% !important;
+
+    }
+
+    .responsive-text{
+      line-height: 20px !important;
+        font-size: 12px !important;
+      font-family: "Poppins";
+    }
+
+    .suggested-title{
+      font-family: "Poppin"s;
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 28px;
+    color: rgb(0, 0, 0);
+    text-transform:"uppercase"
+    }
+
+    .article-title{
+          font-family: "Poppin"s;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 23px;
+    color: rgb(0, 0, 0);
+    }
+
+    .suggested-text{
+   font-family: "Poppin"s;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: rgb(0, 0, 0);
+    }
+
+    .left-link-blog{
+    text-align: start !important;
+    }
+    .blogs-margin{
+    margin-top:25px;
+    margin-bottom:20px;
+    }
+
+   .article-left h3 span{
+    font-family: "Poppins" !important;
+    font-weight: 600 !important;
+    font-size: 25px !important;
+    line-height: 30px;
+    color: rgb(0, 0, 0);
+  }
+  .article-left ul {
+    list-style-type: disc !important;
+    list-style-position: outside;
+    padding-left: 22px;
+  }
+
+
+
+  .article-left li {
+    display: list-item !important;
+  }
+
+  .suggested-para{
+    font-family: "Poppins" !important;
+    font-weight: 300 !important;
+    font-size: 16px !important;
+    line-height: 30px;
+    color: rgb(0, 0, 0);
+  }
+  .prev-style a span{
+    font-family: "Poppins" !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    color: #689fff !important;
+  }
+
+  .blog-tags-list {
+    display: none !important;
+  }
+</style>

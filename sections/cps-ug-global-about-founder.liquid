@@ -1,0 +1,217 @@
+<section
+  id="founder"
+  style="background-color: {{ product.metafields.custom.primary_brand_color | default: '#F9EBDA' }};"
+  class="d-border"
+>
+  <div class="ug-container">
+    <h2 class="founder-heading">
+      {{ product.metafields.custom.about_founder_title }}
+    </h2>
+    <div class="founder-container">
+      <!-- Founder Image + Heading -->
+      <div class="founder-image-block">
+        <img
+          src="{{ product.metafields.custom.founder_image }}"
+          alt="Founder"
+          class="founder-image"
+        >
+      </div>
+
+      <!-- Founder Text Content -->
+      <div class="founder-text-block">
+        <div class="custom-style-para-founder">
+          <p>
+            {{ product.metafields.custom.about_founder_description | metafield_tag }}
+          </p>
+        </div>
+        <div class="founder-name-wrapper">
+          <span class="founder-name">
+            {{ product.metafields.custom.founder_name }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* General styles */
+  h2, span {
+    font-family: 'Poppins';
+  }
+
+
+  .founder-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    .founder-container {
+      flex-direction: row;
+      gap: 9rem;
+    }
+  }
+
+  /* Founder Image + Heading */
+  .founder-image-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    order: 1;
+    text-align: left;
+  }
+
+  @media (min-width: 1024px) {
+    .founder-image-block {
+      order: 2;
+      justify-content: flex-end;
+      text-align: left; /* Desktop: heading left aligned */
+    }
+  }
+
+  .founder-heading {
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  @media (min-width: 640px) {
+    .founder-heading {
+      font-size: 36px;
+      line-height: 42px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .founder-heading {
+      font-size: 44px;
+      line-height: 50px;
+    }
+  }
+
+  .founder-image {
+    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (min-width: 640px) {
+    .founder-image {
+      width: 280px;
+      height: 280px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .founder-image {
+      width: 320px;
+      height: 320px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .founder-image {
+      width: 360px;
+      height: 360px;
+      margin-left: 0;
+    }
+  }
+
+  /* Founder Text Content */
+  .founder-text-block {
+    color: #000;
+    order: 2;
+  }
+
+  @media (min-width: 1024px) {
+    .founder-text-block {
+      order: 1;
+    }
+  }
+
+  .custom-style-para-founder p {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+  }
+
+  @media (min-width: 990px) {
+    .custom-style-para-founder p {
+      font-size: 18px !important;
+      line-height: 30px !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  .founder-name-wrapper {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .founder-name-wrapper {
+      margin-top: 1rem;
+    }
+  }
+
+  .founder-name {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 32px;
+    font-weight: 400;
+  }
+
+  @media (min-width: 640px) {
+    .founder-name {
+      font-size: 20px;
+    }
+  }
+
+  /* Optional border utility (used elsewhere in your theme) */
+      .d-border{
+
+  {% if product.metafields.custom.show_founder_top_border == true %}
+    border-top: 1px solid #000000;
+  {% else %}
+    border-top: none; 
+  {% endif %}
+
+  /* Desktop Bottom (default = true) */
+  {% if product.metafields.custom.show_founder_bottom_border != false %}
+    border-bottom: 1px solid #000000; 
+  {% else %}
+    border-bottom: 1px solid #000000; 
+  {% endif %}
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .d-border {
+
+    /* Mobile Top (default = false) */
+    {% if product.metafields.custom.show_founder_top_border == true %}
+      border-top: 0.5px solid #000000;
+    {% else %}
+      border-top: none; 
+    {% endif %}
+
+    /* Mobile Bottom (default = true) */
+    {% if product.metafields.custom.show_founder_bottom_border != false %}
+      border-bottom: 0.5px solid #000000; 
+    {% else %}
+      border-bottom: 0.5px solid #000000; 
+    {% endif %}
+
+  }
+}
+</style>
+
+<script src="{% render 'hs-cdn-script', filename: 'unico-global.js' %}" defer></script>

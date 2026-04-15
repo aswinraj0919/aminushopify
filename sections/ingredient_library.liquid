@@ -1,0 +1,2722 @@
+{% schema %}
+{
+  "name": "Ingredients Library",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_library_button",
+      "label": "Default Library Selected",
+      "default": "A"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Ingredient Section -->
+<section class="ug-container-ing">
+  <div>
+    <!-- Ingredient Library Header -->
+    <div class="text-center mb-4 mt-4">
+      <h2 class="heading-third sm:text-[24px] text-[18px]">Aminu Ingredient Library</h2>
+    </div>
+
+    <!-- Alphabetical Filter -->
+    <div class="flex flex-col items-center mb-8 sm:mt-10 mt-6">
+  <div class="flex lg:flex-row flex-wrap sm:gap-4 gap-[10px] mb-4 md:w-[60vw] w-full justify-center text-center">
+    {% assign alphabets = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z' | split: ',' %}
+    {% for letter in alphabets %}
+      <button
+        data-letter="{{ letter }}"
+        class="category-btn bg-white text-black sm:w-[40px] w-[22px] sm:h-[40px] h-[16px] sm:text-[24px] text-[14px] font-normal rounded-[3px] border-[1px] border-solid border-black flex items-center justify-center"
+        {% if letter == settings.default_library_button %}
+          id="default-category"
+        {% endif %}
+        onclick="showIngredients('{{ letter }}', this)"
+      >
+        {{ letter }}
+      </button>
+    {% endfor %}
+  </div>
+</div>
+  </div>
+
+  <section
+    id="ingredient-list"
+    class="grid grid-cols-2 lg:grid-cols-4 md:gap-10 gap-4 justify-center items-center"
+  ></section>
+
+  <div id="button-container" class="flex justify-center mt-4 mb-8 ">
+    <button
+      id="show-more-button"
+      class="bg-black mx-auto text-white px-2 py-1 rounded-[4px] sm:text-[24px] text-[14px] font-normal uppercase ug-btn-hover"
+    >
+      See More
+    </button>
+    <button
+      id="show-less-button"
+      class="bg-black mx-auto text-white px-2 py-1 rounded-[4px] sm:text-[24px] text-[14px] font-normal uppercase hidden ug-btn-hover"
+    >
+      See Less
+    </button>
+
+    <button
+      id="mobile-view-button"
+      class="block md:hidden bg-black mx-auto text-white px-2 py-1 rounded-[4px] sm:text-[24px] text-[14px] font-normal uppercase ug-btn-hover"
+    >
+      See More
+    </button>
+  </div>
+
+  <!-- Popup Modal for Mobile -->
+  <div
+    id="category-view"
+    tabindex="-1"
+    class="hidden fixed inset-0 z-50 flex justify-center items-center bg-[rgba(0,0,0,0.5)]"
+  >
+    <div
+      style="width: 100%; height: 100%; top: 1%;  overflow: scroll;"
+      class="relative bg-white rounded-lgmax-w-[1000px] w-full  max-h-[90vh] overflow-y-auto mt-16 pb-16 "
+    >
+      <!-- <nav class="breadcrumb container-sub ml-auto">
+        <a href="home.html">Home</a> <span>//</span> <span>Ingredients</span> <span>//</span>
+        <span id="selected-category"></span>
+      </nav> -->
+        <!-- <span
+        id="back-button"
+        style="size: 12px; color: #689FFF; margin-left: 20px; cursor: pointer;"
+      >
+        Back
+      </span> -->
+
+      <div id="back-button" class="sticky-back-button">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="24"
+    viewBox="0 96 960 960"
+    width="24"
+    fill="black"
+  >
+    <path d="M560 816 320 576l240-240 56 56-184 184 184 184-56 56Z" />
+  </svg>
+</div>
+
+      <div class="p-4 md:p-5 text-center ">
+        <div
+          class="grid grid-cols-2 lg:grid-cols-4 md:gap-10 gap-4 justify-center items-center "
+          id="mobile-ingredient-list"
+        >
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+  <!-- Popup Modal for Desktop -->
+  <div
+    id="popup-modal"
+    tabindex="-1"
+    class="hidden fixed inset-0 z-[9999] flex justify-center items-center bg-[rgba(0,0,0,0.5)]"
+  >
+    <div class="relative bg-white sm:rounded-[8px] rounded-[4px]  sm:max-w-[80vw] max-w-[85vw]   sm:p-4 p-2 ">
+      <button
+        type="button"
+        class="absolute top-0.5 right-0.5 text-gray-400 bg-black hover:text-gray-900 rounded-full text-sm sm:w-8 w-6 sm:h-8 h-6 ms-auto inline-flex justify-center items-center fix"
+        onclick="closeModal('popup-modal')"
+      >
+        <svg
+          class="sm:w-3 w-2 sm:h-3 h-2 "
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="fill"
+          viewBox="0 0 14 14"
+        >
+          <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-1 max-h-[70vh] overflow-y-auto">
+        <div class="flex flex-col md:flex-row">
+          <!-- Left Side -->
+          <div class="md:w-1/2  md:border-b md:border-b-0 md:border-r md:border-black custom-border">
+            <h2 id="modal-title" class="text-[24px]  font-[600] sm:mb-1 mb-2 sm:mt-0 mt-2"></h2>
+            <p id="modal-description" class="sm:mb-4 mb-2 sm:text-[16px] text-[14px] font-[300]"></p>
+            <img id="modal-image" src="" alt="Map" class="md:w-[304px] md:h-[200px] w-[196px] h-[128px] sm:mb-4 mb-2 ">
+            <h2 class="sm:text-[24px] text-[18px] font-[600]  sm:mb-1 ug-block ">FOUND INSIDE THE FORMULA OF</h2>
+            <span
+              class="data-found-inside-the-formula  sm:text-[16px] text-[14px] font-[300] ug-block "
+            ></span>
+          </div>
+          <!-- Right Side -->
+          <div class="md:w-1/2 md:ml-6">
+            <h2 class="sm:text-[24px] text-[18px] font-[600] sm:mb-1 mb-2">Origin</h2>
+            <p id="modal-found-inside" class="sm:mb-6 mb-3 sm:text-[16px] text-[14px] font-[300]">Sub-Saharan Region</p>
+            <h2 class="sm:text-[24px] text-[18px] font-[600] sm:mb-1 mb-2">Type of ingredient</h2>
+            <p id="modal-type-of-ingredient" class="sm:mb-6 mb-3 sm:text-[16px] text-[14px] font-[300]">Thickener</p>
+            <h2 class="sm:text-[24px] text-[18px] font-[600] sm:mb-1 mb-2">What it contains</h2>
+            <p id="modal-what-it-contains" class="sm:mb-6 mb-3 sm:text-[16px] text-[14px] font-[300]"></p>
+            <h2 class="sm:text-[24px] text-[18px] font-[600] sm:mb-1 mb-2">Why we chose it</h2>
+            <p id="modal-why-we-chose-it" class="sm:mb-6 mb-3 sm:text-[16px] text-[14px] font-[300]"></p>
+            <h2 class="sm:text-[24px] text-[18px] font-[600]  sm:mb-1 md:hidden block">Found inside the formula of</h2>
+                   <span
+              class="data-found-inside-the-formula  sm:text-[16px] text-[14px] font-[300] md:hidden block "
+            ></span>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+    .library_btn_active {
+      background: black !important;
+      color: white !important;
+    }
+    @media (min-width: 768px) {
+    #mobile-view-button {
+      display: none;
+    }
+  }
+    @media (max-width: 768px) {
+    #show-more-button {
+      display: none;
+    }
+  }
+  /* Make the button sticky */
+.sticky-back-button {
+  position: sticky;
+  top: 13px; 
+  left: 7px; 
+  /* z-index: 1000;  */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white; 
+}
+
+
+
+</style>
+
+<script>
+  function freezeBackground() {
+    document.body.classList.add('overflow-hidden');
+  }
+
+  function unfreezeBackground() {
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden'); // Hide the modal
+  } else {
+    console.error(`Modal with ID ${modalId} not found`);
+        modal.offsetHeight; // Trigger reflow to ensure state update
+  }
+}
+
+  document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    closeModal('category-view');
+  }
+    unfreezeBackground();
+
+});
+
+
+  
+function showIngredients(letter, button) {
+  const ingredientList = document.getElementById("ingredient-list");
+ const showMoreButton = document.getElementById("show-more-button");
+  const showLessButton = document.getElementById("show-less-button");
+
+  //phone
+  const mobileViewButton = document.getElementById("mobile-view-button");
+const categoryView = document.getElementById("category-view");
+const mobileIngredientList = document.getElementById("mobile-ingredient-list");
+    
+  const ingredients = ingredientData[letter] || [];
+  const initialLimit = 4; // Number of ingredients to show initially
+  let isShowingAll = false; // Track if all ingredients are shown
+
+  // Function to render ingredients based on the limit
+  function renderIngredients(limit, container) {
+    container.innerHTML = ""; // Clear content
+
+    ingredients.slice(0, limit).forEach(ingredient => {
+      const item = document.createElement("div");
+      item.className = "ingredient-item flex flex-col items-center text-center cursor-pointer";
+      item.onclick = () => openModal(ingredient); // Add click handler
+
+      item.innerHTML = `
+        <div class="mb-4 mx-auto sm:h-[200px] h-[100px] sm:w-[200px] w-[100px]">
+          <img src="${ingredient.img}" alt="${ingredient.name}" class="w-full h-full object-cover rounded-full" style="border:0.2px solid black;">
+        </div>
+        <h3 class="sm:text-[24px] text-[14px] font-light sm:leading-[30px] leading-[20px] uppercase">${ingredient.name}</h3>`;
+      container.appendChild(item);
+    });
+  }
+ // Function to toggle ingredients and buttons
+  function toggleIngredients(showAll) {
+    isShowingAll = showAll;
+    renderIngredients(isShowingAll ? ingredients.length : initialLimit, ingredientList);
+    showMoreButton.classList.toggle("hidden", isShowingAll); // Hide "Show More" if all items are shown
+    showLessButton.classList.toggle("hidden", !isShowingAll); // Hide "Show Less" if only a few items are shown
+  }
+
+  // Event listeners for the buttons
+  showMoreButton.onclick = () => toggleIngredients(true);
+  showLessButton.onclick = () => toggleIngredients(false);
+
+  // Render initial ingredients
+  renderIngredients(initialLimit, ingredientList);
+
+  // Update the active button style
+  const buttons = document.querySelectorAll('.category-btn');
+  buttons.forEach(btn => btn.classList.remove('library_btn_active'));
+  button.classList.add('library_btn_active');
+
+  // Open mobile view with all ingredients
+mobileViewButton.onclick = () => {
+  renderIngredients(ingredients.length, mobileIngredientList); // Render all in mobile modal
+  categoryView.classList.remove('hidden');
+};
+}
+
+
+// Load the default section on page load
+window.onload = function() {
+  const defaultLetter = '{{ settings.default_library_button }}' || 'A';
+  const defaultButton = document.querySelector(`[data-letter="${defaultLetter}"]`);
+  if (defaultButton) {
+    defaultButton.classList.add('library_btn_active');
+    showIngredients(defaultLetter, defaultButton);
+  }
+
+    // Add click listener to the back button for closing the popup
+  const backButton = document.getElementById('back-button');
+  const categoryView = document.getElementById('category-view');
+  backButton.onclick = () => closeModal('category-view');
+};
+
+function openModal(ingredient) {
+  const modal = document.getElementById('popup-modal');
+  document.getElementById('modal-title').innerText = ingredient.name || "";
+  document.getElementById('modal-description').innerText = ingredient.modal?.Description || "No description available";
+  document.getElementById('modal-image').src = ingredient.modal?.modalimg || "";
+  document.getElementById('modal-found-inside').innerText = ingredient.modal?.origin || "Not specified";
+  document.getElementById('modal-what-it-contains').innerText = ingredient.modal?.contains || "Not specified";
+  document.getElementById('modal-why-we-chose-it').innerText = ingredient.modal?.choose || "Not specified";
+  document.getElementById('modal-type-of-ingredient').innerText = ingredient.modal?.typeOfIngredient || "Unknown";
+const formulaElements = document.querySelectorAll('.data-found-inside-the-formula');
+
+formulaElements.forEach(el => {
+  const text = ingredient.modal?.formula || "Not specified";
+  const url = ingredient.modal?.link;
+
+  if (!url) {
+    el.innerText = text;
+    return;
+  }
+
+  el.innerHTML = `
+    <a href="${url}"
+       class="underline text-[#1E00FF]"
+       rel="noopener">
+      ${text}
+    </a>
+  `;
+});
+
+  // Show modal
+  modal.classList.remove('hidden');
+    freezeBackground();
+
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.classList.add('hidden');
+    unfreezeBackground();
+
+}
+
+  
+  const ingredientData = {
+  A: [
+    { name: "Acacia Senegal Gum", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acacia_Senegal_Gum.png", 
+      modal:{
+        Description:"Acacia Gum, also known as Arabic gum, is harvested from Acacia Senegal trees, supports sustainable livelihoods, and helps fight deforestation.",
+        origin:"Sub-Saharan Region",
+        contains:"It is a naturally occurring polysaccharide (complex molecule of sugar) with a mixture of potassium, magnesium, and calcium salts.",
+        choose:"It provides deep moisturization, natural thickening, and mineral-rich benefits for youthful skin.",
+        typeOfIngredient:" Thickener",
+        formula:"Creams and Cleansers",
+        link:"https://www.aminu.life",        
+        modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acacia_Senegal_Gum.jpg?v=1729581726",
+
+      }
+    },
+    { name: "Acai Berry", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acai_berry_eda7acc2-1bf6-4980-a2e3-d7d49f7bafa3.png", 
+     modal:{
+        Description:"Acai berry oil, rich in antioxidants, surpasses cranberries, raspberries, and blueberries. We use the oil extracted from premium-quality sustainably harvested berries.",
+        origin:"Brazil",
+        contains:"Acai berry oil is rich in Vitamins A, C, and E, anthocyanins, Omega 9, and essential fatty acids, plus phenolic acids and trace minerals.",
+        choose:"We chose acai berry oil for its rapid absorption, deep moisturizing, regeneration, and antioxidant protection.",
+        typeOfIngredient:"Antioxidant, Anti-inflammatory",
+        formula:"Radiance Face Oil",
+        link:"", 
+         modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acai_berry.jpg",
+
+      }
+    },
+    { name: "Acetyl Glucosamine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl_Glucosamine.png",
+      modal:{
+        Description:"It boosts hyaluronic acid production, improves skin hydration, and reduces pigmentation when combined with niacinamide.",
+        origin:"East Asia",
+        contains:"It is an amide derivative of monosaccharide glucose (sugar molecule).",
+        choose:"We combined it with niacinamide to boost the formula’s pigmentation and dark spots fading powers.",
+        typeOfIngredient:"Brightener",
+        formula:"Correcting Concentrate",
+        link:"",        
+        modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl_Glucosamine.jpg",
+        
+      }
+    },
+    { name: "Acetyl Glycyl Beta-Alanine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl-glycyl-beta-alanine.png",
+      modal:{
+        Description:"This active ingredient reduces pigmentation by inhibiting melanin production and blocking its transport to the skin's surface.",
+        origin:"East Asia",
+        contains:"It is a peptide - building blocks of skin cells such as collagen & elastin that give structure & shape to the skin.",
+        choose:"We chose this peptide for its potency, fast absorption, and unique multi-pathway approach to fading dark spots.",
+        typeOfIngredient:"Peptide",
+        formula:"Regenerating Serum, Overnight  peel",
+        link:"",         
+        modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl-glycyl-beta-alanine.jpg",
+      }
+    },
+    { name: "Acetyl Hexapeptide-8", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl_Hexapeptide-8.png?v=1729581726",
+      modal:{
+        Description:"This multifunctional molecule helps minimize expression wrinkles. A 2012 study found the peptide to be safe for long-term use and effective in reducing wrinkles.",
+        origin:"Spain",
+        contains:"It is a high-quality peptide.",
+        choose:"We chose it for its wrinkle-reducing, lifting effect—like Botox, but safer, more cost-effective, and needle-free.",
+        typeOfIngredient:"Peptide",
+        formula:"Regenerating Serum",
+        link:"",          
+        modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Acetyl_Hexapeptide-8.jpg",
+      }
+    },
+    { name: "Activated Charcoal", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Activated_charcoal.png",
+      modal:{
+        Description:"Activated charcoal has been used for over 2000 years to treat poisoning and prevent infections. Commonly used to adsorb oil, cleansing and detoxifying.",
+        origin:"India",
+        contains:"Charcoal is essentially pure carbon, and it is made by burning wood with very little oxygen.",
+        choose:"We use bamboo-derived charcoal for its high surface area, enhancing its cleansing potency.",
+        typeOfIngredient:"Exfoliant",
+        formula:"AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Activated_charcoal.jpg",
+      }
+    },
+    { name: "Alanine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Alanine.png",
+      modal:{
+        Description:"Alanine is the third most abundant amino acid in the skin’s Natural Moisturizing Factor (NMF) and is essential for strengthening its natural hydration. ",
+        origin:"Spain",
+        contains:"It is a non-essential amino acid and one of the 20 building blocks of proteins found in our body.",
+        choose:"We chose Alanine for its ability to strengthen NMF and boost skin hydration in harsh climates.",
+        typeOfIngredient:"Moisturizing Agent",
+        formula:"Hydrating Cream, Regenerating Serum, Overnight Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Alanine.jpg",
+      }
+    },
+    { name: "Aloe vera", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Aloe_vera.png" ,
+      modal:{
+        Description:"Our Aloe powder is IASC-registered and certified ECOCERT, FDA, USDA NOP Organic, Halal, and HACCP - Versatile and trusted.",
+        origin:"Mexico",
+        contains:"It has vitamins, amino acids, minerals, phenolic compounds, emodin, aloin, and anthraquinones with laxative effects.",
+        choose:"We chose it for its powerful healing, anti-inflammatory, and regenerative properties for diverse skin concerns.",
+        typeOfIngredient:"Anti-inflammatory, Moisturizer, Soother",
+        formula:"Found mostly in our creams, oil and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Aloe_vera.jpg?v=1729581725",
+      }
+    },
+    { name: "Anhydroxylitol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Anhydroxylitol_2.png",
+      modal:{
+        Description:"It boosts hyaluronic acid synthesis, strengthens the skin's natural moisture reserves, and redistributes water for more even hydration.",
+        origin:"France",
+        contains:"It is a dehydrated derivative of Xylitol (good alcohol from sugar).",
+        choose:"Chosen for its NATRUE & Ecocert-certified deep hydration and ability to enhance skin's natural moisture retention.",
+        typeOfIngredient:"Humectant",
+        formula:"Cream Cleanser, AHA Face Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Anhydroxylitol_2.jpg?v=1729581653",
+      }
+    },
+    { name: "Antarcticine", img: "",
+      modal:{
+        Description:"Pseudoalteromonas Ferment Extract is a bio-technologically derived ingredient produced by an Antarctic bacterial strain. It has wound healing & skin regenerating capacities.",
+        origin:"Spain",
+        contains:"Chemically it is a glycoprotein, a type of oligosaccharides (complex sugar molecule).",
+        choose:"Chosen for its ability to boost collagen, protect against dryness, and slow skin aging effectively.",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"",
+      }
+    },
+    { name: "Apple (PYRUS MALUS FRUIT EXTRACT)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Apple.jpg?v=1729581653" ,
+      modal:{
+        Description:"Apple extract is known for its exfoliation and antioxidant properties.Did you know apple browning is caused by flavonoid oxidation?",
+        origin:"East Asia",
+        contains:"It has high levels of flavonoids like quercetin and catechin, as well as malic acid, an alpha-hydroxy acid (AHA).",
+        choose:"We chose apple extract for its brightening, exfoliating, and antioxidant protection against dull skin and damage.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Mostly found in our cleansers, scrubs and in few of creams",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Apple_1.jpg",
+      }
+    },
+    { name: "Apricot Kernel Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Apricot_kernel.jpg?v=1729581653",
+      modal:{
+        Description:"Apricot kernel oil is gaining popularity in the skin world as a lightweight, quick-absorbing, and nutrient-rich oil.",
+        origin:"Japan",
+        contains:"It has oleic, linoleic, and palmitic acids, vitamins A, E, and K, as well as glycolipids, phospholipids, and minerals like copper, magnesium, and potassium.",
+        choose:"Chosen for its non-greasy absorption, revitalizing tired skin, and protecting against oxidative damage naturally.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Face Scrub, Antioxidant Body Scrub, Sea Salt Body Scrub, Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Apricot_kernel_1.jpg",
+      }
+    },
+    { name: "Aqua", img: "" ,
+      modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:"",
+        formula:"",
+        link:"",          modalimg:"",
+      }
+    },
+    { name: "Arachidyl Alcohol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Arachidyl_Alcohol_1_293cd2b1-ef8c-47a0-82f1-e3225e4c9d24.jpg?v=1729581654",
+      modal:{
+        Description:"It is a natural emulsifier plus a thickening agent derived from vegetables. ",
+        origin:"France",
+        contains:"It is a straight-chain fatty alcohol obtained by hydrogenation of plant-derived arachidic acid or arachidonic acid.",
+        choose:"Chosen for its eco-friendly emulsifying and emollient properties, providing natural, soothing skin benefits.",
+        typeOfIngredient:" Oil/Emollient",
+        formula:"Found in all our creams and lotions",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Arachidyl_Alchohol.jpg",
+      }
+    },
+    { name: "Arachidyl Glucoside", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Arachidyl_Glucoside.jpg" ,
+      modal:{
+        Description:"Arachidyl glucoside is a natural emulsifier of vegetable origin. ",
+        origin:"France",
+        contains:"It has a water-loving glucose molecule derived from wheat or maize and an oil-loving fatty molecule from rapeseed oil.",
+        choose:"It is a plant-origin emollient (soothes & softens skin) and emulsifier (binds water & oil molecules in creams). ",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Found in all our creams and lotions",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Arachidyl_Glucoside_1_1.jpg",
+      }
+    },
+    { name: "Argan Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Argan_oil_1_21015172-3120-4203-9ced-5d94dc6fe471.jpg",
+      modal:{
+        Description:"Argan oil, known as 'liquid gold,' is rich in nutrients and requires 30 kilos of fruit per liter. Due to the high demand for this super skin food, the tree is protected by UNESCO.",
+        origin:"Morocco",
+        contains:"It contains unsaturated fatty acids, polyphenols (caffeic, oleuropein, ferulic acids), phenolics (tyrosol, catechol), squalene, and Vitamin E.",
+        choose:"Chosen for its skin elasticity, hydration, and antioxidant benefits, making the skin softer and smoother.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Found in most of our creams, oils, and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Argan_oil.jpg",
+      }
+    },
+    { name: "Asafoetida", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Asafoetida.jpg",
+      modal:{
+        Description:"In ancient times it was a prevalent spice and herbal medicine in Europe but has gone out of fashion since then, perhaps due to its pungent smell. ",
+        origin:"India",
+        contains:"It has volatile oils, sesquiterpenes, monoterpenes, and phenolic compounds like ammoresinol.",
+        choose:"We chose it for its antioxidant, hydrating, anti-inflammatory, barrier-strengthening, and UV-protective properties.",
+        typeOfIngredient:"Plant Extract",
+        formula:"Found in our Marine Clay Mask and few serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Asafoetida_ca14686c-5f1b-4c2f-ae90-878ec9dd3f38.jpg?v=1729581653",
+      }
+    },
+    { name: "Ascorbyl Methylsilanol Pectinate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ascorbyl_Methylsilanol_Pectinate.jpg",
+      modal:{
+        Description:"This molecule delivers Vitamin C and silicium to boost collagen, enhance elasticity, and stimulate keratinocyte growth for better skin protection.",
+        origin:"Monaco",
+        contains:"The molecule combines Vitamin C, a silicium core, and pectin, a plant-derived water-soluble carbohydrate.",
+        choose:"We chose this superhero molecule for its ability to target and rejuvenate skin from within.",
+        typeOfIngredient:"Brightener",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ascorbyl_Methylsilanol_Pectinate_2.jpg",
+      }
+    },
+    { name: "Ascorbyl Tetraisopalmitate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ascorbyl_Tetraisopalmitate_2_1.jpg",
+      modal:{
+        Description:"Ascorbyl Tetraisopalmitate is a stable, oil-soluble Vitamin C derivative with high bioavailability, absorbing deeply and converting effectively into Vitamin C.",
+        origin:"",
+        contains:"It is an esterified derivative of ascorbic acid.",
+        choose:"We chose it for its penetration, collagen boost, antioxidant, and non-irritating even to most sensitive skin, properties.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ascorbyl_Tetraisopalmitate_2_2.jpg",
+      }
+    },
+    { name: "Azelamidopropyl Dimethyl Amine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Azelamidopropyl_Dimethyl_Amine_1.jpg",
+      modal:{
+        Description:"It inhibits acne bacteria, controls inflammation, regulates sebum, accelerates wound healing, and improves recovery from post-acne scars.",
+        origin:"East Asia",
+        contains:"It is a patented azelaic acid derivative molecule.",
+        choose:"It's a multi-pathway acne treatment, reducing pores and congestion within weeks.",
+        typeOfIngredient:"Anti-inflammatory",
+        formula:"Clarifying Concentrate, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Azelamidopropyl_Dimethyl_Amine.jpg",
+      }
+    },
+  ],
+   B: [
+    { name: "Bakuchiol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bakuchiol_1_2.jpg",
+    modal:{
+        Description:"Bakuchiol, a natural retinol alternative, boosts collagen without irritation, offering similar anti-aging benefits.",
+        origin:"India",
+        contains:"Bakuchiol is a meroterpene in the class terpenophenol.",
+        choose:"It has antioxidant, anti-inflammatory, and antibacterial benefits, boosting collagen-like retinoic acid but gentler.",
+        typeOfIngredient:"Plant Extract",
+        formula:"Bio-Retinol Cream, Night Repair Cream, Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bakuchiol_1_3.jpg",
+      }
+    },
+    { name: "Behenyl Alcohol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Behenyl_Alcohol_1_92c2e313-e236-43f0-aaf6-cb1b3cbdabcb.jpg",
+        modal:{
+        Description:"A widely used as a humectant and solvent in skin care products. US FDA considers it safe even as a food additive.",
+        origin:"",
+        contains:"It is an organic alcohol molecule.",
+        choose:"Alcohol attracts water, keeping skin hydrated while enhancing product spreadability and effectiveness.",
+        typeOfIngredient:"Thickener ",
+        formula:"Found in all our creams",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Behenyl_Alcohol_1_1.jpg",
+      }
+},
+    { name: "Bergamot", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bergamot_1_d662adf0-177c-46da-9a62-e8b2600fb5e4.jpg",
+        modal:{
+        Description:"Bergamot oil has antioxidant and anti-inflammatory properties. It is primarily used for natural fragrance.",
+        origin:"Southern Italy",
+        contains:"It has limonene, linalyl acetate, linalool, γ-terpinene, and β-pinene for anti-inflammatory, and antimicrobial benefits.",
+        choose:"It is a highly effective ingredient for treating acne, and its calming and uplifting aroma adds to the sensory experience.",
+        typeOfIngredient:"Essential Oil",
+        formula:"Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bergamot.jpg",
+      }
+},
+    { name: "Billberry", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Billberry_1.jpg",
+        modal:{
+        Description:"These Northern European and North American berries, a superfood, offer unique skincare benefits and nutrients.",
+        origin:"Albania",
+        contains:"Bilberries are rich in anthocyanins, hydroquinone, triterpenoids, tannins, resveratrol, and vitamins A, B, C, E.",
+        choose:"It protects against UV damage, lightens spots, reduces melanin, and controls excess oil production.",
+        typeOfIngredient:"Antioxidant",
+        formula:"AHA Power Peel, AHA Face Wash, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Billberry_1.jpg",
+      }
+},
+    { name: "Bioferm Red Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/BiofermRedOil.jpg" ,
+        modal:{
+        Description:"It is a versatile botanical gem that has anti-irritation, antibacterial, antioxidant, and moisture-locking properties.",
+        origin:"Korea",
+        contains:"It has a high content of fatty acids such as linoleic, linolenic, oleic, palmitic, and stearic acid.",
+        choose:"It offers greater skin benefits than wild ginseng as a multi-nutrient.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Nutrient Day Cream, Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/BiofermRedOil_1.jpg",
+      }
+},
+    { name: "Bisabolol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bisabol_2_1.jpg" ,
+        modal:{
+        Description:"Bisabolol soothes and calms sensitive skin, promotes renewal, and enhances the absorption of other active ingredients.",
+        origin:"Korea",
+        contains:"It is a natural terpenoid, also known as levomenol.",
+        choose:"We use it for its well-proven healing, soothing, and moisturizing properties.",
+        typeOfIngredient:"Soother",
+        formula:" Night Repair Cream, Bio-Retinol Cream, Nourishing Sleep Oil, Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Bisabol_2_c89e902f-edce-47a9-a3a4-0ca0970f8892.jpg",
+      }
+},
+    { name: "Black Cumin", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_cumin_1_2.jpg",
+        modal:{
+        Description:"Black Cumin, a herbaceous plant with white flowers, is used in spices and traditional medicine across Asia.",
+        origin:"India",
+        contains:"Thymoquinone is the most useful phytochemical found in black cumin.",
+        choose:"It is rich in thymoquinone, combats acne with potent anti-inflammatory and anti-bacterial properties.",
+        typeOfIngredient:"Anti-inflammatory",
+        formula:"Clarifying Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_cumin.jpg",
+      }
+},
+    { name: "Black Mulberry", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_mulberry_1_3.jpg",
+        modal:{
+        Description:"With antioxidants, mulberry extract brightens skin, reduces pigmentation, and protects against environmental stressors. ",
+        origin:"Iran, afganistan",
+        contains:"Primary fatty acids are linoleic, palmitic, and oleic acids. It also has flavonoids and ascorbic acid.",
+        choose:"It is a potent ingredient for the anti-acne or post-acne regime.",
+        typeOfIngredient:"Brightener",
+        formula:"Found in most of our cleansers and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_mulberry_1_2.",
+      }
+},
+    { name: "Black Silt", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_silt.jpg",
+        modal:{
+        Description:"These are freshwater sediments rich in humic acids and other bioactive compounds.",
+        origin:"Finland",
+        contains:"Black Silt contains magnesium, calcium, potassium, strontium, boron, and iron to detoxify and nourish skin.",
+        choose:"It boosts cell renewal, retains heat, improves capillary circulation, binds toxins, and releases oxygen to skin.",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Nordic Mud Mask",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_silt_1_fca47c46-8b30-42ec-81f6-05857a381c24.jpg",
+      }
+},
+    { name: "Blackberry (MORUS NIGRA)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_berry_1_2.jpg" ,
+        modal:{
+        Description:"Fun fact, the little black fruit is technically not a berry. Botanically it is called an aggregate fruit, composed of small drupelets.",
+        origin:"Europe",
+        contains:"Blackberry fruit extract is rich in anthocyanins, vitamins A, B, C, E, K, and minerals.",
+        choose:"Blackberry extract in our formulas offers antioxidants, anti-aging benefits, and skin repair.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Found in most of our cleansers and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Black_berry_1_3.jpg",
+      }
+},
+    { name: "Blue Tansy", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Blue_tansy.jpg",
+        modal:{
+        Description:"Known as Moroccan Chamomile, this oil gets its blue color from azulene and has been used in traditional medicine and aromatherapy.",
+        origin:"Morocco",
+        contains:"It has a high concentration of chamazulene, which exhibits excellent soothing activity.",
+        choose:"It is a powerful soothing agent and has strong anti-inflammatory activity due to high azulene content. ",
+        typeOfIngredient:"Soother, Anti-inflammatory ",
+        formula:"Nourishing Sleep Oil, Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Blue_tansy_70a49fda-cadc-43a9-9981-d616fd90035f.jpg",
+      }
+},
+    { name: "Blue-Green Algae", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Blue-green_algae.jpg",
+        modal:{
+        Description:"One of the few edible micro plants, it is considered one of the highest nutrient-dense foods (by weight) in the world.",
+        origin:"USA",
+        contains:"Rich in quinones, carotenoids, amino acids, and vitamins B12, E, and K—unique vegetable source of B12.",
+        choose:"A natural alternative to retinol, it offers clinically proven wrinkle reduction in just 21 days.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Night Repair Cream, Bio-Retinol Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Blue-green_algae_1.jpg",
+      }
+},
+    { name: "Borage Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Borage_Oil_1_b1f188a8-8281-4718-8d24-ff335f3cec9d.jpg" ,
+        modal:{
+        Description:"Featuring star-shaped blue flowers, this oil has traditionally been used to provide relief for eczema and atopic dermatitis patients. ",
+        origin:"Spain",
+        contains:"It contains fatty acids, including GLA, oleic, palmitic, and vitamin E, plus phenolic compounds.",
+        choose:"A botanical secret to healthy skin, it restores moisture, smooths dry skin, and soothes redness and inflammation.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Nourishing Sleep Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Borage_Oil.jpg",
+      }
+},
+    { name: "Broussonetia Kazinoki Root Extract", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Broussonetia_Kazinoki_Root_1_3.jpg",
+        modal:{
+        Description:"Known as paper mulberry, Koreans traditionally used its bark to make paper. It's known to have anti-inflammatory and depigmentation properties.",
+        origin:"Korea",
+        contains:"Rich in fatty acids, minerals, and phenolic compounds like gallic, caffeic, and flavonoids.",
+        choose:"It fades dark spots, evens tone, strengthens skin's natural oil barrier, and provides antioxidants.",
+        typeOfIngredient:"Plant Extract",
+        formula:" Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Broussonetia_Kazinoki_Root_1_2.jpg",
+      }
+},
+    { name: "Brown Sugar", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Brown_sugar_1_1.jpg..." ,
+        modal:{
+        Description:"Brown sugar naturally exfoliates, moisturizes, and evens skin tone. It makes the perfect addition to our body scrubs.",
+        origin:"India",
+        contains:"Brown sugar is 95% sucrose and 5% molasses, along with minerals and vitamins such as B1, B2, B3, and B9. ",
+        choose:"It exfoliates and hydrates skin, melting into it for a smoother, glowing, and youthful look.",
+        typeOfIngredient:"Humectant.",
+        formula:"Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Brown_sugar_1.jpg",
+      }
+},
+    { name: "Butylene Glycol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Butylene_glycol_3.jpg",
+        modal:{
+        Description:"A widely used as a humectant and solvent in skin care products. U.S. FDA considers it safe even as a food additive.",
+        origin:"",
+        contains:"It is an organic alcohol molecule.",
+        choose:"A beneficial alcohol attracts water to hydrate skin, enhancing product spreadability and effectiveness.",
+        typeOfIngredient:"Humectant.",
+        formula:"Found mainly in our creams and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Butylene_glycol_2.jpg",
+      }
+}
+  ],
+   C: [
+    { name: "Caffeine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Caffeine_1.jpg",
+     modal:{
+        Description:"Caffeine reduces cellulite, puffy eyes, and tanning, and protects against UVA/UVB. Best results occur when it penetrates deeper layers.",
+        origin:"Ethopia",
+        contains:"Caffeine is a type of alkaloid.",
+        choose:"We use vegetable caffeine from green coffee beans and a vectorized delivery system for effective skin penetration.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Caffeine.jpg",
+      }
+    },
+    { name: "Calendula", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Calendula_1_2.jpg" ,
+        modal:{
+        Description:"Calendula has been used for skin rejuvenation, culinary purposes, wound care, and ceremonial garlands in India.",
+        origin:"Nepal",
+        contains:"The key constituents of calendula are terpenoids, flavonoids, amino acids, lipids, and vitamin A.",
+        choose:"It soothes sensitive skin, hydrates, repairs, and offers anti-inflammatory, antibacterial, antifungal, and UV protection.",
+        typeOfIngredient:"Soother, Anti-inflammatory",
+        formula:"Radiance Face Oil, Nourishing Sleep Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Calendula_1_1.jpg",
+      }
+    },
+    { name: "Camellia", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Camellia_1_1.jpg" ,
+         modal:{
+        Description:"Native to East Asia, it is also known as the Rose of Winter.",
+        origin:"Japan",
+        contains:"It contains mono/di/triterpenes, cimgallic acid, palmitic acid (omega-9), and alpha-tocopherol (Vitamin E). ",
+        choose:"Gallic acid shields skin from UVB damage, boosts hydration, and enhances ingredient absorption.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Camellia_1_2.jpg",
+      }
+    },
+    { name: "Caprylic/Capric Triglyceride", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Capryliccapric_1_2.jpg" ,
+        modal:{
+        Description:"Commonly known as CCTG among skincare nerds, It has been a part of natural skincare products for more than 50 years.",
+        origin:"",
+        contains:"It is made by combining coconut oil-derived fatty acids and glycerin (humectant).",
+        choose:"It forms a lightweight, non- greasy film that prevents water loss and combats skin dryness.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Found in all our creams, scrubs, and oils including Melting Balm Cleanser.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Capryliccapric_1_1.jpg",
+      }
+    },
+    { name: "Capryloyl Glycine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Capryloyl_Glycine_1.jpg",
+        modal:{
+        Description:"It's a multi-functional active ingredient that regulates sebum, treats acne, and enhances the potency of other actives.",
+        origin:"",
+        contains:"It is a lipid amino acid.",
+        choose:"As a key anti-acne ingredient, it regulates excess sebum, reducing acne breakouts significantly",
+        typeOfIngredient:"Soother",
+        formula:"Clarifying Concentrate, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Capryloyl_Glycine.jpg",
+      }
+    },
+    { name: "Caprylyl Glycol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Caprylyl_Glycol_1_1.jpg",
+        modal:{
+        Description:"Caprylyl glycol is commonly used in personal care products to enhance its spreadability and acts as a humectant.",
+        origin:"",
+        contains:"It is alcohol (a good one) derived from caprylic acid, a natural fatty acid found in palm and coconut oil. ",
+        choose:"It features in our formulas as part of active complexes as a humectant and/ or thickener.",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Found in all our creams, masks exfoliators and treatment products",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Caprylyl_Glycol_1_2.jpg",
+      }
+    },
+    { name: "Carrot Seed Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Carrot_seed.jpg",
+        modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:"",
+        formula:"Radiance Face Oil, ",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Carrot_seed_1.jpg",
+      }
+    },
+    { name: "Caviar Lime", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/CaviarLimeimg102_19_2021_12_01_18_692.png" ,
+        modal:{
+        Description:"The inner part of the fruit has multi-colored caviarlike pearls. It has been part of the diet of people of Australia and today features in gourmet food.",
+        origin:"Australia",
+        contains:"Rich in AHAs, polyphenols, flavonoids (antioxidants), and sugars (for hydration).",
+        choose:"Caviar lime is a next-gen AHA that exfoliates, hydrates, and boosts cell turnover, protecting skin.",
+        typeOfIngredient:"Brightener",
+        formula:"Correcting Concentrate, Skin Perfecting Serum, Night Repair Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Caviar_Lime.jpg",
+      }
+    },
+    { name: "Centella Asiatica (Gotu Kola)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Centella_Asiatica_1.jpg",
+        modal:{
+        Description:"Known as Gotu Kola in China, a K-beauty and Ayurvedic favorite, rivals green tea as a skincare powerhouse.",
+        origin:"Korea",
+        contains:"Centella Asiatica contains saponins,flavonoids, amino acids, alkaloids, phytosterols, and fatty acids like linoleic acid.",
+        choose:"Chosen for its ability to boost collagen production and enhance antioxidants in newly formed tissue.",
+        typeOfIngredient:"Soother",
+        formula:"Vit B Body Lotion, Correcting Concentrate, Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Centella_Asiatica_1.jpg?v=1729599705",
+      }
+    },
+    { name: "Cetearyl Alcohol (Cetostearyl Alcohol)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Alcohol_1_1.jpg" ,
+        modal:{
+        Description:"Cetearyl alcohol is a plant- based emulsifier and emollient, non-drying, unlike traditional alcohols.",
+        origin:"",
+        contains:"Cetearyl alcohol, a blend of cetyl and stearyl alcohols, is typically derived from palm or coconut oil.",
+        choose:"It's a natural emollient and emulsifier, stabilizing creams without releasing harmful ethylene oxide.",
+        typeOfIngredient:"Thickener",
+        formula:"Found in all our creams and lotions",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Alcohol_1_2.jpg",
+      }
+    },
+    { name: "Cetearyl Glucoside", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Glucoside_2.jpg",
+        modal:{
+        Description:"A sugar-based plant- derived emulsifier that also serves as a humectant, often paired with Cetearyl alcohol.",
+        origin:"",
+        contains:"Cetearyl Glucoside is a biodegradable, vegetable-derived emulsifier.",
+        choose:"This ingredient has natural humectant and emulsifying properties, free from carcinogenic ethylene oxide",
+        typeOfIngredient:"Thickener",
+        formula:"Found in all our creams and lotions",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Glucoside_1.jpg",
+      }
+    },
+    { name: "Cetearyl Olivate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Olivate_1.jpg" ,
+        modal:{
+        Description:"Cetearyl olivate is a natural humectant, PEG-free emulsifier and a mild surfactant.",
+        origin:"",
+        contains:"Cetearyl olivate is an ester of cetearyl alcohol and olive oil-derived fatty acids, acting as an emulsifier.",
+        choose:"We use a particular blend of cetearyl olivate and sorbitan olivate that is a natural and certified organic emulsifier.",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Found in most of our scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cetearyl_Olivate_2.jpg",
+      }
+    },
+    { name: "Chamomile", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Chamomile_1.jpg?v=1729599705",
+        modal:{
+        Description:"Commonly used in traditional medicine worldwide, its healing properties are extracted by soaking the flowers in oils such as pure almond oil.",
+        origin:"Germany",
+        contains:"German chamomile flowers contain terpenoids (α-bisabolol, azulenes) and flavonoids (quercetin, patuletin).",
+        choose:"Its calming, antiinflammatory, and antioxidant properties, perfect for soothing skin.",
+        typeOfIngredient:"Soother",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Chamomile_1_1.jpg",
+      }
+    },
+    { name: "Chaulmogra", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Chaulmogra.jpg",
+        modal:{
+        Description:"Its therapeutic benefits have been known to humans for more than 500 years. Used to treat leprosy in traditional Indian and Chinese medicine systems.",
+        origin:"India",
+        contains:"Chaulmoogra oil has hydnocarpic acid and 5‘- Methoxyhydnocarpin, boosting antibacterial efficacy in skincare",
+        choose:"It has antimicrobial power and ability to enhance anti- bacterial agents' efficacy",
+        typeOfIngredient:"Plant Extract",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Chaulmogra_1.jpg",
+      }
+    },
+    { name: "Chromium Oxide Green", img: "",
+        modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:"",
+        formula:"",
+        link:"",          modalimg:"",
+      }
+    },
+    { name: "Cinnamon", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cinnamonimg102_20_2021_02_49_07_481.png" ,
+        modal:{
+        Description:"In Ayurveda, cinnamon was considered as precious as gold for its powerful, natural anti- microbial properties.",
+        origin:"China",
+        contains:"Rich in cinnamaldehyde, benzaldehyde, cinnamic acid, eugenol, and terpenes like phellandrene and pinene.",
+        choose:"We chose cinnamon for its antibacterial, soothing, and skin-smoothing properties, perfect for acne-prone skin.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Found in most of our creams, oils, scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cinnamon.jpg",
+      }
+    },
+    { name: "Citric Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Citric_Acid.jpg",
+        modal:{
+        Description:"In personal care products, citric acid is used as a pH regulator.",
+        origin:"",
+        contains:"Citric acid is a weak organic acid, naturally found in citrus fruits such as lemon.",
+        choose:"We use citric acid to regulate our products' pH that makes them stable, effective, and safe to use.",
+        typeOfIngredient:"Alpha-Hydroxy Acid (AHA)",
+        formula:"Overnight Peel, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Citric_acid_1.jpg",
+      }
+    },
+    { name: "Clary Sage Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Clary_Sage_Oil.jpg?v=1729599672",
+        modal:{
+        Description:"Traditionally used in medicine and aroma therapy, this purpleflowered oil may also act as an anti-depressant.",
+        origin:"Europe",
+        contains:"It contains key esters like linalyl acetate,linalool, beta- caryophyllene, alphaterpineol, and geraniol.",
+        choose:"We chose it for its soothing, oil-balancing properties, perfect for calming acne-prone skin.",
+        typeOfIngredient:"Essential Oil",
+        formula:"Nourishing Sleep Oil, Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Clary_Sage_Oil_1.jpg",
+      }
+    },
+    { name: "Clove Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Clove_Oil.jpg",
+        modal:{
+        Description:"Clove oil, extracted from dried buds, has long been used in traditional medicine and Asian cuisine for its robust flavor and aroma.",
+        origin:"India",
+        contains:"Clove oil's key ingredients are eugenol, eugenyl acetate, caryophyllene, with other terpenes and flavonoids.",
+        choose:"Chosen for its powerful antimicrobial, antiinflammatory, and oil- balancing properties.",
+        typeOfIngredient:"Essential Oil",
+        formula:"Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Clove_Oil_1.jpg",
+      }
+    },
+    { name: "Coco Glucoside", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coco_Glucoside_1_1.jpg" ,
+        modal:{
+        Description:"Coco glucoside, derived from coconut oil, cleanses effectively without drying, unlike harsh alkaline surfactants.",
+        origin:"China",
+        contains:"Combining sugar and starch with coconut- derived fatty alcohols creates coco glucosides, a gentle, eco-friendly cleanser.",
+        choose:"Chosen for its gentle, moisturizing, and effective cleansing properties suitable for all skin types.",
+        typeOfIngredient:"Thickener",
+        formula:"Marine Clay Mask, Cream Cleanser, AHA Face Wash, AHA Body Wash, Body Cleanser",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coco_Glucoside_1_2.jpg?v=1729599672",
+      }
+    },
+    { name: "Coconut Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coconut_oil_1_84c39343-028d-4163-92fa-1e4d883e4596.jpg",
+     modal:{
+        Description:"Coconut oil, like olive oil in Southern Europe, has been used for 2000 years in cooking and beauty as an ingredient.",
+        origin:"Kerala",
+        contains:"Coconut oil contains caprylic, capric, lauric, myristic, palmitic, stearic, oleic, and linoleic acids.",
+        choose:"Chose it for its moisturizing, healing, antiinflammatory, and collagen-boosting benefits for skin.",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Found in most of our scrubs, cleansers and oils.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coconut_oil.jpg",
+      }
+    },
+    { name: "Coffee Arabica", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coffee_Arabica.jpg" ,
+    modal:{
+        Description:"Famous as a beverage, coffee has several benefits as a skincare ingredient, is now popular for its DIY benefits.",
+        origin:"Ethopia",
+        contains:"It contains caffeine, phenolic compounds, chlorogenic acids, diterpenoid alcohols, carbohydrates, lipids, and tannins.",
+        choose:"We choose freshly grounded coffee for its antioxidant, antiinflammatory benefits, and ability to reduce redness.",
+        typeOfIngredient:"Antioxidant",
+        formula:"Antioxidant Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Coffee_Arabica_1.jpg",
+      }
+    },
+    { name: "Copper Gluconate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_gluconate_1_1.jpg",
+    modal:{
+        Description:"Copper gluconate is one such copper molecule that is showing promising results as an anti-aging ingredient.",
+        origin:"",
+        contains:"Copper gluconate is a copper salt of D- gluconic acid (organic acid - exfoliant and moisturizer).",
+        choose:"We choose this ingredient for its ability to energize skin cells and boost overall efficacy.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Vit B Enzyme Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_gluconate_1_2.jpg",
+      }
+    },
+    { name: "Copper Lysinate/Prolinate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_lysinate_prolinate_1.jpg",
+    modal:{
+        Description:"A needle-free collagen booster that mimics collagen fillers' effects in 2 weeks but in a natural way",
+        origin:"",
+        contains:"A complex of essential amino acid and copper.",
+        choose:"It helps boost collagen and elastin, reducing deep wrinkles and firming skin.",
+        typeOfIngredient:"Peptide",
+        formula:"Regenerating Serum, Copper Peptide Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_lysinate_prolinate_1_1.jpg",
+      }
+    },
+    { name: "Copper Peptide", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_peptide_1_2.jpg",
+    modal:{
+        Description:"GHK-Cu, a peptide in human plasma, supports skin regeneration and appearance by enhancing copper uptake and matrix repair.",
+        origin:"",
+        contains:"GHK-Cu is a tripeptide of glycine, histidine, and lysine that binds copper ions.",
+        choose:"Copper peptide boosts skin firmness and hydration by enhancing collagen production and improving circulation",
+        typeOfIngredient:"Peptide",
+        formula:"Copper peptide Serum, Regenerating Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Copper_peptide_1_1.jpg",
+      }
+    },
+    { name: "Cotton Seed Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cotton_seed_oil_1_1.jpg",
+    modal:{
+        Description:"It's an Ayurvedic remedy for headaches and an excellent emollient, antioxidant, and antiinflammatory agent.",
+        origin:"India ",
+        contains:"Cottonseed oil is rich in vitamin E, fatty acids, and gossypol (a phenolic compound).",
+        choose:"Cottonseed oil is known to increase skin permeability and improve the penetration of other skin ingredients.",
+        typeOfIngredient:"Oil/Emollient ",
+        formula:"Bio-Retinol Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Cotton_seed_oil_1_2.jpg",
+      }
+    },
+    { name: "Country Mallow Root", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Country_Mallow.jpg",
+    modal:{
+        Description:"It is a rejuvenating herb for muscles, aids weight loss, arthritis, and acts as an aphrodisiac.",
+        origin:"India",
+        contains:"This herb contains alkaloids, flavonoids, sterols, fatty acids, and betaine, a natural humectant.",
+        choose:"It is considered the best nervine tonic and rejuvenates all kinds of Vata disorders. It cools the skin when applied topically.",
+        typeOfIngredient:"Plant Extract ",
+        formula:"Found in most of our creams, scrubs, oils and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Country_Mallow_1.jpg",
+      }
+    }
+  ],
+
+     D: [
+    { name: "Damiana", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Damiana_1_1.jpg",
+        modal:{
+        Description:"Damiana is a nutrient-rich herb used as a female aphrodisiac in folk medicine.",
+        origin:"Southern texas",
+        contains:"Its leaves contain terpenoids, saccharides, mineral salts, tannin, caffeine, p-Arbutin, arbutin, and damianina.",
+        choose:"We chose it for its potent natural lightening, antiinflammatory, and moisturizing benefits, ideal for dark spots.",
+        typeOfIngredient:"Plant Extract ",
+        formula:"Found in most of our brightening and de- pigmentation cohort.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Damiana_1_2.jpg",
+      }
+    },
+    { name: "Dead Sea Salt", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Dead_sea_salt_1_1.jpg" ,
+        modal:{
+        Description:"Rich in minerals, it detoxifies, soothes inflammation, hydrates, controls sebum, and aids in managing psoriasis.",
+        origin:"Israel",
+        contains:"Dead Sea salt contains 12-18% sodium chloride and is rich in bromide, zinc, magnesium, and potassium.",
+        choose:"We use Israeli Dead Sea Salt in our scrubs for its mineral-rich, therapeutic, and skin-rejuvenating benefits.",
+        typeOfIngredient:"Exfoliant",
+        formula:"Sea Salt Body Scrub, Spa Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Dead_sea_salt_1_2.jpg",
+      }
+    },
+    { name: "Decarboxy Carnosine HCL", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Decarboxy_Carnosine.jpg",
+        modal:{
+        Description:"It protects collagen, fights aging factors, and boosts skin cell metabolism to keep skin youthful",
+        origin:"Spain",
+        contains:"It is a natural peptoid",
+        choose:"It has powerful anti- glycation properties, combating skin aging and maintaining elasticity.",
+        typeOfIngredient:"Peptide ",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Decarboxy_Carnosine_1.jpg",
+      }
+    },
+    { name: "Diacetyl Boldine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Diacetyl_Boldine_1_2.jpg",
+        modal:{
+        Description:"This plant-derived, potent ingredient can regulate the production of melanin by inhibiting tyrosine’s activity. ",
+        origin:"Chile Map",
+        contains:"It is an extract from the bark of the Chilean Boldo tree.",
+        choose:"We chose it for its rapid, proven effectiveness in enhancing skin radiance and preventing pigmentation.",
+        typeOfIngredient:"Brightener ",
+        formula:"Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Diacetyl_Boldine_1_1.jpg",
+      }
+    },
+    { name: "Diglucosyl Gallic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Diglucosyl_gallic_acid_1_1.jpg",
+        modal:{
+        Description:"It prevents pigmentation by blocking free radicals, reducing melanin production, and inhibiting pigment transport.",
+        origin:"",
+        contains:"DGA is a stabilized, bioactive alpha- glucoside derivative of unstable THBA, created using green chemistry.",
+        choose:"DGA combats hyperpigmentation by blocking melanin synthesis, even under UV exposure, and protects from UVA/UVB.",
+        typeOfIngredient:"Brightener ",
+        formula:"Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Diglucosyl_gallic_acid_1_2.jpg",
+      }
+    },
+    { name: "Dipalmitoyl Hydroxyproline", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Dipalmitoyl_Hydroxyproline_1_1.jpg",
+        modal:{
+        Description:"A plant-derived vehicle to effectively deliver hydroxyproline, crucial for collagen synthesis, to help delay skin aging",
+        origin:"",
+        contains:"It's made by combining palmitic acid with hydroxyproline, an amino acid in collagen.",
+        choose:"We choose Dipalmitoyl Hydroxyproline for its firming, moisturizing, and naturally lifting skin.",
+        typeOfIngredient:"Peptide ",
+        formula:"Bio-Retinol Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Dipalmitoyl_Hydroxyproline_1_2.jpg",
+      }
+    }
+  ],
+  E: [
+    { name: "Elderflower", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Elderflower_1_1.jpg",
+        modal:{
+        Description:"It's a creamy white, sweet- scented flower historically used for infections,improving complexions, and treating burns.",
+        origin:"Europe",
+        contains:"The flower extract contains flavonoids, essential oils, phenol, carboxylic acids, and tannins.",
+        choose:"We choose this ingredient for its antioxidants, antiinflammatory benefits, wrinkle reduction, and oil- absorbing properties.",
+        typeOfIngredient:"Plant Extract ",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Elderflower_1_2.jpg",
+      }},
+    { name: "Ergosterol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ergosterol_1.jpg" ,
+        modal:{
+        Description:"Phytosterols support cell membranes, aid Vitamin D formation, and offer antiinflammatory and photo- sensitivity reduction.",
+        origin:"Japan",
+        contains:"It is a sterol found in the cell membranes of several living organisms such as fungi.",
+        choose:"Ergosterol and pine mushroom extract reduce photo-sensitivity and prevent pigmentation,freckles, and sunspots.",
+        typeOfIngredient:" Antifungal",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ergosterol_1_1.jpg",
+      }
+    }
+  ],
+  F: [
+    { name: "Fennel", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Fennel.jpg" ,
+        modal:{
+        Description:"It's an aromatic Mediterranean herb used in cookery and absinthe; its oil is derived from seeds.",
+        origin:"India",
+        contains:"It contains anethole, methyl chavicol, polyphenols, antioxidants, and antiinflammatory compounds.",
+        choose:"We chose fennel oil for its soothing and antioxidant properties, plus its delightful fragrance.",
+        typeOfIngredient:"Antioxidant, Antiinflammatory  ",
+        formula:"Sea Salt Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/fennel_1.jpg",
+      }
+    },
+    { name: "FRANKINCENSE ", img: "" ,
+        modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:" ",
+        formula:"",
+        link:"",          modalimg:"",
+      }
+    }
+  ],
+  G: [
+    { name: "Galactoarabinan", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Galactoarabinan_1_a066e390-8cca-4986-b864-eb051d117b59.jpg",
+          modal:{
+        Description:"Harvested from Larch trees in cold regions of Canada and Siberia, this natural ingredient is unique.",
+        origin:"south America",
+        contains:"It is a natural polysaccharide with a high concentration of phenols.",
+        choose:"GA enhances exfoliation, boosts AHA efficacy, aids in sunscreen dispersion, and prevents moisture loss in sunlight.",
+        typeOfIngredient:"Humectant  ",
+        formula:"Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Galactoarabinan.jpg",
+      }
+    },
+    { name: "Ginger", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ginger_1_389491fa-0e3e-485f-ae00-049198ac428a.jpg" ,
+     modal:{
+        Description:"It's a medicinal plant, was traded to the Roman Empire 2,000 years ago from India. Interestingly, its potency increases as the root ages.",
+        origin:"India",
+        contains:"It contains zingibain proteolytic enzyme,lipids, terpenes, phenols, amino acids, phytosterols, vitamin B, and minerals.",
+        choose:"We chose ginger for its antioxidant-rich properties, which soothe, protect, and revitalize the skin.",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Ginger.jpg",
+      }
+    },
+    { name: "Glutamic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glutamic_acid_1_1.jpg" ,
+     modal:{
+        Description:"Glutamic acid aids in protein synthesis, carbohydrate metabolism, and helps maintain skin pH and hydration.",
+        origin:"",
+        contains:"Glutamic acid is an α- amino acid and a non- essential amino acid.",
+        choose:"We chose glutamic acid for its role in balancing skin pH, regulating oil, and boosting vitality.",
+        typeOfIngredient:"Humectant ",
+        formula:"Hydrating Cream, Bio-Retinol Cream, Regenerating Serum, Copper Peptide Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glutamic_acid_1_2.jpg",
+      }
+    },
+    { name: "Glycerin", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycerin_1_1.png",
+     modal:{
+        Description:"Glycerine, initially a soap by-product, gained importance after Alfred Nobel's 1866 dynamite invention.",
+        origin:"",
+        contains:"Glycerol/glycerine is a simple polyol compound (alcohol) with three hydroxyls (OH) groups.",
+        choose:"We chose glycerine for its hydrating properties, solubilizing abilities, and compatibility with other skincare ingredients.",
+        typeOfIngredient:"Humectant ",
+        formula:"Found in most of our cleansers, masks, peel and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycerin_1.jpg",
+      }
+    },
+    { name: "Glyceryl Stearate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glyceryl_Stearate.jpg" ,
+     modal:{
+        Description:"It is used as an emollient and an emulsifier in skin care products and even food. It is naturally found in the human body",
+        origin:"",
+        contains:"Glyceryl Monostearate, a monoglyceride of glycerin and stearic acid, is derived from vegetable, soy, or palm oil.",
+        choose:"This ingredient prevents water loss, maintains moisture, and stabilizes emulsions for soft, smooth skin.",
+        typeOfIngredient:"Moisturising Agent",
+        formula:"Found mostly in our scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glyceryl_Stearate.png",
+      }
+    },
+    { name: "Glycine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycine.jpg" ,
+     modal:{
+        Description:"Glycine is essential for your skin and the muscles.It plays a critical role in the self-moisturizing system of the skin.",
+        origin:"",
+        contains:"As a non-essential amino acid, it naturally synthesizes in the body and helps builds protein.",
+        choose:"Glycine is a vital component of the natural moisturizing factor (NMF) and the main building block of dermal structural proteins.",
+        typeOfIngredient:"Humectant ",
+        formula:"Found in most of our creams and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycine.png",
+      }
+    },
+    { name: "Glycolic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycolic_Acid_1.jpg",
+     modal:{
+        Description:"One of the most famous & potent AHAs, swiftly exfoliates dead skin cells and boosts other agents' effectiveness.",
+        origin:"",
+        contains:"Glycolic acid is an AHA and is naturally found in sugarcane extract.",
+        choose:"We chose glycolic acid for its deep exfoliation, collagen boost, and youthful, firmer skin results.",
+        typeOfIngredient:"Alpha-Hydroxy Acid (AHA) ",
+        formula:"Overnight Peel, AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Glycolic_Acid.jpg",
+      }
+    },
+    { name: "Grapefruit", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Grape_fruit_1_c1ec51a8-81ab-4c88-b6b9-58bb4959c932.jpg" ,
+     modal:{
+        Description:"China leads in grapefruit cultivation, renowned for high Vitamin C and antioxidants; its essential oil comes from the peel.",
+        origin:"China",
+        contains:"Grapefruit oil contains dlimonene, terpenes, monoterpenes, antibacterial, and antimicrobial benefits.",
+        choose:"Grapefruit oil is one of the top citrus essential oils known for its antimicrobial and antioxidant benefits.",
+        typeOfIngredient:" Brightener",
+        formula:"Melting Balm Cleanser, Antioxidant Body Scrub, Vit C Body Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Grape_fruit.jpg",
+      }
+    },
+    { name: "Grapeseed Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Grapeseed_oil.jpg",
+     modal:{
+        Description:"Grapes, grown for 6000 years, yield versatile grape seed oil, renowned in traditional skincare for its diverse benefits.",
+        origin:"Spain",
+        contains:"The seed is rich in phenolic compounds, vitamins C, D, E, amino acids, and tannins.",
+        choose:"Grapeseed oil strengthens the skin barrier, balances tone, and absorbs quickly without a sticky residue",
+        typeOfIngredient:"Oil/Emollient",
+        formula:"Found in our scrubs and oils cohort",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Grapeseed_oil_1_80aaab4f-220d-4617-a927-8a2d140fb2f5.jpg",
+      }
+    },
+    { name: "Great Burnet", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Great_Burnet.jpg" ,
+     modal:{
+        Description:"This plant, with red, egg- shaped flower heads, has cooling properties and heals wounds traditionally.",
+        origin:"China",
+        contains:"Root of great burnet contains triterpene glycosides, fatty acids,flavonoids, phenolic acids, tannins, and neolignans.",
+        choose:"We chose this root extract for its moisturizing, antioxidant, antiinflammatory, and skintone-evening benefits.",
+        typeOfIngredient:" Plant Extract",
+        formula:"Clarifying Concentrate, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Great_Burnet_0e40c528-8eed-48ca-b353-6f4910b16432.jpg",
+      }
+    },
+    { name: "Green Silt", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Green_silt.jpg",
+     modal:{
+        Description:"Silt is a fine freshwater sediment, rich in humic acids, formed by grinding rock fragments over time.",
+        origin:"",
+        contains:"It contains chlorophyll, carotenoids, humic acid, organic nitrogen, free fatty acids, and blue- green algae.",
+        choose:"We chose Green Silt for its detoxifying, nourishing, and revitalizing benefits, which boosts the skin's vitality.",
+        typeOfIngredient:" Exfoliant ",
+        formula:"Nordic Mud Mask",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Green_Siltimg.jpg",
+      }
+    },
+    { name: "Green Tea", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Green_tea.jpg",
+     modal:{
+        Description:"Green tea, used for 4700 years, provides antioxidants in skincare through its extract, but may not provide when consumed orally.",
+        origin:"Assam, India",
+        contains:"Packed with flavonoids, amino acids, caffeine, vitamins A, B, C, E, and K, and minerals manganese and potassium.",
+        choose:"We choose this ingredient for its potent flavonoids, offering UV protection, anti-aging, and antiinflammatory benefits",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Found specially in our acne- care range along with creams, scrubs, oils and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Green_Tea_a111eec2-e843-4266-8656-3ce0ba8530d9.jpg",
+      }
+    },
+    { name: "Guava Leaf", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Guava_Leaf_1_6bfd4d00-4a9f-45e9-bdc6-1a392a7a9196.jpg",
+     modal:{
+        Description:"Guava leaf is popular folk medicine worldwide, in South America for bacterial infections and in India for rheumatism.",
+        origin:"Central & Northern parts of South America",
+        contains:"Guava leaves contain gallic acid, catechin, rutin, naringenin, beta- carotene, lycopene, and kaempferol.",
+        choose:"It has powerful anti- bacterial and antiinflammatory properties, soothing dry, irritated skin.",
+        typeOfIngredient:" Plant Extract",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Guava_Leaf.jpg",
+      }
+    }
+  ],
+      H: [
+    { name: "Hemp Seed Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hemp_Seed_Oil.jpg?v=1729667180",
+          modal:{
+        Description:"Hempseed oil, derived from hemp seeds, lacks THC and CBD, and is used in skincare and cooking.",
+        origin:"Canada",
+        contains:"Rich in omega-3/6 fatty acids, phenolic compounds, vitamins B1, B2, D, E, and essential minerals.",
+        choose:"We chose Hemp Seed Oil for its powerful anti- bacterial, antioxidant, and regenerative properties.",
+        typeOfIngredient:" Oil/Emollient ",
+        formula:"Nourishing Sleep Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hemp_Seed_Oil_90d53b09-5ad0-49f1-9391-35ff624a45a3.jpg",
+      }
+    },
+    { name: "Heptyl Glucoside", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Heptyl_Glucoside_1_95032c36-5a6f-4705-95ce-5472358bf137.jpg" ,
+          modal:{
+        Description:"It is a natural solubilizer; it helps mix oils and Vitamin E in a water solution and helps keep the emulsion stable.",
+        origin:"",
+        contains:"It is produced from sugar and castor oil per the 12 principles of green chemistry.",
+        choose:"We chose this solubilizer for its 100% natural, PEGfree formula that stabilizes emulsions at extreme pH levels.",
+        typeOfIngredient:" Humectant",
+        formula:"AHA Power Peel, AHA face wash, AHA body wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Heptyl_Glucoside.jpg",
+      }
+    },
+    { name: "Himalayan Pink Salt", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Himalayan_Pink_salt_1_2778e665-b91e-4eba-a2e6-866f63788eff.jpg",
+        modal:{
+        Description:"It was formed 250 million years ago; according tolegend, the site of the salt mine was initially discovered by Alexander the Great.",
+        origin:"Pakistan",
+        contains:"This pink halite (salt) is 98-99% salt, enriched with iron, magnesium,iodine, phosphorus, potassium, and zinc.",
+        choose:"We use Himalayan Pink Salt for its natural exfoliation, essential trace elements, and eco-friendly, sustainable sourcing.",
+        typeOfIngredient:" Exfoliant, Soother ",
+        formula:"Face Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Himalayan_pink_salt.jpg",
+      }
+    },
+      { name: "Hops", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hops_1_ec9465b7-dd47-4545-a7ec-747c7c0d9d75.jpg",
+        modal:{
+        Description:"Hops, traditionally used to control fermentation in beer, are now prized in skincare for their anti- microbial and anti-aging benefits.",
+        origin:"",
+        contains:"It contains humulone,lupulone, chalcone xanthohumol, myrcene, humulene, caryophyllene, and flavonoids.",
+        choose:"We use hops extract for CXH’s ability to inhibit pigmentation, block melanocyte growth, and promote cell turnover.",
+        typeOfIngredient:"Anti-inflammatory, Antifungal ",
+        formula:"Radiance face oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hops.jpg",
+      }
+    },
+     { name: "Hyaluronic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hyaluronic_acid_1_3b88cc61-a430-4113-9d59-f61d78086d9a.jpg?v=1729667180",
+        modal:{
+        Description:"It is naturally produced in various human tissues. Topical application of HA keeps skin hydrated and delays aging",
+        origin:"China",
+        contains:"Our vegan HA, made with patented enzymatic technology, has a small molecular weight under 5 kDA.",
+        choose:"We use this vegan, low- molecular-weight HA for deep hydration, making moisture accessible for all skin types.",
+        typeOfIngredient:" Humectant ",
+        formula:"Found in all our products",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hyaluronic_acid.jpg",
+      }
+    },
+       { name: "Hydrogenated Starch Hydrolysate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydrogenated_starch.jpg",
+        modal:{
+        Description:"",
+        origin:"",
+        contains:"It is produced by the controlled hydrogenation of corn syrup, and chemically, it is a polysaccharide carbohydrate.",
+        choose:"We chose HSH for its plant-derived polysaccharides that boost moisture and effectively prevent skin dryness.",
+        typeOfIngredient:"Humectant ",
+        formula:"Night Repair Cream, Bio- Retinol Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydrogenated_starch_bd6be246-5f4a-4955-8b1b-7a5c98c6346c.jpg",
+      }
+    },
+       { name: "Hydroxy Ethyl Cellulose", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxy_Ethyl_Cellulose.jpg",
+        modal:{
+        Description:"Hydroxy Ethyl Cellulose (HEC) is a plant-derived thickener that provides high shear stability in products.",
+        origin:"",
+        contains:"Chemically, it is a derivative of a renewable polysaccharide derived from cellulose (wood).",
+        choose:"We chose HEC for its biodegradable nature, skin barrier enhancement, and excellent sensory benefits.",
+        typeOfIngredient:"Thickener ",
+        formula:"AHA Face Wash, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxy_Ethyl_Cellulose_81b0b84c-e127-4126-a3a0-4309b8862348.jpg",
+      }
+    },
+      { name: "Hydroxyphenoxy Propionic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxyphenoxy_Propionic_Acid_1.jpg" ,
+        modal:{
+        Description:"It is often considered a more powerful dark-spot corrector than hydroquinone or even kojic acid.",
+        origin:"",
+        contains:"HPPA is a beta carboxylic acid.",
+        choose:"It effectively reduces dark spots without the cytotoxic effects of traditional lightening agents like hydroquinone.",
+        typeOfIngredient:"Brightener ",
+        formula:"Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxyphenoxy_Propionic_Acid.jpg",
+      }
+    },
+        { name: "Hydroxypropyl Starch Phosphate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxypropyl_Starch_Phosphate_1_2789568f-3fc4-45a7-bbe7-4ce3bdc166a9.jpg" ,
+        modal:{
+        Description:"A natural, powdered sugar that acts as both a surfactant and emulsifier, binding formulas.",
+        origin:"",
+        contains:"It is a pre-gelatinized sugar and belongs to the family of carbohydrates.",
+        choose:"It has the ability to enhance emulsion viscosity, improve skin conditioning, and provide a non-greasy feel.",
+        typeOfIngredient:"Thickener ",
+        formula:"Found in most of our creams, cleansers, exfoliators and treatment products.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Hydroxypropyl_Starch_Phosphate.jpg",
+      }
+    }
+      ],
+    I: [
+    { name: "Iron Oxides", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Iron_Oxide.jpg",
+        modal:{
+        Description:"Ecocert certified naturally derived inorganic colouring agent",
+        origin:"India",
+        contains:"Naturally occuring iron oxide.",
+        choose:"These are naturally occurring colours we have used to make the product a tad more pretty.",
+        typeOfIngredient:" Brightener ",
+        formula:"AHA Face Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Iron_Oxide_1.jpg",
+      }
+    }
+  ],
+  J: [
+    { name: "Japanese Knotweed Root Extract (Polygonum Cuspidatum)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Japanese_knodweed_1_ab52a6b0-4153-49bf-ac42-eaf701dcff4a.jpg" ,
+            modal:{
+        Description:"It has been used in traditional medicine for ages. Recent research indicates it is a very rich source of resveratrol.",
+        origin:"Japan",
+        contains:"It is rich in resveratrol and contains flavonoids, anthraquinones, coumarins, essential oils, and organic acids.",
+        choose:"We chose it for its anti- aging, soothing, and antioxidant properties that protect and calm skin.",
+        typeOfIngredient:" Antioxidant",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Japanese_knodweed.jpg",
+      }
+    },
+    { name: "Jasmine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Jasmine_1_76a8ef74-383d-46a9-8295-7cf146bd4898.jpg",
+            modal:{
+        Description:"Jasmine, known as Chameli or Malti in Asia, is valued for its aromatic and therapeutic benefits.",
+        origin:"India",
+        contains:"It contains alkaloids, coumarins, flavonoids,tannins, terpenoids, essential oil, and saponins.",
+        choose:"We chose jasmine for its antibacterial, antioxidant benefits and delightful aroma, enhancing product efficacy.",
+        typeOfIngredient:" Antioxidant, Antiinflammatory ",
+        formula:"Found mainly in creams, peel and serums",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Jasmine.jpg",
+      }
+    }
+  ],
+    K: [
+    { name: "Kaffir Lime", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Kaffir_lime_1_1.jpg" ,
+            modal:{
+        Description:"Kaffir lime, with its wrinkly peel and robust aroma, is a potent citrus used in medicine.",
+        origin:"India",
+        contains:"Contains citronella,limonene, D-limonene, α-pinene, myrcene, and terpinolene for a citrusy fragrance and antioxidants.",
+        choose:"We chose kaffir lime oil for its powerful antioxidant, anti-bacterial properties, and uplifting citrus scent.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Melting Balm Cleanser",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Kaffir_lime_1_d2f3f836-c5d8-4190-8bbe-18c314ab8e6d.jpg",
+      }
+    },
+    { name: "Kakadu Plum", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Kakadu_Plum.jpg",
+            modal:{
+        Description:"The most recent sweetheart of the natural skincare industry, boasts 100x more Vitamin C than oranges by weight.",
+        origin:"Australia",
+        contains:"Packed with Vitamin C, A, E, polyphenols, fatty acids, and minerals like Copper, Zinc, Magnesium",
+        choose:"We chose Kakadu plum for its potent Vitamin C, reducing oxidative stress and boosting collagen production.",
+        typeOfIngredient:" Antioxidant",
+        formula:"Night Repair Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Kakadu_Plum_1_0d0463d3-f0b2-4820-89d8-e129e85fafc4.jpg",
+      }
+    },
+    { name: "KOREAN ANGELICA EXTRACT", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Korean_Angellica_1.jpg" ,
+            modal:{
+        Description:"Korean Angelica is a popular traditional medicinal herb used in Asian countries such as Korea, Japan, and China.",
+        origin:"",
+        contains:"The major components of Angelica root extract are decursin & its isomer.",
+        choose:"Researchers have indicated that angelica's root extracts can help in fading dark spots and slow down skin-aging",
+        typeOfIngredient:"Anti-inflammatory Agent ",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Korean_Angellica.jpg",
+      }
+    }
+  ],
+L: [
+    { name: "Lactic Acid", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lactic_Acid_1.jpg",
+            modal:{
+        Description:"Lactic acid forms when milk's natural sugar ferments with harmless bacteria, possibly Cleopatra's secret to radiant skin!",
+        origin:"",
+        contains:"Cleopatra's famous milk baths may owe their glow to lactic acid, naturally found in milk.",
+        choose:"It’s a type of AHA that helps exfoliate, brighten the skin, reduce pores, and boost moisture.",
+        typeOfIngredient:" Alpha-Hydroxy Acid (AHA)",
+        formula:" Overnight Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lactic_Acid.jpg",
+      }
+    },
+    { name: "Lavender", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lactic_Acid.jpg" ,
+            modal:{
+        Description:"It was an important part of Ancient Roman bathing rituals and perfume fragrance in Victorian England because of its pleasing aroma. ",
+        origin:"Bulgaria",
+        contains:"Lavender essential oil contains rosmarinic acid, apigenin, linalool,linalyl acetate, and beneficial polyphenols.",
+        choose:"We chose it for its soothing, anti-microbial, skin-strengthening, and aromatherapeutic benefits.",
+        typeOfIngredient:"Soother ",
+        formula:"Found mostly in our creams, oils, scrubs and cleasners",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lavender_1_f0487262-4e31-4db3-b247-ff3c85de87b9.jpg",
+      }
+    },
+    { name: "Lemon", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lemon.jpg" ,
+            modal:{
+        Description:"Lemon, a citrus powerhouse, offers vibrant, refreshing benefits for skin with its natural oils, vitamins, and citric acid.",
+        origin:"Argentina",
+        contains:"Lemon contains Vitamin C, citric acid, flavonoids, glutathione, Vitamin E, terpenes, and minerals.",
+        choose:"We chose lemon extract for its exfoliating, collagen- boosting, and skin- brightening properties, protecting against damage.",
+        typeOfIngredient:" Brightener",
+        formula:"Clarifying Concentrate, AHA Power Peel, AHA Face Wash, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lemon_1.jpg",
+      }
+    },
+    { name: "Lemongrass", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lemon_Grass.jpg",
+            modal:{
+        Description:"Lemongrass, native to India and South-East Asia, is used in skincare and as a Vitamin A precursor.",
+        origin:"India",
+        contains:"Lemongrass essential oil contains geranial, neral, myrcene, citral, citronellal, geranyl acetate, nerol, geraniol, and limonene.",
+        choose:"We chose lemongrass for its anti-acne, antiinflammatory, and pore- minimizing properties, ideal for breakouts.",
+        typeOfIngredient:" Essential Oil ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lemon_Grass_1.jpg",
+      }
+    },
+    { name: "Licorice", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Licorice_1.jpg",
+            modal:{
+        Description:"In China it was considered a magic plant that would carry the medicinal formula to all the 12 'regular meridians' of the body. ",
+        origin:"India",
+        contains:"Licorice extract contains glabridin, liquiritin, sugars, starch, resins, essential oils, tannins, and amino acids.",
+        choose:"We chose licorice extract for its glabridin and liquiritin, which brighten and reduce pigmentation effectively.",
+        typeOfIngredient:"Brightener ",
+        formula:"Found in most of our creams, serums, cleansers and mask.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Licorice.jpg",
+      }
+    },
+    { name: "Linseed", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Linseed.jpg" ,
+            modal:{
+        Description:"Recently popularized as an edible oil for its high omega-3 content, it’s now also a favored skincare ingredient.",
+        origin:"India",
+        contains:"It contains important fatty acids such as αlinolenic acid, palmitic acid (omega 9), stearic acid, and linoleic acid.",
+        choose:"We chose it for its emollient properties, enhancing skin softness and protecting against moisture loss.",
+        typeOfIngredient:"  Moisturising Agent",
+        formula:"Bio-Retinol",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Linseed_795e5883-54fd-48ed-923a-8b0fba4362ef.jpg",
+      }
+    },
+    { name: "Lotus Leaf", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lotus_leaf_1_3806ce53-99d7-4ea8-86c2-df168b062eaf.jpg" ,
+            modal:{
+        Description:"Lotus, a sacred aquatic plant, has broad leaves and is honored in Hinduism and Buddhism.",
+        origin:"India",
+        contains:"Lotus leaf is a rich source of multiple bioactive components such as alkaloids, tannins, and flavonoids.",
+        choose:"Lotus leaf extract controls sebum, unclogs pores, and balances oil without drying, ideal for acne prevention.",
+        typeOfIngredient:"Plant Extract ",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Lotus_leaf.jpg",
+      }
+    }
+  ],
+ M: [
+    { name: "Macadamia", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Macademia.jpg" ,
+            modal:{
+        Description:"A popular gourmet chocolate used in skincare, its high demand and limited supply make it the most expensive nut in the world.",
+        origin:"Australia ",
+        contains:"It contains plant squalene, tocotrienols, and fatty acids: palmitic, oleic, and linoleic acids",
+        choose:"We chose it for its ability to repair the skin barrier and provide potent anti-aging benefits.",
+        typeOfIngredient:" Oil/Emollient",
+        formula:"Found in all our creams and oils.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Macademia_1.jpg",
+      }
+    },
+    { name: "Mace", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Mace.jpg",
+            modal:{
+        Description:"The Nutmeg tree yields two spices: nutmeg (seed kernel) and mace (its dried covering).",
+        origin:"Srilanka",
+        contains:"Mace oil contains acetic, formic, palmitic, and stearic acids, along with monoterpenes and sesquiterpenes.",
+        choose:"We chose it for its ability to exfoliate, enhance radiance, and firm skin through organic acids.",
+        typeOfIngredient:"Anti-inflammatory, Antifungal Agent ",
+        formula:"Nourishing Sleep Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Mace_1_e87912bb-4613-4267-945a-50ea853b5ac9.jpg",
+      }
+    },
+    { name: "Magnesium Aspartate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Magnesium_Aspartate_21021ba2-5369-4ba5-bdf9-03e568bc4e48.jpg?v=1729671664",
+            modal:{
+        Description:"This magnesium salt of aspartic acid enhances protein function, mineral delivery, and energy efficiency in the skin.",
+        origin:"",
+        contains:"It is a magnesium salt of aspartic acid, an amino acid.",
+        choose:"It is ideal for promoting skin tightness and supporting vital cellular activities for a rejuvenated complexion. ",
+        typeOfIngredient:"Soother ",
+        formula:"AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Magnesium_Aspartate_1.jpg?v=1729671666",
+      }
+    },
+    { name: "Magnolia", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Magnolia_1.jpg",
+            modal:{
+        Description:"Magnolia tree, used in traditional Chinese medicine, offers antiinflammatory and soothing benefits in skincare.",
+        origin:"India",
+        contains:"Magnolia bark extract contains potent antioxidants magnolol and honokiol, which are 1,000 times stronger than vitamin E.",
+        choose:"Chosen for its potent antioxidant, antiinflammatory, and skin barrier-boosting properties.",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"Clarifying Concentrate, Skin Perfecting Serum, Regenerating Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Magnolia.jpg",
+      }
+    },
+    { name: "Malachite", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Malachite_1_7ae5059b-5702-4a92-81c3-65bbb984f3ad.jpg",
+            modal:{
+        Description:"The rich copper content of malachite extract has been studied to increase collagen and elastin in the skin and give plumpness and glow.",
+        origin:"Russia",
+        contains:"It is a rich source of trace elements such as zinc, copper, selenium, and manganese (minerals).",
+        choose:"Chosen for its anti-aging, hydration, and collagen- boosting benefits in gentle aqueous form.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Hydrating Cream, AHA Power Peel, Body Cleanser",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Malachite.jpg",
+      }
+    },
+    { name: "Manicouagan Sea Mineral Clay", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Manicouagan_Sea_Mineral_Clay_1.jpg",
+            modal:{
+        Description:"Over 200 million years ago, a meteorite hit what is today Québec, Canada. It has several skincare benefits",
+        origin:"Canada",
+        contains:"It contains clay, water, illite, quartz, sodium, and potassium oxide in a silicate mineral complex.",
+        choose:"It has unique exfoliating, moisturizing, and antiinflammatory properties that rejuvenate skin.",
+        typeOfIngredient:" Exfoliant",
+        formula:"Marine Clay Mask",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Manicouagan_Sea_Mineral_Clay.jpg",
+      }
+    },
+    { name: "Manuka Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Manuka_Oil_2.jpg",
+            modal:{
+        Description:"Manuka oil, a traditional Maori medicine, is 33x more potent than Australian tea tree oil against bacteria.",
+        origin:"New Zealand",
+        contains:"It is rich in monoterpenes, sesquiterpenes, diterpenes, and various skin-nourishing compounds.",
+        choose:"It has powerful anti- microbial, antiinflammatory, and skin- protective properties against acne.",
+        typeOfIngredient:" Antifungal",
+        formula:"Melting Balm Cleanser, Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Manuka_Oil_1.jpg",
+      }
+    },
+    { name: "Meadowfoam", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Meadowfoam_1_fa15ccfc-48f2-4ef9-9f36-87fb41c84d94.jpg" ,
+            modal:{
+        Description:"Fun Fact: Meadowfoam seed oil gets its name because its blooms resemble white sea foam on meadows!",
+        origin:"USA",
+        contains:"It contains over 98% long-chain fatty acids, about 60% of which is eicosenoic acid (omega 9).",
+        choose:"Meadowfoam oil offers quick absorption and stability, ensuring a nontacky feel and longer shelf life.",
+        typeOfIngredient:" Oil/Emollient ",
+        formula:"Found in all our creams, oils and scrubs.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Meadowfoam.jpg",
+      }
+    },
+    { name: "Methylglucoside Phosphate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylglucoside_Phosphate.jpg" ,
+            modal:{
+        Description:"Produced from glucose, it effectively boosts elastin when paired with an amino acid mineral complex",
+        origin:"",
+        contains:"It is a complex mixture of esters of phosphoric acid with the methyl ether of glucose.",
+        choose:"It helps to disperse active ingredients evenly and provide soothing benefits. ",
+        typeOfIngredient:"Moisturising Agent ",
+        formula:"Regenerating Serum, Copper Peptide Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylglucoside_Phosphate_1.jpg",
+      }
+    },
+    { name: "Methylpropanediol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylpropanediol_1.jpg",
+            modal:{
+        Description:"This colorless, odorless liquid boosts preservatives, hydrates skin, and has strong antimicrobial properties.",
+        origin:"",
+        contains:"It is an organic glycol.",
+        choose:"It features in our formulas as part of a blend of actives.",
+        typeOfIngredient:" Humectant",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylpropanediol.jpg",
+      }
+    },
+    { name: "Methylsilanol Mannuronate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylsilanol_1.jpg",
+            modal:{
+        Description:"Using the silanol technology, this molecule replenishes the natural pool of silicium in the skin.",
+        origin:"Monaco",
+        contains:"Organic silicium contains essential minerals that boost skin hydration, elasticity, and support connective tissue.",
+        choose:"It is a multifunctional compound that enhances skin structure and nutrient delivery",
+        typeOfIngredient:"Moisturising Agent ",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Methylsilanol.jpg",
+      }
+    },
+    { name: "Mirabilis Jalapa Extract", img: "" ,
+            modal:{
+        Description:"The Marvel of Peru, a flower with multi-colored blooms, opens at dusk and closes by dawn.",
+        origin:"Peru",
+        contains:"The flower extract mostly contains anthocyanins and flavonoids.",
+        choose:"We chose this flower extract for its antiinflammatory, antibacterial, and antioxidant properties that soothe skin.",
+        typeOfIngredient:" Anti-inflammatory Agent ",
+        formula:"Soothing Cream",
+        link:"",          modalimg:"",
+      }
+    },
+    { name: "Mixed Tocopherol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Mixed_tocopherol.jpg" ,
+            modal:{
+        Description:"Vitamin E comes in four tocopherols and tocotrienols, and it works even better with Vitamin C.",
+        origin:"",
+        contains:"Tocopherols are lipid- soluble compounds with a chromanol ring and phytyl side chain, derived from tyrosine.",
+        choose:"We chose naturally derived mixed tocopherols for their superior antioxidant benefits and healing efficiency. ",
+        typeOfIngredient:"Antioxidant  ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Mixed_tocopherol_1.jpg",
+      }
+    },
+    { name: "Monoi Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Monoi_oil.jpg" ,
+            modal:{
+        Description:"It is an infusion made by soaking petals of Tahitian gardenia flowers in pure coconut oil. It has been part of Polynesian life for centuries.",
+        origin:"Polynesia",
+        contains:"Monoi oil contains methyl salicylate, lauric acid, flavonoids, terpenoids, monoterpenoids, and phytosteroids.",
+        choose:"Known to combat severe skin conditions like eczema & dermatitis. Monoi Oil is good for skin hydration.",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Bio-Retinol Cream, Vit C Body Oil, Face Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Monoi_oil_cf508ae8-6bb1-417a-a0ba-d5556e08bedd.jpg",
+      }
+    },
+    { name: "Myrrha", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Myrrha_1.jpg" ,
+            modal:{
+        Description:"Fun Fact: According to the Bible, myrrh oil was one of the gifts given to baby Jesus by the three wise men.",
+        origin:"",
+        contains:"Myrrh oil contains terpenes, organic acids, and compounds like a- pinene, limonene, eugenol, and cadinene.",
+        choose:"Known to combat severe skin conditions like eczema and dermatitis, Monoi oil is good for skin hydration.",
+        typeOfIngredient:" Antioxidant, Antiinflammatory",
+        formula:"Found in most of our creams, cleansers and few of scrubs and oil.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Myrrha.jpg",
+      }
+    }
+  ],
+  N: [
+    { name: "Neem", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Neem_1.jpg" ,
+           modal:{
+        Description:"In ancient Hindu texts, it is referred to as 'Sarva Roga Nivarini,' meaning 'one that cures all ailments and ills.",
+        origin:"India (Assam)",
+        contains:"Neem is rich in vitamins E and C, fatty acids, flavonoids, carotenoids, and terpenes.",
+        choose:"We chose neem for its powerful skin benefits,including antiinflammatory, antioxidant, and moisturizing properties.",
+        typeOfIngredient:" Anti-inflammatory, Antifungal ",
+        formula:"Found in many of our oil- based products",
+        link:"",          modalimg:" https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Neem.jpg",
+      }
+},
+    { name: "Niacinamide", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Niacinamide.jpg",
+           modal:{
+        Description:"Also known as nicotinamide, it is perhaps one of the most popular skincare active ingredients today.",
+        origin:"",
+        contains:"Niacinamide is also called nicotinamide. It is a form of vitamin B3, an essential nutrient for the body's regular functioning.",
+        choose:"We chose niacinamide for its hydrating, barrier-repair, and anti-aging benefits, perfect for all skin types.",
+        typeOfIngredient:"Brightener  ",
+        formula:"Found in most of creams, serum and scrubs.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Niacinamide_f2cf2a79-fae6-4b3d-a5e1-c072a4bc5daa.jpg",
+      }
+},
+    { name: "Nordic Beauty Peat", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Nordic_Beauty_peat_1.jpg" ,
+           modal:{
+        Description:"Organic peat, layered over centuries, preserves nutrients from generations of fauna buried in mud.",
+        origin:"Finland",
+        contains:"Peat contains flavonoids, humic acids, fulvic acids, probiotics, and is free from harmful bacteria",
+        choose:"It has unique detoxifying, moisturizing, and skin- balancing properties, enhancing overall skin health.",
+        typeOfIngredient:"Plant Extract  ",
+        formula:"Not mentioned in the current ing-library",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Nordic_Beauty_peat.jpg",
+      }
+}
+  ],
+    O: [
+    { name: "Olive", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Olive.jpg" ,
+           modal:{
+        Description:"Did you know? The first soap was created by blending olive oil, essence, and ashes.",
+        origin:"Italy",
+        contains:"Olive oil contains Vitamins A, D, E, and K,fatty acids - palmitic acid, oleic, linoleic, squalene, and phytosterols.",
+        choose:"We chose olive oil for its powerful vitamins and phyto-chemicals that provide hydration and protection.",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Found in most of our creams and oils.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Olive_1_8a546b12-786a-4574-b765-6bcea89a7d82.jpg",
+      }
+},
+    { name: "Olive Squalane", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Olive_squalane.jpg",
+           modal:{
+        Description:"It is naturally present in our skin’s sebum, helps keep the skin lubricated, and forms a protective barrier.",
+        origin:"Italy",
+        contains:"Squalene is a naturally occurring hydrocarbon, synthesized from vegetable and other sources.",
+        choose:"We chose squalene for its lightweight hydration, lipid barrier restoration, and skin toning properties.",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Radiance Face Oil, Nourishing Sleep Oil, Vit C Body Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Olive_squalene.jpg",
+      }
+},
+    { name: "Orange", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Orange_1_d9388548-629e-4b47-9e7d-a013aaa89112.jpg",
+        modal:{
+        Description:"The golden child of the citrus family, orange, is a potent skincare ingredient. We use a concentrated extract of orange. ",
+        origin:"USA",
+        contains:"The extract contains flavonoids, alpha- hydroxy acids, and terpenes like limonene and linalool.",
+        choose:"This potent AHA has antioxidants, and antiinflammatory properties that enhance skin health.",
+        typeOfIngredient:" Brightener",
+        formula:"AHA Power Peel, AHA Face Wash, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Orange.jpg",
+      }
+}
+  ],
+  P: [
+    { name: "Palm", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Palm_1_0c7d3423-3d6c-42cc-b52c-39d083125cb8.jpg",
+        modal:{
+        Description:"Palm oil is a fascinating ingredient with a rich history and wide-ranging applications.",
+        origin:"Malaysia",
+        contains:"It is the esterified fatty acid part of palm oil.",
+        choose:"We chose palm oil for its lipid barrier support, antimicrobial properties, and antioxidant benefits against free radicals.",
+        typeOfIngredient:" Oil/Emollient ",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Palm.jpg",
+      }
+},
+    { name: "Palm Glycerides", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/PalmGlycerides_1.jpg",
+           modal:{
+        Description:"It is a natural emollient and emulsifier.",
+        origin:"",
+        contains:"It is the esterfied fatty acid part of palm oil.",
+        choose:"We chose it for its moisturizing, soothing, and antioxidant properties that reduce breakouts and aging",
+        typeOfIngredient:" Moisturizing Agent",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/PalmGlycerides.jpg",
+      }
+},
+    { name: "Papain", img: "",
+           modal:{
+        Description:"To get you the power of 1000 papayas in one little jar, we have used Papain enzyme as an exfoliating ingredient.",
+        origin:"India",
+        contains:"It’s a naturally occurring enzyme.",
+        choose:"Papain gently exfoliates, removes dead skin cells, enhances cell turnover, and reveals brighter, youthful skin.",
+        typeOfIngredient:"Exfoliant ",
+        formula:"Vit B Enzyme Scrub",
+        link:"",          modalimg:"",
+      }
+},
+    { name: "Papaya Seed Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Papaya_Seed_Oiil.jpg" ,
+           modal:{
+        Description:"Papaya is grown in most tropical regions of the world and is considered a dietary super-fruit. ",
+        origin:"India",
+        contains:"Papaya seed oil is rich in lipids, proteins, oleic acid, vitamins A, C, and B12.",
+        choose:"It strengthens the skin barrier, boosts hydration, and brightens pigmentation for youthful radiance.",
+        typeOfIngredient:"Oil/Emollient ",
+        formula:"Melting Balm Cleanser",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Papaya_Seed_Oil.jpg",
+      }
+},
+    { name: "Pentylene Glycol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pentylene_Glycol_2.jpg",
+           modal:{
+        Description:"Pentylene Glycol is widely used as an emulsifier cum antimicrobial agent in skincare formulas.",
+        origin:"",
+        contains:"Pentylene Glycol is a kind of organic alcohol (a good one).",
+        choose:"We chose pentylene glycol for its moisturizing properties and ability to prevent bacterial contamination.",
+        typeOfIngredient:"Humectant ",
+        formula:"Bio-retinol Cream, Clarifying Concentrate, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pentylene_Glycol_1.jpg",
+      }
+},
+    { name: "Peppermint", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Peppermint_1_dbb35ca7-b995-4660-9105-30d9996263d2.jpg",
+           modal:{
+        Description:"Peppermint, an aromatic plant with high menthol, is globally cultivated for food and personal care.",
+        origin:"India",
+        contains:"Mint is a good source of menthone, menthyl acetate, eucalyptol, neomenthol, and limonene.",
+        choose:"We chose peppermint essential oil for its cooling aroma and soothing, antioxidant, and astringent benefits.",
+        typeOfIngredient:"Essential Oil  ",
+        formula:"Marine Clay Mask, Nordic Mud Mask, Nourishing Sleep Oil, Sea Salt Scrub, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Peppermint.jpg",
+      }
+},
+    { name: "Pine Mushroom", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pine_Mushroom_de3b38c4-68d2-48be-b1a6-354530245f4d.jpg" ,
+           modal:{
+        Description:"Also known as songyi mushrooms or matsutake. It has been used for skin lightening in Japan, Korea, and China since antiquity",
+        origin:"Japan",
+        contains:"These mushrooms are high in vitamins B and D, minerals such as zinc and selenium, and kojic acid.",
+        choose:"Chosen for their potent brightening and skintightening abilities, which are both time-tested and scientifically proven.",
+        typeOfIngredient:"Antioxidant, antiInflammatory ",
+        formula:"Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pine_Mushroom.jpg",
+      }
+},
+    { name: "Pine Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pine_oil_cb15b99d-6b7a-4e4a-8b58-441cb17cfd43.jpg",
+           modal:{
+        Description:"The essential oil has therapeutic value and a grounding woody aromatic note that lends warmth and body to a personal care product or perfume.",
+        origin:"Hungary",
+        contains:"Pine oil consists of αterpineol, linalool, limonene, anethole, caryophyllene, and other cyclic terpene alcohols.",
+        choose:"It's woody aroma reduces inflammation, shields against oxidative damage, and enhances skin barrier function.",
+        typeOfIngredient:"Essential Oil ",
+        formula:"Found in all our creams, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pine_oil.jpg",
+      }
+},
+    { name: "Polyglyceryl-3 Caprate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Polyglyceryl-3_Caprate_2.jpg",
+           modal:{
+        Description:"It is a 100% vegetable- derived, nitrogen-free, PEG-free thickening agent.",
+        origin:"TBD",
+        contains:"It's an alternative to synthetic surfactants. Additionally, it boosts the product's skin- smoothening properties.",
+        choose:"Emollient ",
+        typeOfIngredient:" Face Scrub, Antioxidant Body Scrub, Sea Salt Body Scrub",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Polyglyceryl-3_Caprate_1_6619b997-80cc-441d-aed7-16c5e6b98ec7.jpg",
+      }
+},
+    { name: "Polyglyceryl-3 Diisostearate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Polyglyceryl-3_Caprate.jpg",
+           modal:{
+        Description:"It is a naturally derived emulsifier. More importantly, it is gentle and recommended even for baby skin.",
+        origin:"TBD",
+        contains:"This natural surfactant boosts skin smoothness, offering a gentle alternative to synthetic options.",
+        choose:"Emollient ",
+        typeOfIngredient:"Found in most of our creams, cleansers and scrubs ",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Polyglyceryl-3_Caprate_c91763fe-7e40-4bd9-a26b-45e24617b9d4.jpg",
+      }
+},
+    { name: "Pomegranate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pomegranate.jpg",
+           modal:{
+        Description:"It origniates in Afghanistan and Pakistan, enriches Mediterranean cuisine and holds cultural significance worldwide.",
+        origin:"India",
+        contains:"Pomegranate contains fatty acids, tocopherol, and amino acids like Proline, Valine, and Methionine.",
+        choose:"We chose it for its anti- aging effects, improving metabolism and moisture retention in skin.",
+        typeOfIngredient:"Antioxidant  ",
+        formula:"Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pomegranate_ff4be67b-1309-4269-95ee-e18d7c8b225b.jpg",
+      }
+},
+    { name: "Potassium Aspartate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_Aspartate_2.jpg",
+           modal:{
+        Description:"Potassium contributes to the metabolism of skin cells and helps avoid the sensations of discomfort when the skin is attacked.",
+        origin:"",
+        contains:"It is a salt of aspartic acid, a naturally occurring amino acid in the body.",
+        choose:"We chose potassium aspartate for its soothing, protective, and barrierrebuilding benefits for sensitive skin",
+        typeOfIngredient:"Humectant ",
+        formula:"AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_Aspartate_1.jpg",
+      }
+},
+    { name: "Potassium Lauroyl Wheat Amino Acids", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_lauroly_wheat.jpg",
+           modal:{
+        Description:"It is a naturally-derived emulsifier.",
+        origin:"",
+        contains:"Chemically, it is a potassium salt of lauric acid chloride and wheat- derived amino acids.",
+        choose:"It is a natural emulsifier that also works as a conditioning and cleansing agent. ",
+        typeOfIngredient:" Moisturising Agent ",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_lauroly_wheat_738dd3d7-91e7-4fee-8e19-1680431f28f7.jpg",
+      }
+},
+    { name: "Potassium Sorbate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_Sorbate_1.jpg",
+           modal:{
+        Description:"Potassium Sorbate is a common preservative that inhibits mold, yeast, and fungi in products.",
+        origin:"",
+        contains:"It is the potassium salt of sorbic acid",
+        choose:"We chose Ecocert potassium sorbate for its natural, broad-spectrum protection against yeast and mold.",
+        typeOfIngredient:" Antifungal",
+        formula:"Found in most of our creams, serums and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Potassium_Sorbate.jpg",
+      }
+},
+    { name: "Prickly Pear", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Prickly_Pear_1.jpg",
+           modal:{
+        Description:"This cactus species is nutritious, studied for diabetes treatment, and yields expensive non- comedogenic beauty oil.",
+        origin:"Morocco",
+        contains:"It contains fatty acids, vitamins E and K, and sterols like campesterol and stigmasterol.",
+        choose:"It strengthens the skin's barrier, boosts hydration, and improves tone, brightness, and antioxidant protection.",
+        typeOfIngredient:" Antioxidant",
+        formula:"Sea Salt Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Prickly_Pear.jpg",
+      }
+},
+    { name: "Proline", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Proline.jpg" ,
+           modal:{
+        Description:"The second most abundant amino acids, proline and hydroxyproline, make up 25% of collagen and help form the skin’s moisture. ",
+        origin:"",
+        contains:"It is a proteinogenic amino acid.",
+        choose:"We chose proline to enhance moisture retention, boost collagen, and prevent dehydration and aging.",
+        typeOfIngredient:"Peptide ",
+        formula:"Hydrating Cream, Bio-Retinol Cream, Regenerating Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Proline_1.jpg",
+      }
+},
+    { name: "Propanediol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Propanediol_1_cce0c6f5-6afa-4512-b38c-bc46b0622ead.jpg",
+           modal:{
+        Description:"Propanediol, derived from corn sugar, acts as a humectant, solvent, and emollient in skincare.",
+        origin:"",
+        contains:"It is a naturally derived compound that contains glycols.",
+        choose:"We chose it for its dual role as a solvent base and hydrating humectant in formulas. ",
+        typeOfIngredient:" Humectant ",
+        formula:"Found in all of our creams, serums and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Propanediol.jpg",
+      }
+},
+    { name: "Pseudoalteromonas Ferment Extract (ANTARCTICINE)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Antarcticine.jpg" ,
+           modal:{
+        Description:"It promotes wound healing and skin regeneration by stimulating keratinocyte growth.",
+        origin:"",
+        contains:"Chemically it is a glycoprotein, a type of oligosaccharides (complex sugar molecule).",
+        choose:"We chose this extract for its collagen-boosting properties and ability to protect against extreme dryness.",
+        typeOfIngredient:"  Moisturising Agent.",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Antarcticine_25af24c6-c4c4-42ca-9436-8f6fb07a958c.jpg",
+      }
+},
+    { name: "PSIDIUM GUAJAVA LEAF EXTRACT (GUAVA LEAF EXTRACT)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/PSIDIUM_GUAJAVA_LEAF_EXTRACT.jpg",
+           modal:{
+        Description:"In South America, it is used to treat bacterial infections, while in India, it is used as a cure for rheumatism.",
+        origin:"",
+        contains:"It contains gallic acid, catechin, rutin, naringenin, beta- carotene, lycopene, and kaempferol.",
+        choose:"We chose guava leaves for their rich antioxidant content, promoting skin health and vitality.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Clarifying Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/PSIDIUM_GUAJAVA_LEAF_EXTRACT_1.jpg",
+      }
+},
+    { name: "Pumpkin", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pumpkin.jpg",
+           modal:{
+        Description:"Pumpkin seed oil, popular in Eastern Europe, is valued for its nutrients and skincare benefits.",
+        origin:"India",
+        contains:"It contains fatty acids, sterols, minerals like potassium and zinc, and vitamin E for nourishment.",
+        choose:"Pumpkin seed oil's nutrients rejuvenate dry, mature skin while reducing UV damage effectively.",
+        typeOfIngredient:"Antioxidant  ",
+        formula:"Melting Balm Cleanser",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Pumpkin_2_161710c2-d007-4da5-a4cd-75757e25dd1d.jpg",
+      }
+}
+  ],
+  Q: [],
+  R: [
+    { name: "Rose", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rose_Geranium.jpg",
+           modal:{
+        Description:"Rose, revered in mythology, enriches our formulas with organic petals, rosewater, and rosehip oil.",
+        origin:"India",
+        contains:"Various parts of the rose plant are rich in vitamins B, C, K, carotene, phenolic acids, and flavonoids.",
+        choose:"Rose petal extract controls oil, prevents bacteria, and balances skin’s natural pH effectively.",
+        typeOfIngredient:" Antioxidant",
+        formula:"Found in our Phyto-Nutrient Herb Infused Oil.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rose_Geranium_1c85546f-e1bd-45d6-8485-202a131271ab.jpg",
+      }
+},
+    { name: "Rose Geranium Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rose_Geranium.jpg",
+           modal:{
+        Description:"Rose geranium, native to South Africa, emits a roselike scent and produces aromatic essential oil.",
+        origin:"India",
+        contains:"TBD",
+        choose:"Chosen for its calming scent, antimicrobial, antiinflammatory properties, and ability to enhance skin absorption.",
+        typeOfIngredient:" Oil/Emollient",
+        formula:"Found in most of our creams and oils.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rose_Geranium_1c85546f-e1bd-45d6-8485-202a131271ab.jpg",
+      }
+},
+    { name: "Rosehip Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rosehip_oil_1.jpg",
+           modal:{
+        Description:"Rosehip, located beneath rose petals, contains seeds and shares similar apothecary properties as petals.",
+        origin:"France",
+        contains:"Rosehip oil is rich in phenolic compounds, carotenoids, ascorbic acid, fatty acids, and phytosterols. ",
+        choose:"It's an antioxidant, antimicrobial, and antiinflammatory compound that revitalizes and plumps the skin.",
+        typeOfIngredient:"Oil/Emollient ",
+        formula:"Face Scrub, Radiance Face Oil, Antioxidant Body Scrub, Spa Body Scrub, Sea Salt Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rosehip_oil.jpg",
+      }
+},
+    { name: "Rosemary", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rosehmary.jpg" ,
+           modal:{
+        Description:"Rosemary, sacred to ancient cultures, stimulates brain activity and belongs to the mint family.",
+        origin:"Morocco",
+        contains:"Contains terpenes, rosmarinic, caffeic, ursolic, betulinic, carnosic, carnosol acids, and 10–20% camphor oil.",
+        choose:"Chosen for its antioxidant, UV protection, anti-wrinkle, antibacterial, and skin barrier-improving properties.",
+        typeOfIngredient:" Antioxidant ",
+        formula:"Sea Salt Body Scrub, Antioxidant Body Scrub, Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rosemary_e261840d-cc79-4d4a-9860-f64a81b6bdbf.jpg",
+      }
+},
+    { name: "Rumex Occidentalis (Western Dock Flower)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rumex_27d4f2da-6b99-4699-8143-562fc84d031e.jpg" ,
+           modal:{
+        Description:"Also known as the western dock, this plant is native to the Prairies grassland of Canada. ",
+        origin:"Nothern canada",
+        contains:"The major bioactive compounds are anthraquinones and flavonoids.",
+        choose:"We chose this extract for its powerful tyrosinase inhibition and ability to reduce pigmentation effectively.",
+        typeOfIngredient:" Anti-inflammatory",
+        formula:"Night Repair Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rumex.jpg",
+      }
+},
+    { name: "Rutinyl Succinate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rutinyl_69bc2086-ba0e-489e-ace7-2de5eb97fe0f.jpg",
+           modal:{
+        Description:"A naturally-derived ingredient known for its potent antioxidant, skin protecting, UV absorption properties",
+        origin:"Brazil ",
+        contains:"Rutinyl Succinate is the ester of Rutin and Succinic Acid.",
+        choose:"We chose this stable rutin derivative for its capillary permeability, antiinflammatory, and antioxidant benefits.",
+        typeOfIngredient:" Anti-Aging Agent",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Rutinyl.jpg",
+      }
+}
+  ],
+  S: [
+    { name: "Saccharide Isomerate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Saccharide_Isomerate.jpg",
+        modal:{
+        Description:"A 100% natural, plant- derived molecule that mimics skin's Natural Moisturising Factor for hydration.",
+        origin:"",
+        contains:"It contains isomerized D-glucose, similar to the carbohydrate complex of citric acid and sodium citrate.",
+        choose:"We chose saccharide isomerate for its longlasting hydration and natural compatibility with the skin.",
+        typeOfIngredient:" Humectant",
+        formula:"Not mentioned in the current ing-library",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Saccharide_Isomerate_1.jpg",
+      }
+},
+    { name: "Saccharomyces Lysate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Saccharomyces_Lysate_1_4286d8ee-3158-452c-bf3c-401ec843972e.jpg",
+        modal:{
+        Description:"Saccharomyces lysate is a yeast that breaks down ingredients into smaller molecules for better absorption.",
+        origin:"",
+        contains:"Saccharomyces lysate is a probiotic yeast obtained by fermentation.",
+        choose:"Its extract enhances ingredient absorption, provides amino acids, and balances the skin's microbiome.",
+        typeOfIngredient:" Antioxidant",
+        formula:"Regenerating Serum, Copper Peptide Serum, Bio- Retinol Cream, Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Saccharomyces_Lysate.jpg",
+      }
+             },
+    { name: "Safflower Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Safflower_1_53600b62-cb3b-4d05-859d-6e31e285ca11.jpg" ,
+        modal:{
+        Description:"Safflower oil, rich in unsaturated fatty acids, is used in cooking and personal care products.",
+        origin:"India",
+        contains:"It contains various fatty acids, flavonoids, and phenolic compounds, offering diverse skin benefits.",
+        choose:"We have used safflower oil for its lightweight texture, stability, and long-lasting benefits in skincare.",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Safflower.jpg",
+      }
+             },
+    { name: "Sandalwood", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sandalwood_62db36d4-ec81-43fa-936f-67fa30a0b73d.jpg",
+        modal:{
+        Description:"Sandalwood, sacred in India, is the world's second-costliest wood, celebrated for its fragrance and healing properties.",
+        origin:"India",
+        contains:"The major constituents of sandalwood are α- and β-santalol (essential oil components).",
+        choose:"We chose sandalwood water for its soothing, antiseptic, and antiinflammatory properties for sensitive skin",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sandalwood.jpg",
+      }
+    },
+    { name: "Sarcosine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sarcosine_1_4ba0ecf1-2e68-4748-a5c9-48a34293ad62.jpg",
+          modal:{
+        Description:"Sarcosine, a lab- synthesized ingredient, naturally occurs in our bodies and helps reduce sebum production",
+        origin:"",
+        contains:"It contains quercetin (flavonoid), derivatives of amino acid such as aspartic acid, glutamic acid and leucine.",
+        choose:"TBD",
+        typeOfIngredient:"Soother ",
+        formula:"AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sarcosine_96a730da-f127-4e21-8bb5-231ce0b1d7d9.jpg",
+      }
+          },
+    { name: "Scutellaria Baicalensis Root", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Scutellaria_Baicalensis_root_1_2143bba4-ab1b-46f6-9553-29f1a4843ef6.jpg",
+          modal:{
+        Description:"This mint family member, Scutellaria Baicalensis, has been used medicinally for over 2000 years.",
+        origin:"China",
+        contains:"Its root contains potent antioxidants like baicalin, oroxylin A, wogonin, and their bio- active aglycones.",
+        choose:"We chose SB for its antiinflammatory, anti-allergic, and UV protection properties to enhance skin defense.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Scutellaria_Baicalensis_root.jpg",
+      }
+          },
+    { name: "Sea Salt", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sea_salt.jpg" ,
+          modal:{
+        Description:"Common salt offers essential trace elements and therapeutic benefits for the skin when applied topically.",
+        origin:"Isreal",
+        contains:"Sea salt contains minerals like bromide, iodine, magnesium, potassium, and calcium, unlike common salt.",
+        choose:"We chose sea salt for its pH restoration, gentle exfoliation, and essential mineral benefits for skin.",
+        typeOfIngredient:" Exfoliant ",
+        formula:"Sea Salt Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sea_salt_bca92595-20d8-4bdc-8e31-c19fc5fbe282.jpg",
+      }
+          },
+    { name: "Seabuckthorn Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Seabuckthorn_oil.jpg" ,
+          modal:{
+        Description:"Fun Fact - This plant can survive extreme temperatures of even -40 degree Celsius.",
+        origin:"Ladakh",
+        contains:"It contains fatty acids, minerals, tannins, and flavonoids, including zinc, iron, calcium, and copper.",
+        choose:"Seabuckthorn keeps skin hydrated, combats dryness, and boosts cell regeneration, even in harsh conditions. ",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Radiance Face Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Seabuckthorn_oil_1_77546433-5119-4a68-8207-04b27b65f8f5.jpg",
+      }
+          },
+    { name: "Serine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Serine_2.jpg",
+          modal:{
+        Description:"NMF contains sugars, amino acids, PCA, and urea. Among amino acids, serine is the most abundant (40%).",
+        origin:"",
+        contains:"A non-essential amino acid synthesized by the body, but its levels drop with age, requiring supplementation.",
+        choose:"Serine enhances skin hydration, boosting NMF levels to combat aging and environmental stressors effectively.",
+        typeOfIngredient:"Humectant  ",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Seabuckthorn_oil_1_77546433-5119-4a68-8207-04b27b65f8f5.jpg",
+      }
+          },
+    { name: "Shea Nut Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Shea_nut.jpg",
+          modal:{
+        Description:"Native to Africa, the shea tree, or miracle plant offers edible oil and cosmetic and pharmaceutical benefits.",
+        origin:"Africa",
+        contains:"It contains catechin, fatty acids like oleic and linoleic acid, plus vitamins A and E.",
+        choose:"We chose shea butter for its moisturizing, soothing, protective, and skin- brightening properties.",
+        typeOfIngredient:" Oil/Emollient ",
+        formula:"Not mentioned in the current ingredient-library",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Shea_nut_4bf8aaae-e38a-4dfa-9d12-94c52a798128.jpg?v=1729752118",
+      }
+          },
+    { name: "Silanetriol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Silantriol_1.jpg",
+          modal:{
+        Description:"Silanetriol in our formulas is a silanol - an active ingredient that has an organic silicium core and hydroxy.",
+        origin:"",
+        contains:"It is a combination of organic silicium core, hydroxy, and other groups such as CH3 at the branches",
+        choose:"We chose organic silicium for its powerful anti-aging, hydrating, and skinrepairing properties.",
+        typeOfIngredient:"Moisturising Agent ",
+        formula:"Copper Peptide Serum, Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Silantriol.jpg",
+      }
+          },
+    { name: "Silica", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Silica_1_464ba105-7273-4ea9-bed6-f8625cda23db.jpg" ,
+          modal:{
+        Description:"Silica is an oxide of the silicon element. It is the most common mineral on earth.",
+        origin:"",
+        contains:"Silica is an oxide of silicon with the chemical formula SiO₂ (chemically Silicon dioxide).",
+        choose:"Silica beads gently exfoliate, absorb excess oil, and offer an ecofriendly alternative to microplastics.",
+        typeOfIngredient:" Thickener",
+        formula:"Overnight Facial Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Silica.jpg",
+      }
+          },
+    { name: "Siloxanetriol Alginate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Siloxanetriol_Alginate_1.jpg",
+          modal:{
+        Description:"Based on the silanol technology, these molecules deliver caffeine deep into the skin, greatly enhancing its anti-cellulite efficacy.",
+        origin:"Brazil",
+        contains:"It is a silanol derived from organic silcium",
+        choose:"Chosen for its potent, safe anti-cellulite, skinrepairing, and skinremodeling properties.",
+        typeOfIngredient:" Moisturising Agent",
+        formula:"Longevity Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Siloxanetriol_Alginate.jpg",
+      }
+          },
+    { name: "Sodium Benzoate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Benzoate_1.jpg?v=1729752117",
+          modal:{
+        Description:"It's a common preservative in food and skincare that prevents fungal growth.",
+        origin:"",
+        contains:"It is an inorganic salt - sodium salt of benzoic acid.",
+        choose:"Primarily an anti-fungal agent but it also helps kill bad bacteria.",
+        typeOfIngredient:" Antifungal ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Benzoate.jpg?v=1729752117",
+      }
+          },
+    { name: "Sodium Cocoyl Amino Acids", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/SodiumCocoylAminoAcids_1.jpg",
+          modal:{
+        Description:"Derived from coconut, it is a surfactant without the potential irritation of traditional surfactants.",
+        origin:"",
+        contains:"It is a sodium salt of a mixture of amino acids.",
+        choose:"Chosen for its ability to replace synthetic surfactants while soothing, restoring skin, and offering antioxidants.",
+        typeOfIngredient:" Moisturising Agent ",
+        formula:"AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/SodiumCocoylAminoAcids.jpg",
+      }
+          },
+    { name: "Sodium Hydroxide", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Hydroxide_2.jpg" ,
+          modal:{
+        Description:"It is used to maintain the pH of active blends or the final product.",
+        origin:"",
+        contains:"It is an alkaline ingredient used to increase the pH of a product.",
+        choose:"It is used to ensure stability and effectiveness of a particular active ingredient or the overall product.",
+        typeOfIngredient:"Thickener ",
+        formula:"Hydrating Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Hydroxide_1.jpg",
+      }
+          },
+    { name: "Sodium Magnesium Silicate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Magnesium_Silicate_1.jpg" ,
+          modal:{
+        Description:"This biomaterial gel, made per green chemistry, acts as a reservoir for AHAs on skin.",
+        origin:"",
+        contains:"It is a type of talc (silicate clay) comprised mainly of magnesium and sodium silicate",
+        choose:"We chose this bio-material to regulate AHA release, enhancing efficacy while minimizing irritation.",
+        typeOfIngredient:" Thickener",
+        formula:"Overnight Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Magnesium_Silicate_a68421df-d459-4a50-9daa-d25716d66609.jpg",
+      }
+          },
+    { name: "Sodium Phosphate", img: "" ,
+          modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:" ",
+        formula:"",
+        link:"",          modalimg:"",
+      }
+          },
+    { name: "Sodium Stearoyl Glutamate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Stearoyl_Glutamate.jpg",
+          modal:{
+        Description:"It is a natural, environmentally-friendly and hypoallergenic emulsifier.",
+        origin:"UK",
+        contains:"It contains amino acids from glutamic acid and fatty acids from palm or coconut plants",
+        choose:"We use natural, skinfriendly emulsifiers with skin-like pH, avoiding synthetic, harmful alternatives.",
+        typeOfIngredient:" Thickener",
+        formula:"Found in all our creams",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sodium_Stearoyl_Glutamate_1.jpg",
+      }
+          },
+    { name: "Sorbitan Olivate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sorbitan_Olivate_2.jpg",
+          modal:{
+        Description:"It is a natural, PEG-free humectant, emulsifier and a mild surfactant.",
+        origin:"",
+        contains:"An ester of sorbitol (good alcohol) and the fatty acids of olive oil.",
+        choose:"Moisturizes and softens the skin while making the products stable, smooth and rich in texture",
+        typeOfIngredient:"Moisturising Agent ",
+        formula:"Found mostly in our scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sorbitan_Olivate_1.jpg",
+      }
+          },
+    { name: "Spanish Needle (Bidens Pilosa)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Spanish_needle_1_0b00ca55-e3e8-4b52-becf-8fd1f69c3151.jpg",
+          modal:{
+        Description:"",
+        origin:"South america (peru, brazil)",
+        contains:"Spanish needle contains several terpenes, monoterpenes, and oxygenated terpenes.",
+        choose:"It reduces wrinkles, enhances preservatives, and offers antibacterial, anti-inflammatory, and hypotensive benefits.",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"Bio-Retinol Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Spanish_needle.jpg",
+      }
+          },
+    { name: "Star Anise", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Star_Anise.jpg",
+          modal:{
+        Description:"It has a long history of use as a medicinal plant in China. It is also a major ingredient in the famous five-spice powder.",
+        origin:"China",
+        contains:"It contains phenols, flavonoids, terpenes, tannins, and essential minerals like calcium, iron, and magnesium.",
+        choose:"TBD",
+        typeOfIngredient:" Antioxidant ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Star_Anise_40f8d8cc-5386-489f-a022-383ff143c600.jpg",
+      }
+          },
+    { name: "Sugar Maple", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sugar_maple_1_43d518f4-eab4-4d39-96c6-33ef584bf56d.jpg",
+          modal:{
+        Description:"The maple tree is a major source of sugar, maple syrup, and lumber, especially in the Northern US and Canada.",
+        origin:"Canada",
+        contains:"Sugar Maple is rich in AHAs, glucose, fructose, sucrose, phenols, zinc, calcium, potassium, magnesium.",
+        choose:"We chose sugar maple extract for its AHAs, promoting gentle exfoliation and enhanced cell turnover",
+        typeOfIngredient:"Alpha-Hydroxy Acid (AHA)AHA Power Peel, AHA Face Wash, AHA Body Wash ",
+        formula:"AHA Power Peel, AHA Face Wash, AHA Body Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sugar_maple.jpg",
+      }
+          },
+    { name: "Sugarcane", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sugarcane_1_4f8ed008-f7bc-4cb9-8da3-5dc0f0b9b10f.jpg" ,
+          modal:{
+        Description:"Besides being a major sugar source, sugarcane offers significant therapeutic benefits for skincare",
+        origin:"USA",
+        contains:"Sugarcane is a rich source of sucrose, glycolic acid, several amino acids, starch, and gums.",
+        choose:"We chose sugarcane for its glycolic acid and moisturizing brown sugar for gentle exfoliation.",
+        typeOfIngredient:"Alpha-Hydroxy Acids (AHAs) ",
+        formula:"Overnight Peel, AHA Power Peel",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sugarcane.jpg?v=1729752118",
+      }
+          },
+    { name: "Sunflower", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sunflower.jpg",
+          modal:{
+        Description:"Sunflowers, native to the Americas, symbolize trust and love, widely used as edible oil and skincare.",
+        origin:"India",
+        contains:"It contains fatty acids like oleic, palmitic, linoleic, stearic acids, amino acids, and abundant vitamin E.",
+        choose:"Chosen for its collagen- boosting, pigmentationfading, barrier- strengthening, and antioxidant-rich properties.",
+        typeOfIngredient:"Oil/Emollient ",
+        formula:"Melting Balm Cleanser, Radiance Face Oil, Nourishing Sleep Oil",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sunflower_af10354a-459d-4b21-9f6e-827cff1daca8.jpg",
+      }
+          },
+    { name: "Sweet Flag", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sweet_flag_1_24eb88de-c9f1-4a63-81b4-0ee81ae7af18.jpg",
+          modal:{
+        Description:"Sweet flag is recommended by spiritual teachers and folk healers for improving brain activity and memory power.",
+        origin:"",
+        contains:"It contains alkaloids, flavonoids, phenols, saponins, sugars, tannins, and triterpenes.",
+        choose:"Over the past few years, research has shown that the root extract helps augment wound healing and collagen production.",
+        typeOfIngredient:"Anti-inflammatory  ",
+        formula:"Found in most of our creams, oils and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Sweet_flag.jpg",
+      }
+          },
+],
+
+  T: [
+    { name: "Tasmanian Pepper Extract", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tasmanian_pepper.jpg",
+        modal:{
+        Description:"Used by Australia's Aboriginal people as a traditional medicine, it’s a revered botanical gem.",
+        origin:"Australia",
+        contains:"It contains polygodial, citral, anethole, flavonoids, trace minerals, and various phenolic compounds.",
+        choose:"Chosen for its soothing, antioxidant-rich properties that nourish skin and reduce dark circles.",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"Soothing Cream",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tasmanian_pepper_8649f0a6-71bb-41d8-9645-d0c596a94c17.jpg",
+      }
+},
+    { name: "Tea Tree Oil", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tea_tree_1_dabbf199-b734-4512-8700-72d784ae9cf3.jpg",
+        modal:{
+        Description:"This plant is called tea tree because the early British explorers saw local people drinking tea made out of the tree's leaves.",
+        origin:"Australia",
+        contains:"It contains terpenes like α-terpineol, limonene, α- pinene, α-terpinene, caryophyllene, and camphene.",
+        choose:"Chosen for its antibacterial, antiinflammatory, and penetration-enhancing properties for acne prevention.",
+        typeOfIngredient:" Antifungal",
+        formula:" Sea Salt Body Scrub",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tea_tree.jpg",
+      }
+},
+    { name: "Threonine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Threonine_1.jpg",
+        modal:{
+        Description:"An essential amino acid that helps produce glycine and serine, vital for collagen and elastin",
+        origin:"",
+        contains:"It is an amino acid.",
+        choose:"We chose it for its ability to boost skin firmness and plumpness, rejuvenating aging skin. ",
+        typeOfIngredient:"Moisturising Agent ",
+        formula:"Hydrating Cream, Bio-Retinol Cream, Regenerating Serum, Copper Peptide Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Threonine.jpg",
+      }
+},
+    { name: "Tin Oxide", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tin_oxide.jpg",
+        modal:{
+        Description:"TBD",
+        origin:"",
+        contains:"TBD",
+        choose:"TBD",
+        typeOfIngredient:" Thickener ",
+        formula:"Overnight Peel, correcting concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tin_oxide_1_52740909-89a0-4dc0-bda5-d5fd68e65875.jpg",
+      }
+},
+    { name: "Titanium Dioxide", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Titanium_Dioxide_1.jpg",
+        modal:{
+        Description:"TBD",
+        origin:"",
+        contains:"TBD",
+        choose:"TBD",
+        typeOfIngredient:" Thickener",
+        formula:"Regenerating Serum, Overnight Facial Peel, Correcting Concentrate",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Titanium_Dioxide.jpg",
+      }
+},
+    { name: "Trisodium Ethylenediamine Disuccinate", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Trisodium_Ethylenediamine_Disuccinate_1.jpg" ,
+        modal:{
+        Description:"It is a bio-degradable chelating agent that selectively binds with specific metallic ions in the formula.",
+        origin:"",
+        contains:"It is a structural isomer of EDTA, which has the same formula, but the atoms are placed in a different order.",
+        choose:"These stabilizing agents prevent beneficial metal ions from reacting with other actives, maintaining product integrity.",
+        typeOfIngredient:"Antioxidant ",
+        formula:"Found in most of our creams, serums, exfoliators and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Trisodium_Ethylenediamine_Disuccinate.jpg",
+      }
+},
+    { name: "Tulsi (Holy Basil)", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tulsi.jpg",
+        modal:{
+        Description:"Tulsi is described as 'the incomparable one'. holds sacred significance and is worshipped in Hinduism",
+        origin:"India",
+        contains:"It contains triterpenoids, phenolic compounds, terpenes, and trace elements like calcium,iron, and zinc.",
+        choose:"Holy basil extract balances pH, adapts skin to stress, and offers UV protection, healing, and anti-aging benefits",
+        typeOfIngredient:" Anti-inflammatory",
+        formula:"Found in most of our creams, oils, scrubs and cleansers",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Tulsi_8ce5e4d6-6514-4c62-825c-a4592aa4d3fd.jpg",
+      }
+},
+    { name: "Turmeric", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Turmeric.jpg",
+        modal:{
+        Description: "Turmeric, or 'Indian saffron,' is a powerful antiseptic spice from the ginger family",
+        origin:"India",
+        contains:"It contains curcumin, curcuminoids, terpenes, and essential amino acids.",
+        choose:"We chose turmeric for its antioxidant properties, skin rejuvenation, and superior absorption through macerated oil.",
+        typeOfIngredient:" Anti-inflammatory, Antioxidant ",
+        formula:"Found in most of our creams, oils, scrubs and cleansers.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Turmeric_1cbd1ced-c4e7-4469-abbe-2508da4139f8.jpg",
+      }
+}
+  ],
+   U: [
+    { name: "Ultramarines", img: "",
+           modal:{
+        Description:"",
+        origin:"",
+        contains:"",
+        choose:"",
+        typeOfIngredient:"Colorant/Pigment ",
+        formula:"",
+        link:"",          modalimg:"",
+      }
+},
+    { name: "Undecylenoyl Phenylalanine", img: "",
+           modal:{
+        Description:"This molecule blocks MSH hormone, preventing melanin production, reducing dark spots, tanning, and pigmentation.",
+        origin:"",
+        contains:"It is derived from a lipid amino acid (Phenylalanine) ",
+        choose:"This molecule inhibits MSH to prevent dark spots and pigmentation and from tanning and aging.",
+        typeOfIngredient:"Brightener ",
+        formula:"Multivitamin Cream",
+        link:"",          modalimg:"",
+      }
+},
+    { name: "Uva Ursi", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Uva_ursi.jpg",
+           modal:{
+        Description:"Funfact, Bears are very fond of uva ursi, and thus they are also known as Bearberry. Uva ursi in Latin means bear's grape.",
+        origin:"USA",
+        contains:"Rich in arbutin, flavonoids, vitamins A, C, E, phenol-carboxylic acids, and essential minerals.",
+        choose:"We chose its leaf extract for its anti-aging, pigmentation reduction, and antioxidant protection benefits.",
+        typeOfIngredient:" Brightener",
+        formula:"Found in our anti-aging cohort.",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Uva_ursi_d75ae115-7c43-4c60-8275-75975665aee2.jpg",
+      }
+}
+],
+  V: [{ name: "Valine", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Valine_structure_1.jpg",
+             modal:{
+        Description:"Essential for protein synthesis, valine is an amino acid obtained from whole grains and vegetables.",
+        origin:"",
+        contains:"It is an aliphatic essential amino acid.",
+        choose:"We chose Valine for its ability to heal scars, wrinkles, and fine lines by boosting cell growth.",
+        typeOfIngredient:" Peptide",
+        formula:"Bio-Retinol Cream, Correcting Concentrate, Regenerating Serum, Copper Peptide Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Valine_structure.jpg",
+      }
+}],
+  W: [],
+  X: [
+    { name: "Xanthan Gum", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xanthum_gum_1_1a2baccf-211c-4dca-a237-c4c3b56caf76.jpg",
+        modal:{
+        Description:"Xanthan gum, derived from Xanthomonas campestris fermentation, is a popular natural thickener in industries.",
+        origin:"",
+        contains:"It is a high molecular polysaccharide (complex sugar molecule).",
+        choose:"We chose it for its thickening, and stabilizing properties, creating a gel texture for smooth application.",
+        typeOfIngredient:"Thickener  ",
+        formula:"In most of the products",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xanthum_gum.jpg",
+      }
+},
+    { name: "Xylitol", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xylitol_1.jpg?v=1729752118",
+           modal:{
+        Description:"Xylitol is a natural sugar found in fruits and vegetables, often used as a sucrose substitute",
+        origin:"",
+        contains:"It is naturally occurring (good) alcohol.",
+        choose:"Xylitol strengthens skin moisture, regulates sebum, and combats acne-causing bacteria for healthier skin.",
+        typeOfIngredient:" Humectant",
+        formula:"Cream Cleanser, AHA Face Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xylitol_2_dc22d864-9db9-4c1b-9baf-0f9374ea7ebc.jpg",
+      }
+},
+    { name: "Xylitylglucoside", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xylitylglucoside_1_cd6ab445-af4b-40b9-baa7-0729a11ee108.jpg",
+           modal:{
+        Description:"Produced by fermentation wheat and wood provide quick and lasting hydration for your skin.",
+        origin:"",
+        contains:"It is derived from two sugars - xylitol and glucose.",
+        choose:"This molecule enhances skin hydration by increasing water reservoirs, promoting healthy and repaired skin.",
+        typeOfIngredient:" Humectant",
+        formula:"Cream Cleanser, AHA Face Wash",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Xylitylglucoside.jpg",
+      }
+},
+  ],
+  Y: [
+    { name: "Yarrow ", img: "https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Yarrow.jpg" ,
+           modal:{
+        Description:"Fun fact, It was used in wound healing as late as the First World War, hence the name soldiers’ woundwort",
+        origin:"Europe",
+        contains:"It contains terpenes,flavonoids, alkaloids, coumarins, and several tannins as well.",
+        choose:"Yarrow extract stimulates collagen production, enhances skin renewal, and improves tone while fighting blemishes.",
+        typeOfIngredient:"Anti-inflammatory ",
+        formula:"Bio-retinol Cream, Clarifying Concentrate, Skin Perfecting Serum",
+        link:"",          modalimg:"https://cdn.shopify.com/s/files/1/0566/6521/0945/files/Yarrow_2f70f7ca-6e7c-4d85-a990-acd0919f1e70.jpg",
+      }
+},
+    { name: "Ylang Ylang", img: "",
+           modal:{
+        Description:"This oil has a delicate floral, fruity aroma and is known for calming, balancing and aphrodisiac effects.",
+        origin:"East Africa (comoros)",
+        contains:"It contains aromatic compounds like p- methyl anisole, esters,linalool, and geraniol.",
+        choose:" We chose this essential oil for its grounding scent and benefits in sebum regulation and skin rejuvenation.",
+        typeOfIngredient:"Oil/Emollient  ",
+        formula:"Vit B Enzyme Scrub",
+        link:"",          modalimg:"",
+      }
+},
+  ],
+  Z: [
+    { name: "Zinc Gluconate", img: "",
+           modal:{
+        Description:"Zinc Gluconate is an important mineral for skin health and gene communication in our body",
+        origin:"",
+        contains:"Zinc gluconate is the zinc salt of gluconic acid.",
+        choose:"This molecule aids cell production, reduces wrinkles, protects against oxidative stress, and maintains skin structure",
+        typeOfIngredient:" Anti-inflammatory",
+        formula:"Vit B Enzyme Scrub",
+        link:"",          modalimg:"",
+      }
+    },
+  ]
+};
+
+function showIngredients(letter, button) {
+  const ingredientList = document.getElementById("ingredient-list");
+  const showMoreButton = document.getElementById("show-more-button");
+  const showLessButton = document.getElementById("show-less-button");
+
+  // Phone view elements
+  const mobileViewButton = document.getElementById("mobile-view-button");
+  const categoryView = document.getElementById("category-view");
+  const mobileIngredientList = document.getElementById("mobile-ingredient-list");
+  
+  const ingredients = ingredientData[letter] || [];
+  const initialLimit = 4; // Number of ingredients to show initially
+  let isShowingAll = false; // Track if all ingredients are shown
+
+  // Function to render ingredients based on the limit
+  function renderIngredients(limit, container) {
+    container.innerHTML = ""; // Clear content
+
+    ingredients.slice(0, limit).forEach(ingredient => {
+      const item = document.createElement("div");
+      item.className = "ingredient-item flex flex-col items-center text-center cursor-pointer";
+      item.onclick = () => openModal(ingredient); // Add click handler
+
+      item.innerHTML = `
+        <div class="mb-4 mx-auto sm:h-[200px] h-[100px] sm:w-[200px] w-[100px]">
+          <img src="${ingredient.img}" alt="${ingredient.name}" class="w-full h-full object-cover rounded-full" style="border:0.2px solid black;">
+        </div>
+        <h3 class="sm:text-[24px] text-[14px] font-light sm:leading-[30px] leading-[20px] uppercase">${ingredient.name}</h3>`;
+      container.appendChild(item);
+    });
+  }
+
+  // Function to toggle ingredients and buttons
+  function toggleIngredients(showAll) {
+    isShowingAll = showAll;
+    renderIngredients(isShowingAll ? ingredients.length : initialLimit, ingredientList);
+    showMoreButton.classList.toggle("hidden", isShowingAll); // Hide "Show More" if all items are shown
+    showLessButton.classList.toggle("hidden", !isShowingAll); // Hide "Show Less" if only a few items are shown
+  }
+
+  // Event listeners for the buttons
+  showMoreButton.onclick = () => toggleIngredients(true);
+  showLessButton.onclick = () => toggleIngredients(false);
+
+  // Render initial ingredients
+  renderIngredients(initialLimit, ingredientList);
+
+  // Update the active button style
+  const buttons = document.querySelectorAll('.category-btn');
+  buttons.forEach(btn => btn.classList.remove('library_btn_active'));
+  if (button) {
+    button.classList.add('library_btn_active');
+  }
+
+  // Open mobile view with all ingredients
+  mobileViewButton.onclick = () => {
+    renderIngredients(ingredients.length, mobileIngredientList); // Render all in mobile modal
+    categoryView.classList.remove('hidden');
+  };
+}
+
+// Load the default section on page load
+window.onload = function() {
+  const defaultLetter = 'A'; // हमेशा 'A' को डिफ़ॉल्ट बनाना है
+  const defaultButton = document.querySelector(`[data-letter="${defaultLetter}"]`);
+  
+  // 'A' सेक्शन को लोड करें
+  showIngredients(defaultLetter, defaultButton);
+  
+  // Add click listener to the back button for closing the popup
+  const backButton = document.getElementById('back-button');
+  const categoryView = document.getElementById('category-view');
+  if (backButton) {
+    backButton.onclick = () => closeModal('category-view');
+  }
+};
+
+function openModal(ingredient) {
+  const modal = document.getElementById('popup-modal');
+  document.getElementById('modal-title').innerText = ingredient.name || "";
+  document.getElementById('modal-description').innerText = ingredient.modal?.Description || "No description available";
+  document.getElementById('modal-image').src = ingredient.modal?.modalimg || "";
+  document.getElementById('modal-found-inside').innerText = ingredient.modal?.origin || "Not specified";
+  document.getElementById('modal-what-it-contains').innerText = ingredient.modal?.contains || "Not specified";
+  document.getElementById('modal-why-we-chose-it').innerText = ingredient.modal?.choose || "Not specified";
+  document.getElementById('modal-type-of-ingredient').innerText = ingredient.modal?.typeOfIngredient || "Unknown";
+const formulaElements = document.querySelectorAll('.data-found-inside-the-formula');
+
+formulaElements.forEach(el => {
+  const text = ingredient.modal?.formula || "Not specified";
+  const url = ingredient.modal?.link;
+
+  if (!url) {
+    el.innerText = text;
+    return;
+  }
+
+  el.innerHTML = `
+    <a href="${url}"
+       class="underline text-[#1E00FF]"
+       rel="noopener">
+      ${text}
+    </a>
+  `;
+});
+
+  // Show modal
+  modal.classList.remove('hidden');
+    freezeBackground();
+
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.classList.add('hidden');
+  
+ unfreezeBackground();
+}
+</script>

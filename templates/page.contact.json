@@ -1,0 +1,169 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ug_contact_information_zbKKbN": {
+      "type": "ug-contact-information",
+      "blocks": {
+        "heading_with_text_Xz94km": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Customer Support:",
+            "heading_size": "heading-small",
+            "heading_color": "#000000",
+            "show_heading_underline": false,
+            "text": "<p><a href=\"mailto:care@aminu.life\" title=\"mailto:care@aminu.life\">care@aminu.life</a><br/>Our current response time is about 54 minutes. Expect a reply between 10 am and 7:00 pm IST Monday through Saturday. </p>",
+            "text_size": "text-medium",
+            "text_alignment": "text-left"
+          }
+        },
+        "heading_with_text_xpXiry": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "The Clean Consultation:",
+            "heading_size": "heading-small",
+            "heading_color": "#000000",
+            "show_heading_underline": false,
+            "text": "<p><a href=\"mailto:skincoach@aminu.life\" title=\"mailto:skincoach@aminu.life\">skincoach@aminu.life</a><br/>We're perfectionists with our skincare - and want to make sure you are too. Our Skin Coach team is here to help you achieve the results you’re looking for.</p>",
+            "text_size": "text-large",
+            "text_alignment": "text-left"
+          }
+        },
+        "heading_with_text_UXiVPw": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Salon & Clinic Inquiries:",
+            "heading_size": "heading-medium",
+            "heading_color": "#333333",
+            "show_heading_underline": false,
+            "text": "<p><a href=\"tel:+917021198701\" title=\"tel:+917021198701\">+917021198701</a></p>",
+            "text_size": "text-medium",
+            "text_alignment": "text-left"
+          }
+        },
+        "heading_with_text_6Kn7pH": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Collab + Press + Partnerships:",
+            "heading_size": "heading-small",
+            "heading_color": "#000000",
+            "show_heading_underline": false,
+            "text": "<p><a href=\"mailto:press@aminu.life\" title=\"mailto:press@aminu.life\">press@aminu.life</a><br/></p>",
+            "text_size": "text-medium",
+            "text_alignment": "text-left"
+          }
+        },
+        "heading_with_text_kc7fYf": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Wholesale:",
+            "heading_size": "heading-small",
+            "heading_color": "#000000",
+            "show_heading_underline": false,
+            "text": "<p><a href=\"mailto:wholesale@aminu.life\" title=\"mailto:wholesale@aminu.life\">wholesale@aminu.life</a></p>",
+            "text_size": "text-medium",
+            "text_alignment": "text-left"
+          }
+        },
+        "heading_with_text_wt7rdb": {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Head Office Address:",
+            "heading_size": "heading-small",
+            "heading_color": "#000000",
+            "show_heading_underline": false,
+            "text": "<p>9/B Government Industrial Estate, Near Hindustan Naka, Charkop, Kandivali(W), Mumbai - 400 067, India.</p>",
+            "text_size": "text-medium",
+            "text_alignment": "text-left"
+          }
+        }
+      },
+      "block_order": [
+        "heading_with_text_Xz94km",
+        "heading_with_text_xpXiry",
+        "heading_with_text_UXiVPw",
+        "heading_with_text_6Kn7pH",
+        "heading_with_text_kc7fYf",
+        "heading_with_text_wt7rdb"
+      ],
+      "name": "Multiple Content Blocks",
+      "settings": {
+        "section_heading": "Your connection to Aminu",
+        "enable_wide_display": false,
+        "section_heading_size": "section-heading-small",
+        "section_heading_alignment": "section-heading-left",
+        "section_heading_weight": "600",
+        "section_heading_color": "#333333",
+        "show_section_underline": false,
+        "section_heading_spacing": 5,
+        "layout_style": "stacked",
+        "grid_columns_desktop": 2,
+        "grid_columns_mobile": 1,
+        "grid_alignment": "flex-start",
+        "blocks_gap": 0,
+        "block_alignment": "block-left",
+        "block_spacing": "block-spacing-small",
+        "enable_block_background": false,
+        "block_background_color": "#f9f9f9",
+        "block_border_radius": 8,
+        "block_padding": 0,
+        "block_heading_spacing": 15,
+        "block_heading_weight": "600",
+        "background_color": "rgba(0,0,0,0)",
+        "text_color": "#000000",
+        "section_padding": 0,
+        "section_padding_mobile": 0,
+        "section_margin": 0,
+        "section_margin_mobile": 0,
+        "content_padding": 20,
+        "content_padding_mobile": 15,
+        "section_class": ""
+      }
+    },
+    "main": {
+      "type": "main-contact",
+      "blocks": {
+        "name": {
+          "type": "name_input",
+          "settings": {
+            "half_width": true
+          }
+        },
+        "email": {
+          "type": "email_input",
+          "settings": {
+            "half_width": true
+          }
+        },
+        "message": {
+          "type": "message_input",
+          "settings": {
+            "half_width": false
+          }
+        }
+      },
+      "block_order": [
+        "name",
+        "email",
+        "message"
+      ],
+      "settings": {
+        "show_page_title": false,
+        "use_columns": true,
+        "contact_title": "You’ve got questions, we’ve got answers on anything !",
+        "contact_text": "<p>Let’s Talk, But You First!<strong><br/></strong>We’re proud of the relationships we build. We’re all wildly different from each other, so chances are at least one of us has something in common with you!<strong><br/><br/></strong></p>"
+      }
+    }
+  },
+  "order": [
+    "ug_contact_information_zbKKbN",
+    "main"
+  ]
+}

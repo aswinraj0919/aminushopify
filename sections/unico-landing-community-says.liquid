@@ -1,0 +1,189 @@
+{% schema %}
+{
+  "name": "Community Is Saying",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blogs",
+      "name": "Blogs",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "video_poster_image",
+          "label": "Video Poster Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video url",
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Review Title"
+        },
+        {
+          "type": "text",
+          "id": "review_summary",
+          "label": "Review Summary"
+        },
+        {
+          "type": "text",
+          "id": "review_author",
+          "label": "Review Author"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<!-- Community Is Saying Section -->
+<div class="lg:max-w-[1350px] max-w-[90%] m-auto pb-12 pt-12 ">
+  <!-- Header -->
+  <div class="mb-10">
+    <h2 class="sm:text-[44px] text-[32px] leading-[42px] font-[600]">{{ section.settings.title }}</h2>
+  </div>
+  <!-- Cards Section -->
+  <div class="flex md:gap-8 gap-3 overflow-x-auto scrollbar-hide">
+    {% for block in section.blocks %}
+      {% if block.type == 'blogs' %}
+        <div class="w-[212px] min-w-[212px] ">
+          <div class="relative cursor-pointer">
+            <video
+              id="video-poster-{{ forloop.index }}"
+              class="custom-video__video object-cover w-[212px] h-[373px] rounded-[4px]"
+              muted
+              poster="{{ block.settings.video_poster_image | image_url }}"
+            >
+              Your browser does not support the video tag.
+            </video>
+            <!-- Play Button -->
+            <div
+              id="play-button-{{ forloop.index }}"
+              class="custom-video__control3"
+              onclick="openModal({{ forloop.index }}, '{{ block.settings.video_url }}')"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 50"
+                width="100"
+                height="100"
+                fill="black"
+                style="transform: scale(1.5);"
+              >
+                <path d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z" fill="#000000"/>
+              </svg>
+            </div>
+          </div>
+          <!-- Review Content -->
+          <div>
+            <h3 class="text-[12px] font-[500] mt-2">{{ block.settings.review_title }}</h3>
+            <p class="text-[16px] font-[600] mt-3">{{ block.settings.review_summary }}</p>
+            <p class="text-[12px] font-[300] mt-1">{{ block.settings.review_author }}</p>
+          </div>
+        </div>
+        <!-- Modal for Video Playback -->
+        <div
+          id="custom-modal-{{ forloop.index }}"
+          tabindex="-1"
+          aria-hidden="true"
+          class="hidden fixed top-10 inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
+        >
+          <div class="relative">
+            <div class="relative bg-white rounded-[16px] shadow">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between  border-b rounded-[16px] relative">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Watch Video</h3>
+                <!-- Close button -->
+                <button
+                  type="button"
+                  class="text-white bg-black  rounded-full w-8 h-8 ms-auto inline-flex justify-center items-center "
+                  onclick="closeModal({{ forloop.index }})"
+                >
+                  <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>
+              </div>
+              <div class="p-4 md:p-5 space-y-4">
+                <video
+                  class="custom-video__video_modal object-cover w-full lg:w-[300px] lg:h-[500px] h-[400px]  rounded-[12px]"
+                  controls
+                  style="border: 0.2px solid black"
+                >
+                  <!-- The source is dynamically set through JavaScript, so no need for the source element here -->
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- Custom Styles -->
+  <style>
+    .custom-video__control3 {
+      position: absolute;
+      top: 43%;
+      left: 38%;
+      border-radius: 50%;
+      padding: 1em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+      width: 60px;
+      height: 60px;
+      padding: 13px 0;
+      border: 2px solid #000000;
+    }
+
+  </style>
+  <script>
+    function openModal(index, videoUrl) {
+      console.log('Opening modal for video:', index, videoUrl);
+
+      // Open the modal
+      const modal = document.getElementById('custom-modal-' + index);
+      modal.classList.remove('hidden');
+
+      // Load the video into the video element
+      const videoElement = modal.querySelector('video');
+      videoElement.src = videoUrl;
+
+      // Wait for the video to be ready and then play it
+      videoElement.load();  // Load the new source
+      videoElement.play();  // Play the video after loading
+    }
+
+    function closeModal(index) {
+      const modal = document.getElementById('custom-modal-' + index);
+      modal.classList.add('hidden');
+
+      // Stop the video and clear the video source
+      const videoElement = modal.querySelector('video');
+      videoElement.pause();
+      videoElement.src = '';  // Clear the source to stop the video completely
+    }
+  </script>
+</div>

@@ -1,0 +1,255 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "divider": {
+          "type": "divider",
+          "settings": {
+            "show_in_quickbuy": false
+          }
+        },
+        "variant-picker": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "selector_style": "listed",
+            "dynamic_availability": "show",
+            "enable_size_chart": false,
+            "size_chart_label": "Size guide",
+            "size_chart_variant": "Size",
+            "size_chart_page": ""
+          }
+        },
+        "buy-buttons": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": true,
+            "enable_payment_button": true,
+            "show_backorder_text": false,
+            "show_pickup_availability": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "show_in_tab": false,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "vendor",
+        "divider",
+        "variant-picker",
+        "buy-buttons",
+        "description"
+      ],
+      "settings": {
+        "show_breadcrumbs": true,
+        "select_first_variant": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": true,
+        "enable_sticky_columns": false,
+        "enable_sticky_atc": true,
+        "sticky_atc_position": "end",
+        "sticky_atc_mobile": true,
+        "sticky_atc_behavior": "add_to_cart",
+        "sticky_atc_button_style": "secondary",
+        "gallery_size": "medium",
+        "gallery_layout": "carousel-under",
+        "enable_zoom": true,
+        "show_alt_text": false,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": false,
+        "media_grouping_option": "Color,Colour,Couleur,Farbe"
+      }
+    },
+    "cps-ug-global-camparison": {
+      "type": "cps-ug-global-camparison",
+      "settings": {}
+    },
+    "cps-ug-global-how-it-works": {
+      "type": "cps-ug-global-how-it-works",
+      "settings": {}
+    },
+    "cps-ug-global-key-ingredients": {
+      "type": "cps-ug-global-key-ingredients",
+      "settings": {}
+    },
+    "cps-ug-global-infinite-slider": {
+      "type": "cps-ug-global-infinite-slider",
+      "disabled": true,
+      "settings": {}
+    },
+    "scrolling_banner_bEiNHT": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_kfhDGz": {
+          "type": "text",
+          "settings": {
+            "text": "THE BEST OF NATURE + SCIENCE OFFERINGS",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_wYchLM": {
+          "type": "text",
+          "settings": {
+            "text": "DERMATOLOGICALLY TESTED FOR SAFETY & IRRITATION",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_c8CHbH": {
+          "type": "text",
+          "settings": {
+            "text": "MULTIFUNCTIONAL",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_tFFfjr": {
+          "type": "text",
+          "settings": {
+            "text": "VEGAN & CRUELTY-FREE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_ijAXMA": {
+          "type": "text",
+          "settings": {
+            "text": "ZERO PLASTIC",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_kfhDGz",
+        "text_wYchLM",
+        "text_c8CHbH",
+        "text_tFFfjr",
+        "text_ijAXMA"
+      ],
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 20,
+        "vertical_padding": 12,
+        "speed": 28,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "cps-ug-global-community": {
+      "type": "cps-ug-global-community",
+      "settings": {}
+    },
+    "cps-ug-global-about-founder": {
+      "type": "cps-ug-global-about-founder",
+      "settings": {}
+    },
+    "cps-ug-global-blogs": {
+      "type": "cps-ug-global-blogs",
+      "settings": {}
+    },
+    "cps-ug-global-Pairs-well-with": {
+      "type": "cps-ug-global-Pairs-well-with",
+      "settings": {}
+    },
+    "1760359502bb8c1cd1": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_EPWLEx": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_EPWLEx"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true
+      }
+    },
+    "cps-ug-global-consultation": {
+      "type": "cps-ug-global-consultation",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "cps-ug-global-camparison",
+    "cps-ug-global-how-it-works",
+    "cps-ug-global-key-ingredients",
+    "cps-ug-global-infinite-slider",
+    "scrolling_banner_bEiNHT",
+    "cps-ug-global-community",
+    "cps-ug-global-about-founder",
+    "cps-ug-global-blogs",
+    "cps-ug-global-Pairs-well-with",
+    "1760359502bb8c1cd1",
+    "cps-ug-global-consultation"
+  ]
+}

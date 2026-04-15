@@ -1,0 +1,41 @@
+<div class="unico-container">
+  <link id="None" rel="stylesheet" href="{{ 'unico_ingredients.css' | asset_url }}">
+
+  <!-- Our Ingredient Section -->
+  <nav class="breadcrumb ug-container-ing  "><a href="/">Home</a> <span>//</span> <span>Ingredients</span></nav>
+  <section class="ug-container-ing b-border">
+    <h1 class="mt-4 sm:text-[44px] text-[32px] sm:leading-[52px] leading-[40px] font-semibold sm:w-[20vw] w-[50vw]">
+      {{ section.settings.hero_section_title }}
+    </h1>
+    <p class="mt-4 mb-7 sm:text-[16px] text-[14px] font-light sm:w-[50vw] w-full">
+      {{ section.settings.hero_section_desc }}
+    </p>
+    <div
+      class=" hidden sm:block  my-5  "
+      style="border-top: 0.2px solid black;"
+    ></div>
+  </section>
+</div>
+    <div
+      class=" sm:hidden block  my-5  "
+      style="border-top: 0.2px solid black;"
+    ></div>
+{% schema %}
+{
+  "name": "Ingredients Section",
+  "settings": [
+      {
+      "type": "text",
+      "id": "hero_section_title",
+      "label": "Hero section title",
+      "default": "Our <br /> Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "hero_section_desc",
+      "label": "Hero section desc",
+      "default": "We pack one bottle with holistic ingredients to address primary and secondary skin concerns, keeping your skincare      minimalist, quick, and adaptable to daily changes."
+    }
+  ]
+}
+{% endschema %}

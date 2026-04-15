@@ -1,0 +1,222 @@
+<!-- Glide.js CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+/>
+
+<section class="magazine-media-section">
+  <div class="ug-container">
+    <h2 class="mm-title">{{ section.settings.title }}</h2>
+
+    <div class="glide glide-magazines">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+
+          {% for block in section.blocks %}
+          <li class="glide__slide">
+            <div class="mm-card">
+
+              <div class="mm-image-wrapper">
+                <img alt="" class="mm-image hs-lazyload hs-id-d98af2a6" loading="lazy" src="{{ block.settings.image | img_url: '800x' }}"/>
+
+                <!-- HOVER BUTTONS -->
+                <div class="mm-hover-buttons">
+                  <a href="{{ block.settings.product_link }}" class="mm-btn black">VIEW PRODUCT</a>
+                  <a href="{{ block.settings.article_link }}" class="mm-btn white">FULL ARTICLE</a>
+                </div>
+              </div>
+
+              <p class="mm-caption ">
+                {{ block.settings.caption }}
+              </p>
+
+            </div>
+          </li>
+          {% endfor %}
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Glide.js JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  new Glide(".glide-magazines", {
+    type: "carousel",  // <-- change from 'slider' to 'carousel' for infinite loop
+    gap: 20,
+    perView: 3,
+    autoplay: false,   // optional: set to number for auto sliding
+    hoverpause: true,  // pause on hover
+    loop: true,        // infinite loop enabled
+    breakpoints: {
+      1024: { perView: 2 },
+      768: { perView: 1.3 },
+      480: { perView: 1.2 }
+    }
+  }).mount();
+});
+</script>
+
+<style>
+.magazine-media-section {
+  
+  background: #fff;
+}
+
+.mm-title {
+  font-size: 44px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .mm-title {
+    font-size: 30px;
+  }
+}
+
+
+.glide__slides li {
+  list-style: none !important;
+}
+
+.mm-card {
+  width: 100%;
+}
+
+.mm-image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.mm-image {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .mm-image {
+    height: 426px;
+    width: 100%;
+  object-fit: cover;
+  display: block;
+  }
+}
+
+
+/* HOVER BUTTON WRAPPER */
+.mm-hover-buttons {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.mm-image-wrapper:hover .mm-hover-buttons {
+  opacity: 1;
+}
+
+/* BUTTONS */
+.mm-btn {
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  width: 160px;
+  border: 1px solid #fff;
+}
+
+.mm-btn.black {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.mm-btn.white {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Caption */
+.mm-caption {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 12px;
+  text-align: start;
+}
+
+{% comment %} @media (max-width: 767px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+} {% endcomment %}
+</style>
+
+{% schema %}
+{
+  "name": "Magazine & Media",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Magazine & Media"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media_item",
+      "name": "Media Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Magazine | Product Name"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "View Product Link"
+        },
+        {
+          "type": "url",
+          "id": "article_link",
+          "label": "Full Article Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Magazine & Media",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+

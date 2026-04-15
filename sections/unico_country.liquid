@@ -1,0 +1,122 @@
+{% schema %}
+{
+  "name": "Countries Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Countries Section" }
+  ]
+}
+{% endschema %}
+
+<!-- Owl CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+<style>
+/* DESKTOP GRID */
+.countries-grid {
+  display: none;   /* default hidden for mobile */
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 600px) {
+  .countries-grid {
+    display: grid !important; /* show on tablet+desktop */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .countries-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* MOBILE CAROUSEL */
+.mobile-carousel {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .mobile-carousel {
+    display: none !important; /* hide on tablet/desktop */
+  }
+}
+</style>
+
+<section class="mt-12">
+
+  <!-- DESKTOP + TABLET -->
+  <div class="ug-container-ing pb-8">
+    <div class="countries-grid">
+      {% for block in section.blocks %}
+      <div class="bg-[#F7F7F7] p-6 rounded-[4px]">
+        <h2 class="font-medium text-[40px] sm:text-[48px]">{{ block.settings.number }}</h2>
+        <h3 class="text-[32px] sm:text-[40px] font-extralight mb-3 leading-none">
+          {{ block.settings.title }}
+        </h3>
+        <p class="font-light text-[14px] sm:text-[16px]">
+          {{ block.settings.description }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- LINE -->
+  <div class="ug-container-ing pb-2" style="border-top:0.2px solid black; display:none;" id="desktop-line"></div>
+
+  <!-- MOBILE CAROUSEL -->
+  <div class="mobile-carousel bg-[#F7F7F7] mt-10">
+
+    <div style="border-bottom:0.2px solid black;"></div>
+
+    <div class="owl-carousel owl-theme pt-4">
+      {% for block in section.blocks %}
+      <div class="bg-[#F7F7F7] pl-[16px] pr-[16px] pt-6 rounded-[4px]">
+        <h2 class="font-medium text-[40px]">{{ block.settings.number }}</h2>
+        <h3 class="text-[32px] font-extralight mb-3 leading-none">
+          {{ block.settings.title }}
+        </h3>
+        <p class="font-light text-[14px]">
+          {{ block.settings.description }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="border-top:0.2px solid black;"></div>
+
+  </div>
+
+</section>
+
+<!-- jQuery + Owl JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+$(document).ready(function() {
+  // MOBILE ONLY
+  if (window.innerWidth < 600) {
+    $(".owl-carousel").owlCarousel({
+      items: 1,
+      margin: 20,
+      dots: true,
+      loop: true
+    });
+  }
+});
+</script>

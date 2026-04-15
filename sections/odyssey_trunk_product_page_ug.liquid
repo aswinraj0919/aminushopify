@@ -1,0 +1,978 @@
+{% comment %} new code  {% endcomment %}
+{% schema %}
+{
+  "name": "Odyssey Product Details",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "url",
+      "label": "Breadcrumb Title"
+    },
+    {
+      "type": "text",
+      "id": "signTitle",
+      "label": "Sign Name"
+    },
+    {
+      "type": "number",
+      "id": "bestVariant",
+      "label": "Best Variant"
+    },
+    {
+      "type": "number",
+      "id": "rating",
+      "label": "Rating"
+    },
+    {
+      "type": "number",
+      "id": "reviews",
+      "label": "Number of Reviews"
+    },
+    {
+      "type": "image_picker",
+      "id": "moon_icon",
+      "label": "Moon Icon"
+    },
+    {
+      "type": "text",
+      "id": "subDiscription",
+      "label": "Sub Discription"
+    },
+    {
+      "type": "text",
+      "id": "phoneProductDiscription",
+      "label": "Product Discription"
+    },
+    {
+      "type": "url",
+      "id": "main_video",
+      "label": "Product Video"
+    },
+    {
+      "type": "richtext",
+      "id": "trunk_contain",
+      "label": "Trunk Contain"
+    },
+    {
+      "type": "text",
+      "id": "save_text",
+      "label": "Save"
+    },
+    {
+      "type": "richtext",
+      "id": "free_text",
+      "label": "Free"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rotated_text",
+      "name": "Rotated Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "rotated",
+          "label": "Rotated Text"
+        }
+      ]
+    },
+    {
+      "type": "varient_image",
+      "name": "Varient Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "varient_images",
+          "label": "Varient Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Details",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign name = section.settings.collection %}
+{% assign collection_products = collections[name].products %}
+{% assign product = section.settings.product %}
+
+{% assign varient_image = blank %}
+{% for block in section.blocks %}
+  {% if block.type == 'varient_image' and block.settings.varient_images != blank %}
+    {% assign varient_image = block.settings.varient_images %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<!-- Swiper CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+>
+
+<style>
+  /* Mobile Carousel - Using Swiper.js */
+  .mobile-carousel-fix {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: none !important;
+  }
+
+  /* Show mobile carousel only on mobile */
+  @media (max-width: 1023px) {
+    .mobile-carousel-fix {
+      display: block !important;
+    }
+
+    /* Hide desktop sidebar on mobile */
+    .lg\:w-\[10\%\] {
+      display: none !important;
+    }
+
+    /* Hide desktop main image section on mobile */
+    .lg\:w-\[40\%\] {
+      display: none !important;
+    }
+
+    /* Hide desktop product header (second product details) on mobile */
+    .lg\:flex.flex-row.items-start.justify-between {
+      display: none !important;
+    }
+
+    /* Hide desktop description on mobile */
+    .lg\:pl-12 .text-\[14px\].leading-\[19px\].font-\[400\].mt-3.mb-5 {
+      display: none !important;
+    }
+  }
+
+  /* Show desktop layout on desktop */
+  @media (min-width: 1024px) {
+    /* Hide mobile carousel on desktop */
+    .mobile-carousel-fix {
+      display: none !important;
+    }
+
+    /* Hide mobile header on desktop */
+    .responsive-display {
+      display: none !important;
+    }
+
+    /* Show desktop sidebar on desktop */
+    .lg\:w-\[10\%\] {
+      display: flex !important;
+    }
+
+    /* Show desktop main image section on desktop */
+    .lg\:w-\[40\%\] {
+      display: block !important;
+    }
+
+    /* Show desktop product header on desktop */
+    .lg\:flex.flex-row.items-start.justify-between {
+      display: flex !important;
+    }
+
+    /* Show desktop description on desktop */
+    .lg\:pl-12 .text-\[14px\].leading-\[19px\].font-\[400\].mt-3.mb-5 {
+      display: block !important;
+    }
+  }
+
+  /* Swiper Custom Styles */
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    width: 100%;
+    height: 435px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    {% comment %} border: 0.2px solid black; {% endcomment %}
+  }
+
+  /* Ensure video controls work properly */
+  .custom-video__control2 {
+    position: absolute;
+    top: 40%;
+    left: 46%;
+    border-radius: 50%;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    width: 78px;
+    height: 78px;
+    border: 3.33px solid #000000;
+    z-index: 10;
+  }
+
+  /* Rotating text animation */
+  .rotating-text {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rotating-text .word {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    animation: showText 5s infinite;
+  }
+
+  .rotating-text .word:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .rotating-text .word:nth-child(2) {
+    animation-delay: 1s;
+  }
+
+  .rotating-text .word:nth-child(3) {
+    animation-delay: 2s;
+  }
+
+  .rotating-text .word:nth-child(4) {
+    animation-delay: 3s;
+  }
+
+  .rotating-text .word:nth-child(5) {
+    animation-delay: 4s;
+  }
+
+  @keyframes showText {
+    0% {
+      opacity: 0;
+    }
+    16.66% {
+      opacity: 1;
+    }
+    33.33% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Custom top padding for desktop */
+  @media only screen and (min-width: 1025px) {
+    .custom-top-padding-am {
+      padding-top: 35px !important;
+    }
+  }
+
+  .product_section {
+    margin-top: -10px;
+  }
+
+  /* Hide elements properly */
+  .hidden {
+    display: none !important;
+  }
+
+  /* Video wrapper styles */
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 435px;
+  }
+
+  .video-wrapper img,
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 0.2px solid black;
+  }
+
+  .video-control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    width: 78px;
+    height: 78px;
+    border: 3.33px solid #000000;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .video-control svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Desktop video styles */
+  .desktop-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 573px;
+  }
+
+  .desktop-video-wrapper img,
+  .desktop-video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 0.2px solid black;
+  }
+</style>
+
+<section class="lg:max-w-[1350px] max-w-[90%] m-auto pb-12 product_section">
+  <!-- Breadcrumb -->
+  <div class="font-[400] lg:text-[14px] text-[12px] mt-9">{{ section.settings.url }}</div>
+
+  <!-- MOBILE PRODUCT DETAILS (Only shows on mobile) -->
+  <div class="flex flex-col responsive-display">
+    <div>
+      <span class="text-[40px] font-[400] AccountantSignature">{{ section.settings.signTitle }}</span>
+      <div class="relative inline-block">
+        <h1 class="text-[28px] font-[500] uppercase">{{ product.title }}</h1>
+        <img
+          src="{{ section.settings.moon_icon | image_url }}"
+          alt="Moon Icon"
+          class="absolute top-[-10px] right-[-30px] h-[26px] w-[25px]"
+          width="25px"
+          height="26px"
+        >
+      </div>
+    </div>
+
+    <div class="flex items-center mt-3">
+      <span style="display:block">
+        {%- render 'judgeme_widgets',
+          widget_type: 'judgeme_preview_badge',
+          jm_style: '',
+          concierge_install: false,
+          product: product
+        -%}
+      </span>
+    </div>
+
+    <h2 class="text-[14px] leading-[19px] font-[400] mt-3 mb-5">
+      {{ section.settings.phoneProductDiscription }}
+    </h2>
+  </div>
+
+  <div class="flex flex-col lg:flex-row">
+    <!-- Sidebar (Thumbnails) - Desktop Only -->
+    <div
+      class="lg:w-[10%] w-full lg:flex flex-col gap-6 h-auto lg:h-[573px] pt-10"
+      style="overflow-y:scroll;padding-top:0px!important;margin-top:2.5rem!important"
+    >
+      {% for block in section.blocks %}
+        {% if block.type == 'varient_image' %}
+          <img
+            src="{{ block.settings.varient_images | image_url }}"
+            class="cursor-pointer bg-[#D9D9D9] rounded-md lg:h-[110px] lg:w-[110px] h-[90px] w-[90px] rounded-[12px]"
+            width="90px"
+            height="90px"
+            onclick="updateMainMedia('{{ block.settings.varient_images | image_url }}', {{ forloop.first}})"
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Main Image/Video - Desktop Only -->
+    <div class="lg:w-[40%] w-full lg:px-4 lg:pt-10 cursor-pointer">
+      <div id="main_video_section" class="relative desktop-video-wrapper">
+        {% if section.settings.main_video != blank %}
+          <img
+            src="{{ varient_image | image_url }}"
+            alt="Product Image"
+            class="custom-video__image object-cover rounded-[12px]"
+            style="border: 0.2px solid black"
+          >
+          <!-- Play button -->
+          <div class="custom-video__control2 absolute cursor-pointer" onclick="playDesktopVideo()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="60" height="60" fill="white">
+              <path
+                d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z"
+                fill="#000000" />
+            </svg>
+          </div>
+
+          <!-- Video element, initially hidden -->
+          <video
+            class="custom-video__video object-cover rounded-[12px] hidden"
+            muted
+            poster="{{varient_image | image_url }}"
+            controls
+            style="border: 0.2px solid black"
+            id="desktop_video"
+          >
+            <source src="{{ section.settings.main_video }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% else %}
+          <img
+            src="{{varient_image | image_url }}"
+            alt="Product Image"
+            class="object-cover rounded-[12px]"
+            style="border: 0.2px solid black"
+          >
+        {% endif %}
+      </div>
+
+      <div id="main_image_section" class="hidden desktop-video-wrapper">
+        <img
+          src="{{ product.images[0] | image_url }}"
+          alt="Product Image"
+          class="object-cover rounded-[12px]"
+          style="border: 0.2px solid black"
+        >
+      </div>
+    </div>
+
+    <!-- Mobile Carousel - USING SWIPER.JS -->
+    <div class="mobile-carousel-fix">
+      <div class="swiper mobile-swiper">
+        <div class="swiper-wrapper">
+          {% if section.settings.main_video != blank %}
+            <div class="swiper-slide">
+              <div class="video-wrapper">
+                <img
+                  src="{{ varient_image | image_url }}"
+                  alt="Product Image"
+                  id="mobile_video_image"
+                  class="swiper-video-image"
+                >
+                <!-- Play button -->
+                <div class="video-control" onclick="playMobileVideo()">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="#000000">
+                    <path
+                      d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z" />
+                  </svg>
+                </div>
+                <video
+                  class="hidden"
+                  muted
+                  poster="{{varient_image | image_url }}"
+                  controls
+                  id="mobile_video"
+                >
+                  <source src="{{ section.settings.main_video }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          {% endif %}
+
+          {% for block in section.blocks %}
+            {% if block.type == 'varient_image' %}
+              <div class="swiper-slide">
+                <img
+                  src="{{ block.settings.varient_images | image_url }}"
+                  alt="Product Image"
+                  class="swiper-image"
+                >
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="lg:w-[60%] w-full lg:pl-12">
+      <!-- DESKTOP PRODUCT DETAILS (Only shows on desktop) -->
+      <div class="lg:flex flex-row items-start justify-between custom-top-padding-am">
+        <div class="text-center lg:text-left flex flex-col">
+          <span class="text-[44px] font-[400] mt-1 AccountantSignature">
+            {{ section.settings.signTitle }}
+          </span>
+
+          <div class="relative inline-block">
+            <h1 class="lg:text-[32px] text-[28px] font-[500] uppercase">{{ product.title }}</h1>
+            <img
+              src="{{ section.settings.moon_icon | image_url }}"
+              alt="Moon Icon"
+              class="absolute top-[-10px] right-[-30px] h-[26px] w-[25px]"
+              height="26px"
+              width="25px"
+            >
+          </div>
+        </div>
+
+        <div class="flex items-center mt-3">
+          <span style="display:block">
+            {%- render 'judgeme_widgets',
+              widget_type: 'judgeme_preview_badge',
+              jm_style: '',
+              concierge_install: false,
+              product: product
+            -%}
+          </span>
+        </div>
+      </div>
+
+      <!-- DESKTOP PRODUCT DESCRIPTION (Only shows on desktop) -->
+      <h2 class="text-[14px] leading-[19px] font-[400] mt-3 mb-5">
+        {{ section.settings.phoneProductDiscription }}
+      </h2>
+
+      <!-- Rotating Text (Shows on both mobile and desktop) -->
+      <div class="lg:text-[40px] md:text-start text-center text-[20px] lg:font-[300] font-[500] lg:leading-[54px]">
+        {{ section.settings.subDiscription }}
+        <div class="rotating-text mb-6 h-[60px]">
+          {% for block in section.blocks %}
+            {% if block.type == 'rotated_text' %}
+              <span class="word text-[42px] font-[600] md:right-0 right-0">{{ block.settings.rotated }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Pricing Section (Shows on both mobile and desktop) -->
+      <div class="flex flex-row items-center gap-3 ">
+        {% for variant in product.variants %}
+          <div
+            class="cursor-pointer variant-option "
+            data-variant-id="{{ variant.id }}"
+            onclick="selectVariantMain({{ variant.id }})"
+            id="variant-main-content-{{ variant.id }}"
+          >
+            <div class="flex flex-row items-end gap-3">
+              <p class="text-[24px] leading-[19px] font-[600] pt-1 pb-2">
+                ₹{{ variant.price | money_without_currency | split: '.' | first }}
+              </p>
+              <p class="text-[16px] leading-[19px] font-[300] text-[#535353] line-through line-through decoration-[1px] pt-1 pb-2">
+                ₹{{ variant.compare_at_price | money_without_currency | split: '.' | first }}
+              </p>
+              <button class="text-[12px] leading-[19px] font-[400] px-3 py-[1px] bg-[#34B10B] text-white rounded-[4px] mb-2 border-none hover:bg-[#34B10B]">
+                {{ section.settings.save_text }}
+              </button>
+            </div>
+
+            <div class="text-[12px] leading-[19px] font-[400] pt-1 pb-2">{{ section.settings.free_text }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Quantity and Add to Cart (Shows on both mobile and desktop) -->
+      <div class="flex flex-row items-center mt-4 gap-2">
+        {% if product.available %}
+          <div class="flex items-center rounded w-[115px] h-[40px] justify-center border-solid border-[#444444] border-[0.5px]">
+            <a id="decrease-btn" class="px-2 text-[20px] cursor-pointer" onclick="decreaseCount()">−</a>
+            <small id="product-count" class="px-4 text-[14px]">1</small>
+            <a id="increase-btn" class="px-2 text-[20px] cursor-pointer" onclick="increaseCount()">+</a>
+          </div>
+        {% endif %}
+        <form id="custom-product-form" class="flex-1">
+          <input
+            type="hidden"
+            name="items[0][id]"
+            id="variant-id-field"
+            value="{{ product.selected_or_first_available_variant.id }}"
+          >
+          <input type="hidden" name="items[0][quantity]" id="quantity-field" value="1">
+
+          <button
+            type="submit"
+            class="add-to-cart-custom bg-black text-white rounded-[4px] text-[14px] font-[600] w-full lg:w-[231px] h-[40px]{% unless product.available %} disabled{% endunless %}"
+            {% unless product.available %}
+              disabled
+            {% endunless %}
+          >
+            {% if product.available %}
+              ADD TO CART
+            {% else %}
+              SOLD OUT
+            {% endif %}
+          </button>
+        </form>
+      </div>
+
+      <!-- Trunk Content (Shows on both mobile and desktop) -->
+      <div class="pt-8 md:w-[40%] w-[70%] ">
+        <span class="text-[14px] leading-[23px] font-[400] mt-3 mb-5 ug-link-blue">
+          {{ section.settings.trunk_contain }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="sticky-atc"
+    class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-50 hidden"
+  >
+    <div class="max-w-[1350px] mx-auto px-4 py-3 flex items-center gap-3">
+      <!-- Product Info (Desktop only) - Hyperspeed lazy loading -->
+      <div class="hidden lg:flex items-center gap-3">
+        <img
+          class="w-[60px] h-[60px] object-contain hs-lazyload hs-id-08dd109e"
+          loading="lazy"
+          src="{{ product.featured_image | image_url: width: 80 }}"
+        >
+        <div>
+          <p class="text-[14px] font-[500]">{{ product.title }}</p>
+          <p id="sticky-price" class="text-[14px] font-[400]"></p>
+        </div>
+      </div>
+
+      <!-- Sticky Add to Cart with availability styling -->
+      <button
+        id="stickyAddToCart"
+        type="submit"
+        class="ml-auto w-full lg:w-[300px] h-[40px] bg-black text-white font-[600] rounded-[4px]"
+        {% unless product.available %}
+          disabled
+        {% endunless %}
+        style="
+          {% if product.available %}
+            background:black;
+            color:#fff;
+            border-color:black;
+          {% else %}
+            background:#999 !important;
+            color:#fff !important;
+            border-color:#999 !important;
+            cursor:not-allowed;
+          {% endif %}
+        "
+      >
+        {% if product.available %}
+          ADD TO CART
+        {% else %}
+          SOLD OUT
+        {% endif %}
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+// Initialize Swiper
+let mobileSwiper = null;
+
+function initMobileSwiper() {
+  // Only initialize on mobile
+  if (window.innerWidth >= 1024) {
+    if (mobileSwiper) {
+      mobileSwiper.destroy(true, true);
+      mobileSwiper = null;
+    }
+    return;
+  }
+  
+  // Initialize Swiper if not already initialized
+  if (!mobileSwiper) {
+    mobileSwiper = new Swiper('.mobile-swiper', {
+  direction: 'horizontal',
+  loop: false,
+  slidesPerView: 1.2, // 1.2 slides दिखेंगे (20% next slide visible)
+  centeredSlides: false, // Center नहीं करेंगे
+  spaceBetween: 10,
+  slideToClickedSlide: true,
+  
+  // Responsive breakpoints
+  breakpoints: {
+    320: {
+      slidesPerView: 1.1,
+      spaceBetween: 8
+    },
+    375: {
+      slidesPerView: 1.15,
+      spaceBetween: 10
+    },
+    480: {
+      slidesPerView: 1.2,
+      spaceBetween: 12
+    }
+  },
+  
+  touchRatio: 1,
+  simulateTouch: true,
+  touchStartPreventDefault: false,
+  allowTouchMove: true,
+  
+  navigation: false,
+  pagination: false,
+  scrollbar: false,
+  
+  on: {
+    init: function () {
+      console.log('Swiper initialized with preview effect');
+      resetMobileVideo();
+    },
+    slideChange: function () {
+      resetMobileVideo();
+    }
+  }
+});
+  }
+}
+
+// Mobile Video Functions
+function playMobileVideo() {
+  const mobileVideo = document.getElementById('mobile_video');
+  const mobileVideoImage = document.getElementById('mobile_video_image');
+  const videoControl = document.querySelector('.video-control');
+  
+  if (mobileVideo && mobileVideoImage && videoControl) {
+    mobileVideoImage.style.display = 'none';
+    videoControl.style.display = 'none';
+    mobileVideo.classList.remove('hidden');
+    mobileVideo.style.display = 'block';
+    mobileVideo.play();
+  }
+}
+
+function resetMobileVideo() {
+  const mobileVideo = document.getElementById('mobile_video');
+  const mobileVideoImage = document.getElementById('mobile_video_image');
+  const videoControl = document.querySelector('.video-control');
+  
+  if (mobileVideo && mobileVideoImage && videoControl) {
+    mobileVideo.pause();
+    mobileVideo.currentTime = 0;
+    mobileVideo.classList.add('hidden');
+    mobileVideo.style.display = 'none';
+    mobileVideoImage.style.display = 'block';
+    videoControl.style.display = 'flex';
+  }
+}
+
+// Desktop Video Functions
+function playDesktopVideo() {
+  const desktopVideo = document.getElementById('desktop_video');
+  const desktopVideoImage = document.querySelector('.custom-video__image');
+  const desktopVideoControl = document.querySelector('.custom-video__control2');
+  
+  if (desktopVideo && desktopVideoImage && desktopVideoControl) {
+    desktopVideoImage.style.display = 'none';
+    desktopVideoControl.style.display = 'none';
+    desktopVideo.classList.remove('hidden');
+    desktopVideo.play();
+    
+    desktopVideo.addEventListener('ended', function() {
+      desktopVideoImage.style.display = 'block';
+      desktopVideoControl.style.display = 'flex';
+      desktopVideo.classList.add('hidden');
+    });
+  }
+}
+
+// Desktop Main Media Functions
+function updateMainMedia(imageUrl, isFirstThumbnail) {
+  // Only for desktop
+  if (window.innerWidth < 1024) return;
+  
+  const mainVideoSection = document.getElementById('main_video_section');
+  const mainImageSection = document.getElementById('main_image_section');
+  const mainImage = mainImageSection.querySelector('img');
+  const desktopVideo = document.getElementById('desktop_video');
+  const desktopVideoImage = document.querySelector('.custom-video__image');
+  const desktopVideoControl = document.querySelector('.custom-video__control2');
+  
+  if (isFirstThumbnail) {
+    // Show video section
+    if (mainVideoSection) {
+      mainVideoSection.classList.remove('hidden');
+      if (desktopVideoImage) desktopVideoImage.style.display = 'block';
+      if (desktopVideoControl) desktopVideoControl.style.display = 'flex';
+      if (desktopVideo) desktopVideo.classList.add('hidden');
+    }
+    if (mainImageSection) mainImageSection.classList.add('hidden');
+  } else {
+    // Show image section
+    if (mainVideoSection) mainVideoSection.classList.add('hidden');
+    if (mainImageSection) {
+      mainImageSection.classList.remove('hidden');
+      if (mainImage) {
+        mainImage.src = imageUrl;
+      }
+    }
+  }
+}
+
+// Original Sticky ATC Functions
+document.addEventListener('DOMContentLoaded', function () {
+  const stickyBar = document.getElementById('sticky-atc');
+  const productSection = document.querySelector('.product_section');
+
+  if (!stickyBar || !productSection) return;
+
+  function handleStickyVisibility() {
+    const rect = productSection.getBoundingClientRect();
+
+    // Show sticky when product section is fully scrolled past
+    if (rect.bottom <= 0) {
+      stickyBar.classList.remove('hidden');
+    } else {
+      stickyBar.classList.add('hidden');
+    }
+  }
+
+  window.addEventListener('scroll', handleStickyVisibility, { passive: true });
+  window.addEventListener('resize', handleStickyVisibility);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const stickyBtn = document.getElementById('stickyAddToCart');
+  const priceEl = document.getElementById('sticky-price');
+  const form = document.getElementById('custom-product-form');
+  const qtyField = document.getElementById('quantity-field');
+  const variantField = document.getElementById('variant-id-field');
+
+  const variants = {{ product.variants | json }};
+
+  function formatMoney(cents) {
+    if (window.Shopify && Shopify.formatMoney) {
+      return Shopify.formatMoney(cents, "{{ shop.money_format }}");
+    }
+    return '₹' + (cents / 100).toFixed(2);
+  }
+
+  function updateStickyPrice() {
+    const variant = variants.find(v => v.id == selectedVariantId);
+    if (variant && priceEl) {
+      priceEl.textContent = formatMoney(variant.price);
+    }
+  }
+
+  // Sync price initially
+  updateStickyPrice();
+
+  // Update price when variant changes
+  const originalSelectVariant = window.selectVariantMain;
+  window.selectVariantMain = function (variantId) {
+    originalSelectVariant(variantId);
+    updateStickyPrice();
+  };
+
+  // Sticky add to cart click
+  stickyBtn.addEventListener('click', function () {
+    if (!form) return;
+
+    qtyField.value = document.getElementById('product-count').innerText || 1;
+    variantField.value = selectedVariantId;
+
+    form.requestSubmit();
+  });
+});
+
+// Original Quantity Functions
+let count = 1;
+
+function updateQuantity() {
+  document.getElementById("product-count").innerText = count;
+  document.getElementById("quantity-field").value = count;
+}
+
+function increaseCount() {
+  count++;
+  updateQuantity();
+}
+
+function decreaseCount() {
+  if (count > 1) count--;
+  updateQuantity();
+}
+
+// Original Variant Selection
+let selectedVariantId = {{ product.variants.last.id | json }};
+
+function selectVariantMain(variantId) {
+  selectedVariantId = variantId;
+  document.getElementById('variant-id-field').value = variantId;
+  
+  // Update selected variant styling
+  const variantElements = document.querySelectorAll('[id^="variant-main-content-"]');
+  variantElements.forEach(el => {
+    if (el.id === `variant-main-content-${variantId}`) {
+      el.style.backgroundColor = 'white';
+    } else {
+      el.style.backgroundColor = 'white';
+    }
+  });
+}
+
+// Original Add to Cart Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("custom-product-form");
+  
+  if (form) {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      
+      try {
+        const response = await fetch("/cart/add.js", {
+          method: "POST",
+          body: formData
+        });
+        
+        if (!response.ok) {
+          console.error("Add to cart failed", await response.text());
+          return;
+        }
+        
+        // Open cart drawer
+        {% comment %} document.dispatchEvent(new CustomEvent("dispatch:cart-drawer:open")); {% endcomment %}
+         handleFloCartBtn();
+        document.dispatchEvent(new CustomEvent("dispatch:cart-drawer:refresh"));
+        
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+      }
+    });
+  }
+  
+  // Initialize variant selection
+  if (selectedVariantId) {
+    selectVariantMain(selectedVariantId);
+  }
+  
+  // Initialize Swiper on page load
+  initMobileSwiper();
+  
+  // Reinitialize Swiper on resize
+  window.addEventListener('resize', function() {
+    initMobileSwiper();
+  });
+});
+
+// Initialize Swiper when page loads
+window.addEventListener('load', function() {
+  initMobileSwiper();
+});
+</script>

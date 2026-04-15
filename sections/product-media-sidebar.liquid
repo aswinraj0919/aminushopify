@@ -1,0 +1,177 @@
+{% schema %}
+{
+  "name": "Product Media Sidebar",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "main_video",
+      "label": "Main Video URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "varient_image",
+      "name": "Variant Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "varient_images",
+          "label": "Variant Image"
+        },
+        {
+          "type": "number",
+          "id": "image_index",
+          "label": "Image Index"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Media Sidebar",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Sidebar Thumbnails -->
+<div class="lg:w-[10%] w-full lg:flex flex-col gap-6 h-auto lg:h-[573px] pt-10 hidden sidebar-scroll">
+  {% assign varient_image = blank %}
+  {% for block in section.blocks %}
+    {% if block.type == 'varient_image' and block.settings.varient_images != blank %}
+      {% assign varient_image = block.settings.varient_images %}
+      <img
+        src="{{ block.settings.varient_images | image_url }}"
+        class="cursor-pointer bg-[#D9D9D9] rounded-md lg:h-[110px] lg:w-[110px] h-[90px] w-[90px] rounded-[12px]"
+        width="90px"
+        height="90px"
+        onclick="updateMainMedia('{{ block.settings.varient_images | image_url }}', {{ block.settings.image_index }})"
+      >
+    {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Modal -->
+<div
+  id="popup-modal"
+  tabindex="-1"
+  class="hidden fixed inset-0 z-[9999] flex justify-center items-center w-screen h-screen bg-black bg-opacity-50"
+>
+  <div class="relative p-1 w-full h-full bg-white">
+    <div class="relative bg-white">
+      <button
+        type="button"
+        class="absolute top-3 end-2.5 text-black bg-transparent hover:bg-transparent hover:text-black text-sm w-12 h-12 border-none ms-auto inline-flex justify-center items-center outline-none focus:outline-none z-50"
+        data-modal-hide="popup-modal"
+        onclick="document.getElementById('popup-modal').classList.add('hidden')"
+      >
+        <span class="text-2xl">&#x2715;</span>
+      </button>
+      <div class="bg-gray-100 flex justify-center items-center min-h-screen">
+        <div class="w-[800px] relative">
+          <div class="relative overflow-hidden rounded-lg">
+            <div id="carousel" class="flex transition-transform duration-500"></div>
+          </div>
+          <button
+            id="prev"
+            class="absolute top-1/2 left-0 transform -translate-y-1/2 text-black p-2 outline-none focus:outline-none hover:bg-transparent border-none"
+          >❮</button>
+          <button
+            id="next"
+            class="absolute top-1/2 right-0 transform -translate-y-1/2 text-black p-2 outline-none focus:outline-none hover:bg-transparent border-none"
+          >❯</button>
+          <div id="thumbnails" class="flex justify-center space-x-2 mt-3 md:w-full w-[250px] text-center overflow-x-auto m-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.sidebar-scroll { overflow-y: scroll; padding-top: 0!important; margin-top: 2.5rem!important; }
+.custom-video__control2 {
+  position: absolute;
+  top: 40%;
+  left: 46%;
+  border-radius: 50%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  width: 78px;
+  height: 78px;
+  border: 3.33px solid #000000;
+}
+</style>
+
+<script>
+let clickedImage = 0;
+const mediaItems = [
+  {% for block in section.blocks %}
+    { type: 'image', src: '{{ block.settings.varient_images | image_url }}' },
+  {% endfor %}
+];
+
+function updateMainMedia(imageUrl, isFirstThumbnail) {
+  clickedImage = isFirstThumbnail;
+  const mainVideoSection = document.getElementById('main_video_section');
+  const mainImageSection = document.getElementById('main_image_section');
+  const mainImage = mainImageSection?.querySelector('img');
+
+  if (isFirstThumbnail === 1) {
+    mainVideoSection?.classList.remove('hidden');
+    mainImageSection?.classList.add('hidden');
+  } else {
+    mainVideoSection?.classList.add('hidden');
+    mainImageSection?.classList.remove('hidden');
+    if (mainImage) mainImage.src = imageUrl;
+  }
+}
+
+const carousel = document.getElementById('carousel');
+const thumbnails = document.getElementById('thumbnails');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+let index = 0;
+
+function renderCarousel() {
+  carousel.innerHTML = '';
+  thumbnails.innerHTML = '';
+  mediaItems.forEach((item, i) => {
+    carousel.innerHTML += `<div class="w-full flex-shrink-0"><img src="${item.src}" class="object-contain w-full md:h-[70vh] h-[65vh]" alt="Media ${i+1}"></div>`;
+    thumbnails.innerHTML += `<img src="${item.src}" class="thumb w-16 h-12 object-cover cursor-pointer border-2 ${i===0?'border-black':'border-gray-400'}" data-index="${i}">`;
+  });
+  addThumbnailClickEvents();
+  updateCarousel();
+}
+
+function updateCarousel() {
+  carousel.style.transform = `translateX(${-index * 100}%)`;
+  document.querySelectorAll('.thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('border-black', i === index);
+    thumb.classList.toggle('border-gray-400', i !== index);
+  });
+}
+
+function addThumbnailClickEvents() {
+  document.querySelectorAll('.thumb').forEach(thumb => {
+    thumb.addEventListener('click', (event) => {
+      index = parseInt(event.target.dataset.index);
+      clickedImage = index;
+      updateCarousel();
+    });
+  });
+}
+
+prevBtn?.addEventListener('click', () => { index = (index-1+mediaItems.length)%mediaItems.length; updateCarousel(); });
+nextBtn?.addEventListener('click', () => { index = (index+1)%mediaItems.length; updateCarousel(); });
+
+document.addEventListener('DOMContentLoaded', renderCarousel);
+</script>

@@ -1,0 +1,615 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_yFaybj": {
+      "type": "slideshow",
+      "blocks": {
+        "image_hxX6UJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/desktop_banner.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy.webp",
+            "slide_link": "https://www.aminu.life/collections/all",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 6,
+            "title_size": 60,
+            "title_size_mobile": 40,
+            "use_h1": false,
+            "text": "",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center left"
+          }
+        },
+        "image_DDUQhd": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "slide_link": "",
+            "subheading": "that feel good fit",
+            "title": "Iconic style, maximum heat.",
+            "heading_max_width": 8,
+            "title_size": 60,
+            "title_size_mobile": 40,
+            "use_h1": false,
+            "text": "",
+            "enlarge_text": false,
+            "button_label_1": "Shop Swimwear",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center left"
+          }
+        },
+        "image_9Wyhwe": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "slide_link": "",
+            "subheading": "just landed",
+            "title": "Blending beauty with purpose.",
+            "heading_max_width": 8,
+            "title_size": 60,
+            "title_size_mobile": 40,
+            "use_h1": false,
+            "text": "<p>Be the first to shop the drop</p>",
+            "enlarge_text": false,
+            "button_label_1": "Shop tops",
+            "button_url_1": "",
+            "button_label_2": "Shop bottoms",
+            "button_url_2": "",
+            "text_alignment": "center left"
+          }
+        }
+      },
+      "block_order": [
+        "image_hxX6UJ",
+        "image_DDUQhd",
+        "image_9Wyhwe"
+      ],
+      "settings": {
+        "height": "fixed",
+        "height_desktop": 560,
+        "height_mobile": 460,
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "overlay_style": "shadow",
+        "transition": "slide-fade",
+        "navigation": "dots",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "accessibility_info": ""
+      }
+    },
+    "custom_content_pkGWkD": {
+      "type": "custom-content",
+      "blocks": {
+        "text_9NbUnc": {
+          "type": "text",
+          "settings": {
+            "width": "third",
+            "text_alignment": "left",
+            "center_on_mobile": true,
+            "icon": "",
+            "icon_color": "rgba(0,0,0,0)",
+            "subheading": "",
+            "title": "<strong>FLASH SALE</strong> : UP TO 40% OFF!",
+            "title_size": 24,
+            "title_size_mobile": 32,
+            "text": "",
+            "button_label": "",
+            "button_link": "#",
+            "button_style": "secondary"
+          }
+        },
+        "countdown_fRAMXk": {
+          "type": "countdown",
+          "settings": {
+            "width": "third",
+            "end_date": "2025-12-08",
+            "end_time": "14:45",
+            "end_text": "<p>Thank you for shopping</p>",
+            "hide_on_end": false,
+            "number_size": 32,
+            "number_font": "heading",
+            "divider_type": "colon",
+            "show_timer_labels": true
+          }
+        },
+        "text_db3XfD": {
+          "type": "text",
+          "settings": {
+            "width": "third",
+            "text_alignment": "center",
+            "center_on_mobile": true,
+            "icon": "",
+            "icon_color": "rgba(0,0,0,0)",
+            "subheading": "",
+            "title": "",
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "text": "",
+            "button_label": "shop now",
+            "button_link": "",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "text_9NbUnc",
+        "countdown_fRAMXk",
+        "text_db3XfD"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "Custom content",
+      "settings": {
+        "spacing": "small",
+        "enable_section": true,
+        "alignment": "middle",
+        "color_scheme": "1"
+      }
+    },
+    "balanced-path-section": {
+      "type": "balanced-path-section",
+      "blocks": {
+        "card_3DhmcF": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/GENTLE_FORMULAS_6f8b0fcc-7662-421f-b857-397fbaec0648.webp",
+            "title": "Always effective, gentle & fun",
+            "description": "We make multi-pathway, multi-functional formulas designed to adapt to your environment, genetics and lifestyle to deliver unmatched care and healthy, resilient skin.",
+            "button_text": "Shop Aminu Products",
+            "button_link": "https://www.aminu.life/collections/all"
+          }
+        },
+        "card_87wXWj": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/INDIVIDUALISED_REGIME_860660dc-7066-43c3-8cb2-a608ea89f648.webp",
+            "title": "Skincare that you need NOW",
+            "description": "Your skin's needs change with day, season, year, location, age. Our SkinNow algorithm in few minutes helps you choose the right skincare that your skin needs NOW!",
+            "button_text": "Take Skin Quiz",
+            "button_link": "https://www.aminu.life/#quiz-QYHZ7V"
+          }
+        },
+        "card_tRzrPe": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/INGREDIENTS_TECHNOLOGIES_460x_1_d9a8ddef-cfc8-4730-9b1f-b37327c27ccb.webp",
+            "title": "The OG formulas",
+            "description": "We carefully source ingredients (240+ on the last count) from 40+ countries to make sure our unique formulas are effective and yet gentle on skin, planet and pets.",
+            "button_text": "Know Aminu Ingredients",
+            "button_link": "https://www.aminu.life/pages/our-ingredients"
+          }
+        }
+      },
+      "block_order": [
+        "card_3DhmcF",
+        "card_87wXWj",
+        "card_tRzrPe"
+      ],
+      "settings": {
+        "heading": "a balanced path to healthy skin",
+        "subheading": "Our formulas understand your skin's changing needs, are gentle & joy to use & deliver visibly healthy, radiant skin."
+      }
+    },
+    "skincare-era": {
+      "type": "skincare-era",
+      "blocks": {
+        "era_8ar4EJ": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/brightning.png",
+            "text": "for bright era",
+            "link": "https://www.aminu.life/collections/uneven-tone-and-spots"
+          }
+        },
+        "era_U44zjP": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/clear_009c60b5-fbb1-4985-a90a-d1e1132d9337.png",
+            "text": "for clear era",
+            "link": "https://www.aminu.life/collections/breakouts-and-acne-prone"
+          }
+        },
+        "era_WcgMxc": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/hydration_e67c4969-1735-49c0-9fa7-5913e1c1428f.png",
+            "text": "for hydration era",
+            "link": "https://www.aminu.life/collections/dullness-and-dehydration"
+          }
+        },
+        "era_GEnXKK": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/timeless_c774c9e5-f690-4809-868b-004f7ebfba7d.png",
+            "text": "for timeless era",
+            "link": "https://www.aminu.life/collections/firmness-lines-and-tired-skin"
+          }
+        },
+        "era_zkDeCN": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/repair_fe7a8dc9-c5f7-4630-8f06-33478ace0946.png",
+            "text": "for barrier repair era",
+            "link": "https://www.aminu.life/collections/sensitised-and-redness-prone"
+          }
+        },
+        "era_QJV4fa": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/smooth_3b0c8029-29b2-4780-9b94-5bc38d99ec9f.png",
+            "text": "for smooth era",
+            "link": "https://www.aminu.life/collections/blackheads-and-rough-texture"
+          }
+        },
+        "era_NNVAjj": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/every_day_e445ee69-e279-47c2-baa5-76e5604c323d.png",
+            "text": "for every(day) era",
+            "link": "https://www.aminu.life/collections/protection-and-maintenance"
+          }
+        },
+        "era_d6DmgJ": {
+          "type": "era",
+          "settings": {
+            "icon": "shopify://shop_images/every_day-2.png",
+            "text": "for detox era",
+            "link": "https://www.aminu.life/collections/blackhead-congestion"
+          }
+        }
+      },
+      "block_order": [
+        "era_8ar4EJ",
+        "era_U44zjP",
+        "era_WcgMxc",
+        "era_GEnXKK",
+        "era_zkDeCN",
+        "era_QJV4fa",
+        "era_NNVAjj",
+        "era_d6DmgJ"
+      ],
+      "settings": {
+        "heading": "build your holy grail era :))"
+      }
+    },
+    "featured-collection-tabs": {
+      "type": "featured-collection-tabs",
+      "blocks": {
+        "tab_qLQgYL": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "FAVOURITES",
+            "tab_collection": "best-sellers"
+          }
+        },
+        "tab_atBCrz": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "BODY CARE",
+            "tab_collection": "body-care"
+          }
+        },
+        "tab_KpKeCz": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "RITUAL SETS",
+            "tab_collection": "combos"
+          }
+        },
+        "tab_QVHxXa": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "SERUMS",
+            "tab_collection": "serum"
+          }
+        }
+      },
+      "block_order": [
+        "tab_qLQgYL",
+        "tab_atBCrz",
+        "tab_KpKeCz",
+        "tab_QVHxXa"
+      ],
+      "settings": {
+        "title": "shop all products",
+        "view_all_link": "https://www.aminu.life/collections/best-sellers",
+        "view_all_label": ""
+      }
+    },
+    "our-story": {
+      "type": "our-story",
+      "settings": {
+        "heading": "OUR STORY",
+        "content": "<p>\"pronounced as uh-mee-nu\"</p><p>At Aminu, we bring together the best of science and art to bring you your healthiest skin ever. We draw inspiration from everywhere, from the powerhouse nutrients in superfoods to the fascinating world of microbiology, material sciences, art, and culture. Our journey goes beyond skincare; it's deeply personal. It’s shaped by real experiences and a genuine understanding of what it means to care for your skin in a way that feels balanced and fits into the balance of your life.</p><p><strong>Skincare shouldn’t be complicated, so we’ve simplified it for you. Healthy, radiant skin is just a routine away!</strong></p><p><strong>— Prachi</strong></p>",
+        "image": "shopify://shop_images/About_AMINU_54a9abe7-ca60-452a-a686-f5f5a2bd8465.webp",
+        "button_label": "KNOW MORE",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "ug_testimonial_TNiGJF": {
+      "type": "ug-testimonial",
+      "blocks": {
+        "video_ELxTUT": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/7828e39eea204acf8b3c47abd6ceedb7.mp4",
+            "thumbnail": "shopify://shop_images/siwani_thumbnail.webp",
+            "description": "Video description goes hereVideo description goes hereVideo description goes hereVideo description goes here"
+          }
+        },
+        "video_zPmcbF": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/7828e39eea204acf8b3c47abd6ceedb7.mp4",
+            "thumbnail": "shopify://shop_images/Milky_Mineral_Sunscreen_4.png",
+            "description": "Video description goes here"
+          }
+        },
+        "video_hm9NE7": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f76ca9579bdb47a09327d9ab0bf20c3d.mp4",
+            "thumbnail": "shopify://shop_images/Milky_Mineral_Sunscreen_1.png",
+            "description": "Video description goes here"
+          }
+        },
+        "video_G9NHFQ": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f76ca9579bdb47a09327d9ab0bf20c3d.mp4",
+            "thumbnail": "shopify://shop_images/divya_thumbnail.webp",
+            "description": "Video description goes here"
+          }
+        },
+        "video_x4FzXm": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/c68d5602f68f44dab27174c1cf28c4fa.mp4",
+            "thumbnail": "shopify://shop_images/Sunscreen_Math_and_Alphabet_Soup.webp",
+            "description": "Video description goes hereVideo description goes hereVideo description goes hereVideo description goes hereVideo description goes here"
+          }
+        },
+        "video_JL7zjG": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/c68d5602f68f44dab27174c1cf28c4fa.mp4",
+            "thumbnail": "shopify://shop_images/Melting_Balm_Lifestyle.jpg",
+            "description": "Video description goes hereVideo description goes hereVideo description goes hereVideo description goes hereVideo description goes here"
+          }
+        }
+      },
+      "block_order": [
+        "video_ELxTUT",
+        "video_zPmcbF",
+        "video_hm9NE7",
+        "video_G9NHFQ",
+        "video_x4FzXm",
+        "video_JL7zjG"
+      ],
+      "disabled": true,
+      "name": "Video Reel Slider",
+      "settings": {
+        "heading": "Testimonial"
+      }
+    },
+    "scrolling_banner_L4FjQT": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_pG7JGE": {
+          "type": "text",
+          "settings": {
+            "text": "MADE SAFE CERTIFIED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_3CCQVd": {
+          "type": "text",
+          "settings": {
+            "text": "ANIMAL TEST FREE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_W7pCJd": {
+          "type": "text",
+          "settings": {
+            "text": "DERMATOLOGICALLY TESTED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_E4KVJL": {
+          "type": "text",
+          "settings": {
+            "text": "ZERO PLASTIC INSIDE",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_H7FdAV": {
+          "type": "text",
+          "settings": {
+            "text": "MEDICERT AWARDED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_9y9MUh": {
+          "type": "text",
+          "settings": {
+            "text": "VEGAN",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_pG7JGE",
+        "text_3CCQVd",
+        "text_W7pCJd",
+        "text_E4KVJL",
+        "text_H7FdAV",
+        "text_9y9MUh"
+      ],
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "1",
+        "text_size": 16,
+        "vertical_padding": 10,
+        "speed": 10,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "magazine_review_bmj3q9": {
+      "type": "magazine-review",
+      "blocks": {
+        "review_7yEY88": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/cosmopolitan.png",
+            "text": "<b>A-HA Face Wash</b><br>\"The best active-infused cleansers that will simplify the rest of your routine.\"",
+            "link": "https://www.cosmopolitan.in/beauty/features/photo/the-best-active-infused-cleansers-that-will-simplify-the-rest-of-your-routine-1331210-2026-01-14#slide-9",
+            "new_tab": false
+          }
+        },
+        "review_fTrWbi": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/bazaar.png",
+            "text": "<b>Copper Peptide Serum</b><br>\"Copper peptides represent a kind of reset. They don’t fight the skin by behaving; they teach it to rebalance.\"",
+            "link": "https://www.harpersbazaar.in/beauty/story/the-blue-reset-1308951-2025-11-29",
+            "new_tab": false
+          }
+        },
+        "review_YN3XGR": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/esquire-logo.007285c4.png",
+            "text": "<b>Bio Retinol Cream</b><br>\"skincare isn’t about using a lot of products but about using a few good ones instead.\"",
+            "link": "https://www.esquireindia.co.in/style/grooming/the-best-anti-aging-serums-for-men",
+            "new_tab": false
+          }
+        },
+        "review_byciXC": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/VOGUE_logo.png",
+            "text": "<b>Longevity Serum</b><br>\"clear benefits in barrier strength, hydration balance and irritation reduction.\"",
+            "link": "https://www.vogue.in/content/should-you-try-ectoin-dermatologists-explain-who-it-helps-most",
+            "new_tab": false
+          }
+        },
+        "review_MzegX6": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/Brides_ind.png",
+            "text": "<b>Correcting Concentrate</b><br>\"A dark-spot-fading skincare hero here to smooth, brighten, and give brides the lit-from-within skin they deserve.\"",
+            "link": "https://www.bridestoday.in/beauty-grooming/photo/dark-spots-who-skincare-picks-every-bride-needs-for-luminous-wedding-day-skin-1313888-2025-12-06#4",
+            "new_tab": false
+          }
+        },
+        "review_diWaMH": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/Femina_logo_200x_1.avif",
+            "text": "<b>Vit C Body Oil</b><br> \"Packed with Nourshing oils, this formula deeply moisturises dry, flaky skin.\"",
+            "link": "https://www.femina.in/beauty/skin/amp-stories/8-body-oils-that-lock-in-moisture-better-than-lotion-in-january-288918.amp",
+            "new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "review_7yEY88",
+        "review_fTrWbi",
+        "review_YN3XGR",
+        "review_byciXC",
+        "review_MzegX6",
+        "review_diWaMH"
+      ],
+      "name": "Magazine Review",
+      "settings": {
+        "heading": "from the editors",
+        "auto_scroll_delay": 2,
+        "autoplay": false
+      }
+    },
+    "featured_blog_e9jXnU": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "title": "Blogs",
+        "subheading": "Your daily dose of science",
+        "blog": "collections",
+        "post_limit": 3
+      }
+    },
+    "ug-instagram": {
+      "type": "ug-instagram",
+      "settings": {
+        "followus": "Follow us",
+        "title": "MEET OUR COMMUNITY",
+        "text": "<p>Join the #AminuLife and share your voice with us</p>",
+        "info": "<p>INSTAGRAM<br/><a href=\"https://www.instagram.com/aminu.life/\" title=\"https://www.instagram.com/aminu.life/\">@aminu.life</a></p>",
+        "show_nesletter": true,
+        "newsletter-title": "Let’s be friends, over the internet!!",
+        "code": "<div id=\"insta-feed\"></div>"
+      }
+    }
+  },
+  "order": [
+    "slideshow_yFaybj",
+    "custom_content_pkGWkD",
+    "balanced-path-section",
+    "skincare-era",
+    "featured-collection-tabs",
+    "our-story",
+    "ug_testimonial_TNiGJF",
+    "scrolling_banner_L4FjQT",
+    "magazine_review_bmj3q9",
+    "featured_blog_e9jXnU",
+    "ug-instagram"
+  ]
+}

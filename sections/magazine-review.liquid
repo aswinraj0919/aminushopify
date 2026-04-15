@@ -1,0 +1,520 @@
+{{ 'slick.css' | asset_url | stylesheet_tag }}
+
+<div class="magazine-review-section">
+  <div class="ug-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="magazine-review-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <!-- Desktop Grid -->
+    <div class="magazine-grid desktop-magazine-grid">
+      {% for block in section.blocks %}
+        <div class="magazine-item">
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="magazine-link" {% if block.settings.new_tab %}target="_blank"{% endif %}>
+          {% endif %}
+          
+          {% if block.settings.logo != blank %}
+            <img
+              class="magazine-logo"
+              src="{{ block.settings.logo | image_url }}"
+              alt="{{ block.settings.text | escape }}"
+              loading="lazy"
+            >
+          {% endif %}
+          
+          {% if block.settings.text != blank %}
+            <p class="magazine-text">{{ block.settings.text }}</p>
+          {% endif %}
+          
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Mobile Slider with Slick -->
+    <div class="magazine-slider mobile-magazine-slider" id="magazine-slider-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="magazine-slide">
+          <div class="magazine-item">
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="magazine-link" {% if block.settings.new_tab %}target="_blank"{% endif %}>
+            {% endif %}
+            
+            {% if block.settings.logo != blank %}
+              <img
+                class="magazine-logo"
+                src="{{ block.settings.logo | image_url }}"
+                alt="{{ block.settings.text | escape }}"
+                loading="lazy"
+              >
+            {% endif %}
+            
+            {% if block.settings.text != blank %}
+              <p class="magazine-text">{{ block.settings.text }}</p>
+            {% endif %}
+            
+            {% if block.settings.link != blank %}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'slick.min.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Magazine Review",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "Magazine Review"
+    },
+    {
+      "type": "range",
+      "id": "auto_scroll_delay",
+      "label": "Auto Scroll Speed (Seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Auto Scroll",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Magazine Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Magazine Logo"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text",
+          "default": "Enter review text here"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL",
+          "info": "Optional: Add link to magazine/review"
+        },
+        {
+          "type": "checkbox",
+          "id": "new_tab",
+          "label": "Open in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Magazine Review",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  /* Import Slick CSS */
+  .magazine-review-section .slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .magazine-review-section .slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .magazine-review-section .slick-list:focus {
+    outline: none;
+  }
+  
+  .magazine-review-section .slick-list.dragging {
+    cursor: pointer;
+    cursor: hand;
+  }
+  
+  .magazine-review-section .slick-slider .slick-track,
+  .magazine-review-section .slick-slider .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .magazine-review-section .slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .magazine-review-section .slick-track:before,
+  .magazine-review-section .slick-track:after {
+    display: table;
+    content: '';
+  }
+  
+  .magazine-review-section .slick-track:after {
+    clear: both;
+  }
+  
+  .magazine-review-section .slick-loading .slick-track {
+    visibility: hidden;
+  }
+  
+  .magazine-review-section .slick-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+  }
+  
+  .magazine-review-section .slick-slide img {
+    display: block;
+  }
+  
+  .magazine-review-section .slick-slide.slick-loading img {
+    display: none;
+  }
+  
+  .magazine-review-section .slick-slide.dragging img {
+    pointer-events: none;
+  }
+  
+  .magazine-review-section .slick-initialized .slick-slide {
+    display: block;
+  }
+  
+  .magazine-review-section .slick-loading .slick-slide {
+    visibility: hidden;
+  }
+  
+  .magazine-review-section .slick-vertical .slick-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+  }
+  
+  .magazine-review-section .slick-arrow.slick-hidden {
+    display: none;
+  }
+
+  .magazine-review-section {
+    background: #F1F1EF;
+    text-align: center;
+    {% comment %} padding: 40px 0; {% endcomment %}
+  }
+
+  .ug-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .magazine-review-heading {
+    font-size: 42px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #232323;
+  }
+
+  /* Desktop Grid */
+  .desktop-magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .mobile-magazine-slider {
+    display: none;
+  }
+
+  .magazine-item {
+    text-align: center;
+    padding: 30px 20px;
+    {% comment %} background: white; {% endcomment %}
+    border-radius: 8px;
+    {% comment %} box-shadow: 0 4px 12px rgba(0,0,0,0.05); {% endcomment %}
+    transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    {% comment %} justify-content: center; {% endcomment %}
+  }
+
+  {% comment %} .magazine-item:hover {
+    transform: translateY(-5px);
+  } {% endcomment %}
+
+  .magazine-logo {
+    margin: 5px auto;
+    height: 142px;
+    width: 200px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .magazine-text {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #232323;
+  }
+
+  /* Link Styles */
+  .magazine-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+
+  /* Mobile Slider Styles */
+  @media screen and (max-width: 768px) {
+    .desktop-magazine-grid {
+      display: none;
+    }
+
+    .mobile-magazine-slider {
+      display: block;
+      margin: 0 -15px;
+    }
+    
+    .magazine-slide {
+      padding: 0 15px;
+    }
+
+    .magazine-review-heading {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .magazine-item {
+      padding: 25px 20px;
+    }
+
+    .magazine-text {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    /* Hide Slick arrows and dots */
+    .magazine-review-section .slick-arrow,
+    .magazine-review-section .slick-dots {
+      display: none !important;
+    }
+  }
+
+  /* Small Mobile Styles */
+  @media screen and (max-width: 480px) {
+    .magazine-review-heading {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .magazine-item {
+      padding: 20px 15px;
+    }
+    
+    .magazine-text {
+      font-size: 15px;
+    }
+  }
+
+  /* Extra Small Mobile */
+  @media screen and (max-width: 360px) {
+    .magazine-review-heading {
+      font-size: 24px;
+    }
+
+    .magazine-item {
+      padding: 15px 10px;
+    }
+
+    .magazine-text {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const sliderElement = document.getElementById('magazine-slider-{{ section.id }}');
+    
+    if (!sliderElement) return;
+    
+    // Only initialize on mobile
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    
+    function initSlider() {
+      if (!isMobile()) {
+        // Destroy slider if exists
+        if ($(sliderElement).hasClass('slick-initialized')) {
+          $(sliderElement).slick('unslick');
+        }
+        return;
+      }
+      
+      // Initialize Slick slider only if not already initialized
+      if (!$(sliderElement).hasClass('slick-initialized')) {
+        $(sliderElement).slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: {{ section.settings.autoplay | default: true }},
+          autoplaySpeed: {{ section.settings.auto_scroll_delay | times: 1000 | default: 5000 }},
+          infinite: true,
+          speed: 500,
+          cssEase: 'linear',
+          arrows: false,
+          dots: false,
+          pauseOnHover: true,
+          pauseOnFocus: true,
+          swipe: true,
+          touchMove: true,
+          adaptiveHeight: false,
+          mobileFirst: true,
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                arrows: false,
+                dots: false
+              }
+            }
+          ]
+        });
+      }
+    }
+    
+    // Initialize on load
+    initSlider();
+    
+    // Re-initialize on resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        initSlider();
+      }, 250);
+    });
+  });
+</script>
+
+<script>
+  // Load Slick CSS and JS if not already loaded
+  (function() {
+    // Check if Slick CSS is loaded
+    if (!document.querySelector('link[href*="slick.css"]')) {
+      var slickCSS = document.createElement('link');
+      slickCSS.rel = 'stylesheet';
+      slickCSS.href = 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css';
+      document.head.appendChild(slickCSS);
+    }
+    
+    // Check if Slick JS is loaded
+    if (!window.jQuery || !$.fn.slick) {
+      var jqueryScript = document.createElement('script');
+      jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+      jqueryScript.onload = function() {
+        var slickJS = document.createElement('script');
+        slickJS.src = 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js';
+        slickJS.onload = initSliderAfterLoad;
+        document.body.appendChild(slickJS);
+      };
+      document.body.appendChild(jqueryScript);
+    } else if ($.fn.slick) {
+      // Slick already available
+      document.addEventListener('DOMContentLoaded', initSliderAfterLoad);
+    }
+    
+    function initSliderAfterLoad() {
+      // This will be called after jQuery and Slick are loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        const sliderElement = document.getElementById('magazine-slider-{{ section.id }}');
+        
+        if (!sliderElement) return;
+        
+        function isMobile() {
+          return window.innerWidth <= 768;
+        }
+        
+        function initSlider() {
+          if (!isMobile()) {
+            if ($(sliderElement).hasClass('slick-initialized')) {
+              $(sliderElement).slick('unslick');
+            }
+            return;
+          }
+          
+          if (!$(sliderElement).hasClass('slick-initialized')) {
+            $(sliderElement).slick({
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              autoplay: {{ section.settings.autoplay | default: true }},
+              autoplaySpeed: {{ section.settings.auto_scroll_delay | times: 1000 | default: 5000 }},
+              infinite: true,
+              speed: 500,
+              arrows: false,
+              dots: false,
+              pauseOnHover: true,
+              responsive: [
+                {
+                  breakpoint: 768,
+                  settings: 'unslick'
+                }
+              ]
+            });
+          }
+        }
+        
+        initSlider();
+        
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(initSlider, 250);
+        });
+      });
+    }
+  })();
+</script>

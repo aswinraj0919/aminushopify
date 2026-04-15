@@ -1,0 +1,119 @@
+<div>
+  <!-- The Shop Part -->
+  <section class="ug-container-ing ">
+    <div class=" ">
+      <!-- Heading -->
+      <h2 class="sm:text-[24px] text-[18px] font-semibold text-center mt-4">
+        {{ section.settings.shop_heading }}
+      </h2>
+
+      <!-- Description -->
+      <p class="sm:text-[16px] text-[14px] font-light text-center mt-4">
+        {{ section.settings.shop_description }}
+      </p>
+
+      <!-- Button -->
+      <div class="text-center mt-4">
+        <a
+          href="{{ section.settings.shop_button_link }}"
+          class="inline-block bg-black text-white px-2 sm:py-2 py-0.5 rounded-[4px] text-[16px]  font-[400]"
+        >
+          {{ section.settings.shop_button_text }}
+        </a>
+      </div>
+    </div>
+  </section>
+  <div
+    class=" sm:hidden block mt-5"
+    style="border-top: 0.5px solid black;"
+  ></div>
+
+  <!-- Book personal consultation -->
+  <section class="sm:mt-7">
+    <div class="bg-[#F7F7F7] ug-container-ing">
+      <div class=" sm:px-2 sm:pb-10 pb-5">
+        <div >
+          <!-- Description -->
+          <p class="sm:text-[16px] text-[14px] font-normal text-center pt-4">
+            {{ section.settings.consultation_description }}
+          </p>
+
+          <!-- Button -->
+          <div class="flex justify-center mt-4 ">
+            <a
+              href="{{ section.settings.consultation_button_link }}"
+              class="cursor-pointer flex justify-between items-center sm:w-[470px] sm:text-[16px] text-[14px] sm:font-normal sm:px-4 px-2 py-1 sm:py-2 border-[0.5px] bg-white border-black sm:rounded-[45px] rounded-[4px] text-black font-semibold"
+              style="border: 0.5px solid black"
+            >
+              <span class="sm:text-[16px] text-[14px] font-[600] sm:font-[400]">{{ section.settings.consultation_button_text }}</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+                class="w-[15px] ug-block"
+              >
+                <path
+                  d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Consultation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop Heading",
+      "default": "The Shop"
+    },
+    {
+      "type": "textarea",
+      "id": "shop_description",
+      "label": "Shop Description",
+      "default": "A green online shop dedicated to heal skin and make you glow inside out"
+    },
+    {
+      "type": "url",
+      "id": "shop_button_link",
+      "label": "Shop Button Link"
+    },
+    {
+      "type": "text",
+      "id": "shop_button_text",
+      "label": "Shop Button Text",
+      "default": "CHECK OUR COLLECTION"
+    },
+    {
+      "type": "textarea",
+      "id": "consultation_description",
+      "label": "Consultation Description",
+      "default": "Schedule a one-on-one consultation with one of our skin experts"
+    },
+    {
+      "type": "url",
+      "id": "consultation_button_link",
+      "label": "Consultation Button Link"
+    },
+    {
+      "type": "text",
+      "id": "consultation_button_text",
+      "label": "Consultation Button Text",
+      "default": "BOOK PERSONAL CONSULTATION"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Consultation",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

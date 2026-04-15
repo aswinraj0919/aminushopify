@@ -1,0 +1,981 @@
+<link type="text/css" href="{{ 'cps-ug-global.css' | asset_url }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+{%- liquid
+  assign zoom_size = 5000
+  assign min_aspect_ratio = 0.6
+
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+
+  unless product.has_only_default_variant
+    if section.settings.select_first_variant == false and product.variants.size > 1
+      assign current_variant = product.selected_variant | default: false
+      unless current_variant
+        assign featured_media = product.featured_media
+      endunless
+    endif
+  endunless
+
+  assign product_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
+
+  assign enable_media_grouping = false
+  if section.settings.enable_media_grouping
+    for variant in product.variants
+      if variant.featured_media
+        assign enable_media_grouping = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
+<section
+  class=" product_section first_section_product b-border "
+>
+  <div class="ug-container">
+    <!-- Breadcrumb -->
+    <div class="font-[400] lg:text-[14px] text-[12px] mt-9 ">
+      {{ product.metafields.custom.breadcrumb }}
+    </div>
+    <div class="flex flex-col lg:hidden block">
+      <div>
+        <p class="text-[40px] font-[400] AccountantSignature">
+          {{ product.metafields.custom.design_text_accountantSignature }}
+        </p>
+        <div class="relative inline-block">
+          <h1 class="sm:text-[28px] text-[24px] font-[500] uppercase">{{ product.title }}</h1>
+          <img
+            src="{{ product.metafields.custom.moon_icon }}"
+            alt="Moon Icon"
+            class="absolute top-[-10px] right-[-30px] h-[26px] w-[25px] object-cover"
+            width="25px"
+            height="26px"
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center mt-3 text-[#022983] hover:text-black cursor-pointer">
+        <span style="display:block text-[#022983] hover:text-black ">
+          {%- render 'judgeme_widgets',
+            widget_type: 'judgeme_preview_badge',
+            jm_style: '',
+            concierge_install: false,
+            product: product
+          -%}
+        </span>
+      </div>
+      <div class="custom-product-des mt-3 mb-5  ">
+        <p>
+          {{ product.description }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row">
+      <!-- Sidebar (Thumbnails) -->
+      <div
+        class="lg:w-[10%] w-full lg:flex flex-col gap-6 h-auto lg:h-[573px] pt-10 "
+        style="overflow-y:scroll;padding-top:0px!important;margin-top:2.5rem!important"
+      >
+        {% for media in product.media %}
+          {% if media.media_type == 'image' %}
+            <img
+              src="{{  media.preview_image.src | image_url }}"
+              class=" cursor-pointer bg-[#D9D9D9] rounded-md lg:h-[110px] lg:w-[110px] h-[90px] w-[90px] rounded-[12px] object-cover"
+              width="90px"
+              height="90px"
+              onclick="updateMainMedia('{{  media.preview_image.src | image_url }}',  {{ forloop.index0  }},  false)"
+            >
+          {% else %}
+            <!-- Video -->
+            {% assign mp4Source = media.sources | where: 'format', 'mp4' | first %}
+            <div
+              class="relative lg:h-[130px] lg:w-[106px] h-[90px] w-[90px] rounded-[12px] cursor-pointer "
+              onclick="updateMainMedia('{{ mp4Source.url }}', {{ forloop.index0 }}, true)"
+            >
+              <video
+                width="{{ media.width }}"
+                height="{{ media.height }}"
+                preload="metadata"
+                muted
+                playsinline
+                poster="{{ media.preview_image.src | image_url }}"
+                class="object-cover lg:h-[110px] lg:w-[110px] h-[90px] w-[90px] rounded-[12px]"
+              >
+                {% for source in media.sources %}
+                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                {% endfor %}
+                Your browser does not support the video tag.
+              </video>
+
+              <!-- Play button -->
+              <div class="custom-video__control3 absolute inset-0 flex items-center justify-center cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20" height="20" fill="white">
+                  <!-- Rounded play icon -->
+                  <path
+                    d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z"
+                    fill="#000000" />
+                </svg>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Main Image/Video -->
+      <div class="lg:w-[40%] w-full lg:px-4 lg:pt-10 cursor-pointer " onclick="mainImage()">
+        <div
+          id="main_video_section"
+          class="relative hidden"
+          data-modal-target="popup-modal"
+          data-modal-toggle="popup-modal"
+        >
+          <video
+            id="mainVideoPlayer"
+            class="custom-video__image main_video_section_thambnails object-cover lg:w-[687px] lg:h-[573px] w-full h-[435px] rounded-[12px]"
+            style="border: 0.2px solid black"
+            muted
+            playsinline
+          >
+            <source src="" type="{{ source.mime_type }}">
+            Your browser does not support the video tag.
+          </video>
+
+          <div class="custom-video__control2 absolute inset-0 flex items-center justify-center cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="60" height="60" fill="white">
+              <!-- Rounded play icon -->
+              <path
+                d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z"
+                fill="#000000" />
+            </svg>
+          </div>
+        </div>
+
+        <div id="main_image_section" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+          <img
+            id="mainImage"
+            src="{{ product.media.first.preview_image.src | image_url }}"
+            alt="Product Image"
+            class="object-cover lg:w-[402px] lg:h-[573px] w-full h-[435px] rounded-[12px]"
+            style="border: 0.2px solid black"
+          >
+        </div>
+      </div>
+
+      <div
+        id="popup-modal"
+        tabindex="-1"
+        class="hidden fixed inset-0 z-[9999] flex justify-center items-center bg-black bg-opacity-50"
+      >
+        <div class="relative p-1 w-full h-full bg-white">
+          <div class="relative bg-white">
+            <button
+              type="button"
+              class="absolute top-3 end-2.5 text-black bg-transparent hover:bg-transparent hover:text-black text-sm w-12 h-12 border-none ms-auto inline-flex justify-center items-center outline-none focus:outline-none z-50"
+              data-modal-hide="popup-modal"
+            >
+              <span class="text-2xl">&#x2715;</span>
+            </button>
+            <div class="bg-gray-100 flex justify-center items-center min-h-screen">
+              <div class="w-[800px] relative">
+                <!-- Carousel Container -->
+                <div class="relative overflow-hidden rounded-lg">
+                  <div id="carousel" class="flex transition-transform duration-500"></div>
+                </div>
+
+                <!-- Left Arrow -->
+                <button
+                  id="prev"
+                  class="absolute top-1/2 lg:left-[-100px] left-0 transform -translate-y-1/2 text-black p-2 outline-none focus:outline-none hover:bg-transparent border-none"
+                >
+                  ❮
+                </button>
+
+                <!-- Right Arrow -->
+                <button
+                  id="next"
+                  class="absolute top-1/2 lg:right-[-100px] right-0 transform -translate-y-1/2 text-black p-2 outline-none focus:outline-none hover:bg-transparent border-none"
+                >
+                  ❯
+                </button>
+
+                <!-- Thumbnails -->
+                <div
+                  id="thumbnails"
+                  class="flex justify-center mt-3 md:w-full w-full text-center overflow-x-auto m-auto"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:hidden my-4">
+        <div class="glide-product block lg:hidden">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              {% for media in product.media %}
+                <li class="glide__slide">
+                  {% if media.media_type != 'image' %}
+                    <div
+                      class="w-full cursor-pointer"
+                      onclick="mainImage({{forloop.index0}})"
+                    >
+                      <div
+                        id="main_video_section"
+                        class="relative"
+                        data-modal-target="popup-modal"
+                        data-modal-toggle="popup-modal"
+                      >
+                        <video
+                          width="{{ media.width }}"
+                          height="{{ media.height }}"
+                          preload="metadata"
+                          muted
+                          playsinline
+                          poster="{{ media.preview_image.src | image_url }}"
+                          class="custom-video_carousel_image object-cover w-full h-[435px] rounded-[12px]"
+                          style="border: 0.2px solid black"
+                        >
+                          {% assign mp4Source = media.sources | where: 'format', 'mp4' | first %}
+                          {% if mp4Source %}
+                            <source src="{{ mp4Source.url }}" type="video/mp4">
+                          {% endif %}
+                          Your browser does not support the video tag.
+                        </video>
+
+                        <!-- Play button -->
+                        <div class="custom-video__control2 absolute inset-0 flex items-center justify-center cursor-pointer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 50 50"
+                            width="60"
+                            height="60"
+                            fill="white"
+                          >
+                            <path
+                              d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z"
+                              fill="#000000" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div
+                      data-modal-target="popup-modal"
+                      data-modal-toggle="popup-modal"
+                      onclick="mainImage({{ forloop.index0 }})"
+                    >
+                      <img
+                        src="{{ media.preview_image.src | image_url }}"
+                        alt="Product Image"
+                        class="object-cover w-full h-[435px] rounded-[12px]"
+                        style="border: 0.2px solid black"
+                      >
+                    </div>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="lg:w-[60%] w-full  lg:pl-6">
+        <div class="  custom-top-padding-am">
+          <div class="flex flex-wrap items-center justify-between ">
+            <div class="text-[40px] font-[400] AccountantSignature w-fit">
+              {{ product.metafields.custom.design_text_accountantSignature }}
+            </div>
+            <div class="flex items-center text-[#022983] hover:text-black cursor-pointer w-fit">
+              <span style="display:block text-[#022983] hover:text-black cursor-pointer">
+                {%- assign rating_count = product.metafields.reviews.rating_count | plus: 0 -%}
+                {%- if rating_count > 0 -%}
+                  <div class="theme-product-reviews">
+                    {% render 'rating', rating_value: product.metafields.reviews.rating.value %}
+                    <span class="cc-rating-custom-caption">
+                      {{- 'products.product.reviews_count' | t: count: rating_count -}}
+                    </span>
+                  </div>
+                {%- endif -%}
+              </span>
+            </div>
+          </div>
+          <div class="relative inline-block mt-1">
+            <h1 class="lg:text-[32px] text-[28px] font-[500] uppercase">{{ product.title }}</h1>
+            <img
+              src="{{ product.metafields.custom.moon_icon }}"
+              alt="Moon Icon"
+              class="absolute top-[-10px] right-[-30px] h-[26px] w-[25px] object-cover"
+              height="26px"
+              width="25px"
+            >
+          </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="custom-product-des  mt-4 mb-6">
+          <p>{{ product.description }}</p>
+        </div>
+        <div class="lg:text-[40px] md:text-start text-center text-[20px] lg:font-[300] font-[500] lg:leading-[54px] ">
+          {{ product.metafields.custom.rotated_text_title }}
+          {% assign texts = product.metafields.custom.changing_text.value | parse_json %}
+          <div class="rotating-text mb-6 h-[60px] ">
+            {% for block in texts %}
+              <span class="word text-[40px] font-[600] md:right-0 right-0">{{ block }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="flex flex-row gap-3 items-end snapmint_widget_optional">
+          {% for variant in product.variants %}
+            <div
+              class="lg:w-[106px] w-[94px]  text-center cursor-pointer variant-option flex-grow-0 snapmint_widget_optional_2"
+              data-variant-id="{{ variant.id }}"
+              onclick="selectVariantMain({{ variant.id }})"
+            >
+              <div
+                <div
+                class="rounded-[16px] text-center"
+                {% if forloop.index == 2 %}
+                  style="border:1px solid black;background-color: {{ product.metafields.custom.primary_brand_color | default: '#F9EBDA' }};"
+                {% endif %}
+              >
+                {% if forloop.index == 2 %}
+                  <h2 class="text-[12px] leading-[19px] font-[600] text-black pt-1 pb-1">
+                    {{ variant.metafields.custom.best_result }}
+                  </h2>
+                {% endif %}
+
+                <div
+                  id="variant-main-content-{{ variant.id }}"
+                  class="rounded-[16px]  "
+                  style="border:1px solid black; background-color: {% if forloop.index == product.metafields.custom.default_variant %}{{ product.metafields.custom.secondary_brand_color | default: '#FCF5EC' }}{% else %}#fff{% endif %};"
+                >
+                  <p class="text-[12px] leading-[23px] font-[300] pt-1 ">
+                    {{ variant.metafields.custom.variant_custom_title }}
+                  </p>
+                  <p class="text-[12px] leading-[23px] font-[500]">
+                    {{ variant.metafields.custom.verient_days }}
+                  </p>
+                  <p class="text-[16px] leading-[19px] font-[600] pt-1 pb-2 snapmint_widget_price">
+                    ₹{{ variant.price | money_without_currency | split: '.' | first }}
+                  </p>
+                  <p class="text-[12px] leading-[19px] font-[400] text-white bg-black rounded-b-[15px] py-1">
+                    {{ variant.title }}
+                  </p>
+                </div>
+              </div>
+              <p class="text-[12px] {% if forloop.index == product.metafields.custom.default_variant %} text-[#0066CB] {% endif %} leading-[19px] font-[500] my-2">
+                {{ variant.metafields.custom.variant_discount_value }}
+              </p>
+            </div>
+          {% endfor %}
+
+          <!-- People also Bought == stock -->
+          {% if product.metafields.custom.people_also_bought_show == true %}
+            <a href="{{ product.metafields.custom.people_also_bought_url }}" class="no-underline">
+              <div
+                class="lg:w-[110px] w-[100px] text-center cursor-pointer mb-2  "
+              >
+                <div
+                  class="rounded-[16px] "
+                  style="border:1px solid black;background-color: {{ product.metafields.custom.primary_brand_color | default: '#F9EBDA' }};"
+                >
+                  <h2 class="md:text-[10px] text-[8px] leading-[19px] font-[600] text-black px-1 py-1">
+                    {{ product.metafields.custom.people_also_bought_title }}
+                  </h2>
+
+                  <div
+                    class="rounded-[16px] bg-white"
+                    style="border:1px solid black"
+                  >
+                    <p class=" text-[7.5px] md:text-[8.5px] leading-[14px] font-[300] py-3   px-1">
+                      {{ product.metafields.custom.people_also_bought_description }}
+                    </p>
+                    <p class="text-[12px] md:text-[14px] text-[#000] pb-2">
+                      <span class="font-[600] font-bold">
+                        {{ product.metafields.custom.people_also_bought_discount }}
+                      </span>
+                      <span class="text-[12px] md:text-[14px] text-[#b8b6b6] line-through">
+                        {{ product.metafields.custom.people_also_bought_price }}
+                      </span>
+                    </p>
+                    <p class="text-[8px] md:text-[9.5px] md:leading-[19px] leading-[15px] font-[400] text-white bg-black rounded-b-[15px] md:py-1 py-2  px-1">
+                      {{ product.metafields.custom.people_also_bought_bottom_title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="snapmint_widget_placement"></div>
+
+        <div class="flex flex-row items-center mt-6 gap-2">
+          <div class="flex items-center rounded w-[100px] h-[40px] justify-center" style="border: 0.5px solid #444444">
+            <a
+              id="decrease-btn"
+              class="px-2 text-[20px] font-[300] border-none cursor-pointer"
+              onclick="decreaseCount()"
+              >−</a
+            >
+            <small id="product-count" class="px-4 text-[14px] font-[400]">1</small>
+            <a
+              id="increase-btn"
+              class="px-2 text-[20px] font-[300] border-none cursor-pointer"
+              onclick="increaseCount()"
+              >+</a
+            >
+          </div>
+          <button
+            class=" hover:text-black text-white rounded-[4px] text-[14px] font-[600] w-full lg:w-[220px] h-[40px] addSEcart "
+            style="
+              --brand-black: {{ product.metafields.custom.brand_black_color | default: '#000000' }};
+              --primary-color: {{ product.metafields.custom.primary_brand_color | default: '#F9EBDA' }};
+              background-color: var(--brand-black);
+            "
+            onmouseover="this.style.backgroundColor='var(--primary-color)'"
+            onmouseout="this.style.backgroundColor='var(--brand-black)'"
+            onclick="addToCart()"
+          >
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sticky-bar" class="hidden fixed bottom-0 left-0 right-0 bg-white shadow-md z-50 ">
+    <div class="flex items-center lg:justify-between justify-center border-t px-2 lg:max-w-[1350px] max-w-[95%] m-auto">
+      <!-- Product Image & Info -->
+      <div class="hidden lg:flex flex-row items-center space-x-4">
+        <img
+          src="{{ product.metafields.custom.sticky_image | image_url }}"
+          class="w-[81px] h-[100px] object-contain"
+        >
+        <div>
+          <h2 class="text-[24px] font-[500]">
+            {{ product.title | default: 'Product Name' }}
+          </h2>
+          <p id="sticky-price-desktop" class="text-[16px] font-[400] text-black  "></p>
+        </div>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button
+        class=" hover:text-black text-white px-6 py-2 lg:w-[400px] w-full lg:h-[40px] h-[35px] blue-hover text-center flex flex-row items-center justify-center gap-3 lg:my-0 my-3 cursor-pointer add-to-cart-btn"
+        style="
+          --brand-black: {{ product.metafields.custom.brand_black_color | default: '#000000' }};
+          --primary-color: {{ product.metafields.custom.primary_brand_color | default: '#F9EBDA' }};
+          background-color: var(--brand-black);
+        "
+        onmouseover="this.style.backgroundColor='var(--primary-color)'"
+        onmouseout="this.style.backgroundColor='var(--brand-black)'"
+        id="stickyAddToCart"
+        onclick="addToCart()"
+        {% comment %} disabled {% endcomment %}
+      >
+        <p>ADD TO CART</p>
+        <p id="sticky-price-mobile" class="text-[16px] font-[400] text-white hover:text-black hidden"></p>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+<script>
+
+       console.log("aaaaaaa ====>>", {{ product | json }}, "{{ product.metafields.custom.design_text }}");
+  
+        let isloadedPreORder = true;
+        let clickedImage = 1;
+        
+        function updateMainMedia(mediaUrl, isFirstThumbnail, isVideoAvailable) {
+          clickedImage = isFirstThumbnail;
+
+          console.log("Clicked Media ==>>", mediaUrl, isFirstThumbnail, isVideoAvailable);
+
+          const mainVideoSection = document.getElementById('main_video_section');
+          const mainImageSection = document.getElementById('main_image_section');
+          const videoElement = document.getElementById('mainVideoPlayer');
+          const videoSource = videoElement.querySelector('source');
+          const mainImage = document.getElementById('mainImage');
+
+          if (isVideoAvailable) {
+              // Hide image and show video
+              mainImageSection.classList.add('hidden');
+              mainVideoSection.classList.remove('hidden');
+
+              // Update video source dynamically
+              if (videoSource) {
+                  videoSource.src = mediaUrl;
+              } else {
+                  // If no source exists, create it
+                  const newSource = document.createElement('source');
+                  newSource.src = mediaUrl;
+                  newSource.type = "video/mp4";
+                  videoElement.appendChild(newSource);
+              }
+
+              videoElement.load(); // reload video
+              videoElement.stop(); // autoplay
+          } else {
+              // Hide video and show image
+              mainVideoSection.classList.add('hidden');
+              mainImageSection.classList.remove('hidden');
+
+              if (mainImage) {
+                  mainImage.src = mediaUrl;
+              }
+          }
+      }
+        const mediaItems = [
+        {% for media in product.media %}
+          {% if media.media_type == 'image' %}
+            {
+              type: 'image',
+              src: '{{ media.preview_image.src | image_url }}',
+              index: {{ forloop.index0 }}
+            },
+          {% elsif media.media_type == 'video' %}
+            {%- assign video_source = media.sources | where: 'format', 'mp4' | first -%}
+            {
+              type: 'video',
+              src: '{{ video_source.url }}',
+              thumbnail: '{{ media.preview_image.src | image_url }}',
+              index: {{ forloop.index0 }}
+            },
+          {% endif %}
+        {% endfor %}
+      ];
+
+
+    const carousel = document.getElementById('carousel');
+    const thumbnails = document.getElementById('thumbnails');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let index = 0;
+
+    function renderCarousel() {
+      carousel.innerHTML = '';
+      thumbnails.innerHTML = '';
+
+      mediaItems.forEach((item, i) => {
+          // Create slides
+          let slide;
+          if (item.type === 'image') {
+              slide = `<div class="w-full flex-shrink-0">
+                          <img src="${item.src}" class="object-contain m-auto w-full md:h-[70vh] h-[65vh]" alt="Media ${i+1}">
+                      </div>`;
+          } else if (item.type === 'video') {
+              slide = `<div class="w-full flex-shrink-0">
+                      <video muted playsinline class="object-contain m-auto w-full md:h-[70vh] h-[65vh]" controls autoplay muted>
+                        <source src="${item.src}" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+                      </div>`;
+          }
+          carousel.innerHTML += slide;
+
+          // Create thumbnails
+          let thumb;
+          if (item.type === 'image') {
+              thumb = `<img src="${item.src}" class="thumb w-12 h-12 object-cover cursor-pointer border-2 ${i === 0 ? 'border-black' : 'border-red'}  border-gray-400 hover:border-gray-800" data-index="${i}">`;
+          } else if (item.type === 'video') {
+              thumb = `
+                  <div class="relative thumb-wrapper cursor-pointer border-2 ${i === 0 ? 'border-black' : 'border-gray-400'} hover:border-gray-800" data-index="${i}">
+                  <img src="${item.thumbnail}" class="w-16 h-12 object-cover">
+                  <div class="custom-video__control_fourth custom-video__control3 absolute inset-0 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20" height="20" fill="white">
+                          <path d="M20 15c0-1.1.9-2 2-2h0c.3 0 .5.1.7.3l14.5 10.5c.9.7.9 2.1 0 2.8L22.7 37.7c-.3.2-.5.3-.7.3h0c-1.1 0-2-.9-2-2V15z" fill="#000000" />
+                      </svg>
+                  </div>
+                  </div>
+                 `;
+          }
+          thumbnails.innerHTML += thumb;
+      });
+
+      addThumbnailClickEvents();
+      updateCarousel();
+  }
+
+    function updateCarousel() {
+        const offset = -index * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+
+        document.querySelectorAll('.thumb').forEach((thumb, i) => {
+            thumb.classList.toggle('border-gray-800', i === index);
+            thumb.classList.toggle('border-gray-400', i !== index);
+        });
+    }
+
+
+  function addThumbnailClickEvents() {
+    document.querySelectorAll('.thumb-wrapper, .thumb').forEach(thumb => {
+        thumb.addEventListener('click', (event) => {
+            let target = event.target;
+            
+            // Ensure we get the correct `data-index`, whether clicking on the div, img, or svg inside the thumbnail
+            while (!target.dataset.index && target.parentElement) {
+                target = target.parentElement;
+            }
+
+            index = parseInt(target.getAttribute('data-index'));
+            updateCarousel();
+        });
+    });
+   }
+
+    function mainImage(indexPhone) {
+      if (indexPhone === undefined) {
+        index = clickedImage; // No change, use stored value
+      } else {
+          index = indexPhone; // Ensure index does not go negative
+      }
+
+        updateCarousel();
+        document.getElementById('popup-modal').classList.remove('hidden'); // Show modal
+    }
+
+      prevBtn.addEventListener('click', () => {
+            index = (index - 1 + mediaItems.length) % mediaItems.length;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            index = (index + 1) % mediaItems.length;
+            updateCarousel();
+        });
+
+      // Initialize the carousel
+      renderCarousel(); 
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    const playButton = document.querySelector('.custom-video_carousel_control');
+    const video = document.querySelector('.custom-video_carousel_video');
+    const image = document.querySelector('.custom-video_carousel_image');
+    
+    if (playButton && video && image) {
+      playButton.addEventListener('click', function() {
+        // Hide the image and play button
+        image.style.display = 'none';
+        playButton.style.display = 'none';
+    
+        // Show the video and play it
+        video.classList.remove('hidden');
+        video.play();
+      });
+    }
+    });
+        
+
+let previouslySelectedContent = null;
+let variants = {{ product.variants | json | default: '[]' }};
+
+// If metafield is index
+let defaultIndex = {{ product.metafields.custom.default_variant | minus : 1 }};
+let selectedVariantId = variants[defaultIndex]?.id;
+
+const variantAvailability = {
+  {% for variant in product.variants %}
+    "{{ variant.id }}": {{ variant.available | json }},
+  {% endfor %}
+};
+
+function updateAddToCartButton(variantId) {
+  const isAvailable = variantAvailability[variantId];
+  const addToCartBtn = document.querySelector('.addSEcart');
+  const stickyCartBtn = document.querySelector('.add-to-cart-btn');
+
+  if (!isAvailable) {
+    // Main Button
+    if (addToCartBtn) {
+      addToCartBtn.textContent = "PRE-ORDER";
+      addToCartBtn.disabled = true;
+      addToCartBtn.classList.add("opacity-50", "cursor-not-allowed");
+    }
+    // Sticky Button
+    if (stickyCartBtn) {
+      stickyCartBtn.querySelector("p").textContent = "PRE-ORDER";
+      stickyCartBtn.disabled = true;
+      stickyCartBtn.classList.add("opacity-50", "cursor-not-allowed");
+    }
+  } else {
+    // Main Button
+    if (addToCartBtn) {
+      addToCartBtn.textContent = "ADD TO CART";
+      addToCartBtn.disabled = false;
+      addToCartBtn.classList.remove("opacity-50", "cursor-not-allowed");
+    }
+    // Sticky Button
+    if (stickyCartBtn) {
+      stickyCartBtn.querySelector("p").textContent = "ADD TO CART";
+      stickyCartBtn.disabled = false;
+      stickyCartBtn.classList.remove("opacity-50", "cursor-not-allowed");
+    }
+  }
+}
+
+
+function selectVariantMain(variantId) {
+  selectedVariantId = variantId;
+  console.log("Variant selected:", variantId);
+
+  // Update URL
+  const newUrl = `${window.location.pathname}?variant=${variantId}`;
+  window.history.replaceState(null, null, newUrl);
+
+  // Reset all variants
+  document.querySelectorAll('[id^="variant-main-content-"]').forEach(content => {
+    content.style.backgroundColor = '#fff'; 
+    content.style.color = 'black'; 
+  });
+
+  // Highlight selected
+  const selected = document.getElementById(`variant-main-content-${variantId}`);
+  if (selected) {
+    selected.style.backgroundColor = '{{ product.metafields.custom.secondary_brand_color | default: '#FCF5EC' }}';
+    selected.style.color = 'black';
+  }
+
+    updateAddToCartButton(variantId);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  updateAddToCartButton(selectedVariantId);
+});
+
+let count = 1;
+
+function increaseCount() {
+    count++;
+    document.getElementById('product-count').innerText = count;
+  }
+
+function decreaseCount() {
+  if (count > 1) {
+    count--;
+    document.getElementById('product-count').innerText = count;
+  }
+}
+
+ function addToCart() {
+  if(!selectedVariantId){
+    return;
+  }
+    const fd = new FormData();
+    fd.append('id', selectedVariantId);
+    fd.append('quantity', count);
+
+    fetch('/cart/add.js', { method: 'POST', body: fd })
+      .then(() => {})
+      .catch(console.error);
+  }
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.innerWidth <= 768) {
+    new Glide('.glide-product', {
+      type: 'carousel',
+      perView: 1.4,
+      gap: 4,
+      autoplay: false,
+      rewind: true,
+      animationDuration: 200,
+      swipeThreshold: 80,
+      dragThreshold: 120,
+      breakpoints: {
+        400: { perView: 1.1, gap: 2 },
+        600:{ perView: 1.3, gap: 8 },
+        980: { perView: 2.5, gap: 8 },
+      }
+    }).mount();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const stickyBar = document.getElementById('sticky-bar');
+  const stickyPriceDesktop = document.getElementById('sticky-price-desktop');
+  const stickyPriceMobile = document.getElementById('sticky-price-mobile');
+  const firstSection = document.querySelector('.first_section_product');
+
+  const variants = {{ product.variants | json | default: '[]' }};
+
+  function formatMoney(cents) {
+  const moneyFormat = "{{ shop.money_format }}";
+    if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+      return Shopify.formatMoney(cents, moneyFormat);
+    } else {
+      return '₹' + (cents / 100).toFixed(2);
+    }
+  }
+  
+
+  function updateStickyPrice() {
+    const selectedVariant = variants.find(v => v.id === selectedVariantId);
+    if (selectedVariant) {
+      const formattedPrice = formatMoney(selectedVariant.price);
+      stickyPriceDesktop.innerText = formattedPrice;
+      stickyPriceMobile.innerText = formattedPrice;
+      console.log("Sticky price updated:", formattedPrice);
+    }
+  }
+
+  function handleScroll() {
+    if (!firstSection || !stickyBar) return;
+    const rect = firstSection.getBoundingClientRect();
+    if (rect.bottom <= 0) {
+      stickyBar.classList.remove('hidden');
+    } else {
+      stickyBar.classList.add('hidden');
+    }
+  }
+
+  // Initialize on load
+  updateStickyPrice();
+  handleScroll();
+
+  // Watch scroll
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleScroll);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  function openKeyIngredientsOnMobile() {
+    const keyIngredientBtn = document.querySelector(
+      ".accordion-header[data-section='key-ingredients']"
+    );
+    const keyIngredientContent = document.querySelector(
+      ".accordion-content[data-section='key-ingredients']"
+    );
+
+    if (window.innerWidth <= 640 && keyIngredientBtn && keyIngredientContent) {
+      keyIngredientBtn.classList.add("active");
+      keyIngredientContent.style.display = "block";
+    }
+  }
+
+  openKeyIngredientsOnMobile();
+  window.addEventListener("resize", openKeyIngredientsOnMobile);
+});
+</script>
+
+<style>
+    .b-border {
+    border-top: 1px solid black;
+  }
+
+  @media (max-width: 640px) {
+    .b-border {
+      border-top: 0.5px solid black;
+    }
+  }
+  .custom-product-des p{
+    font-size: 18px !important;
+    line-height: 30px !important;
+    font-weight: 400 !important;
+  }
+
+  @media (max-width: 750px) {
+    .custom-product-des p{
+      font-size: 14px !important;
+      line-height: 19px !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  @media (max-width: 749px){
+    .product-description.rte.cf p{
+      font-size: 14px !important;
+      line-height: 19px !important;
+      font-weight: 400 !important;
+  }
+  }
+
+
+  .productDescription{
+      padding: 0 0px !important;
+    }
+
+  .carousel-item video {
+    height:435px !important;
+    }
+
+  .glide-product .glide__arrows {
+      display: none !important;
+    }
+
+  .rotating-text {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rotating-text .word {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    animation: showText 10s infinite;
+  }
+
+  .rotating-text .word:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .rotating-text .word:nth-child(2) {
+    animation-delay: 1s;
+  }
+
+  .rotating-text .word:nth-child(3) {
+    animation-delay: 2s;
+  }
+
+  .rotating-text .word:nth-child(4) {
+    animation-delay: 3s;
+  }
+
+  .rotating-text .word:nth-child(5) {
+    animation-delay: 4s;
+  }
+  .rotating-text .word:nth-child(6) {
+    animation-delay: 5s;
+  }
+
+  .rotating-text .word:nth-child(7) {
+    animation-delay: 6s;
+  }
+
+  .rotating-text .word:nth-child(8) {
+    animation-delay: 7s;
+  }
+
+  .rotating-text .word:nth-child(9) {
+    animation-delay: 8s;
+  }
+
+  .rotating-text .word:nth-child(10) {
+    animation-delay: 9s;
+  }
+
+@keyframes showText {
+  0% {
+  opacity: 0;
+  }
+  5% {
+  opacity: 1;
+  }
+  10% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 0;
+}
+
+</style>

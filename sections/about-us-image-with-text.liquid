@@ -1,0 +1,102 @@
+{% schema %}
+{
+  "name": "About Us Image With Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "about_image",
+      "label": "About Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Image With Text",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="ug-container about-us-border">
+  <div class="m-auto grid md:grid-cols-2 grid-cols-1 justify-center items-start md:gap-8 gap-4">
+    <!-- Image -->
+    <div
+      class="
+        {% if section.settings.image_position == 'right' %}
+          md:order-2
+        {% else %}
+          md:order-1
+        {% endif %}
+      "
+    >
+      {% if section.settings.about_image %}
+        <img
+          src="{{ section.settings.about_image | img_url: 'master' }}"
+          alt="About Section Image"
+          class="object-cover sm:w-[604px] sm:h-[402px] h-[233px] w-full"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+
+    <!-- Text -->
+    <div
+      class="
+        justify-center
+        {% if section.settings.image_position == 'right' %}
+          md:order-1
+        {% else %}
+          md:order-2
+        {% endif %}
+      "
+    >
+      <h2 class="font-[600] md:text-[44px] sm:mb-5 mb-3 md:leading-[52px] text-[30px] leading-[31px] mt-1">
+        {{ section.settings.section_title }}
+      </h2>
+      <div class="richtext md:text-[18px] text-[15px] font-[400] md:leading-[30px] leading-[20px]">
+        {{ section.settings.text }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+    .richtext ul {
+      list-style: disc !important;
+      margin-left: 1.5rem;
+    }
+
+    .richtext ol {
+      list-style: decimal !important;
+      margin-left: 1.5rem;
+    }
+
+    .richtext li {
+      margin-bottom: 6px; /
+    }
+  @media (max-width: 768px) {
+    .about-us-border {
+    border-top: 0.2px solid #000000;
+  }
+  }
+</style>

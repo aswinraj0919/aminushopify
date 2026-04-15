@@ -1,0 +1,289 @@
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "“View all” button link"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Custom button label",
+      "info": "Defaults to “View all” if left blank"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab Name",
+          "default": "New Tab"
+        },
+        {
+          "type": "collection",
+          "id": "tab_collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection",
+      "category": "Custom",
+      "blocks": [{ "type": "tab" }, { "type": "tab" }]
+    }
+  ]
+}
+{% endschema %}
+
+<section class="featured-section ">
+  <div class="ug-container-shop">
+    <h2 class="featured-title">{{ section.settings.title }}</h2>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      {% for block in section.blocks %}
+        <div class="tab {% if forloop.first %}active{% endif %}" data-target="tab-{{ block.id }}">
+          {{ block.settings.tab_label }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="tab-contents">
+      {% for block in section.blocks %}
+        <div class="tab-content {% if forloop.first %}active{% endif %}" id="tab-{{ block.id }}">
+          {% if block.settings.tab_collection != blank %}
+            <div class="glide" id="glide-{{ block.id }}">
+              <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                  {% for product in block.settings.tab_collection.products limit: 8 %}
+                    <li class="glide__slide">
+                      <div class="product-wrapper">
+                        {% render 'product-block-card', product: product, cache_buster: "now" | date: '%s' %}
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- View All Button -->
+
+    <div class="view-all-container">
+      <a href="{{ section.settings.view_all_link }}" class="view-all-btn">View All →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Glide.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const glideInstances = {};
+
+    // Init Glide for each tab and store instance
+    document.querySelectorAll('.glide').forEach((glideEl) => {
+      const id = glideEl.getAttribute('id');
+      glideInstances[id] = new Glide(glideEl, {
+        type: 'slider',
+        rewind: false, // ❌ infinite loop off
+        perView: 3,
+        gap: 16,
+        bound: true, // optional: edges par stop karega
+        breakpoints: {
+          992: { perView: 2.2, gap: 2 },
+          600: { perView: 1.1, gap: 16 },
+        },
+      });
+      glideInstances[id].mount();
+    });
+
+    // Tab switching
+    const tabs = document.querySelectorAll('.featured-section .tab');
+    const contents = document.querySelectorAll('.featured-section .tab-content');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        contents.forEach((c) => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        const target = tab.getAttribute('data-target');
+        const activeContent = document.getElementById(target);
+        activeContent.classList.add('active');
+
+        // Force Glide to recalc sizes
+        const glideEl = activeContent.querySelector('.glide');
+        if (glideEl) {
+          const id = glideEl.getAttribute('id');
+          if (glideInstances[id]) {
+            glideInstances[id].update();
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  @import url('https://fonts.cdnfonts.com/css/the-seasons');
+  @import url('https://fonts.cdnfonts.com/css/aileron');
+
+  .featured-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  .featured-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  /* === FIX UNEQUAL CARD HEIGHT IN GLIDE (alignment only) === */
+  .glide__slides {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .glide__slide {
+    display: flex;
+    height: auto;
+    padding: 10px;
+  }
+
+  /* wrapper alignment fix */
+  .product-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+
+  /* tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    padding: 10px 30px;
+    border: 1px solid #C4C4C4;
+    border-radius: 4px;
+    background: transparent;
+    color: #000;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .tab.active {
+    background: #ADC7FF;
+    border: none;
+    font-weight: 600;
+  }
+
+  /* tab content */
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* view all */
+  .view-all-container {
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+
+  .view-all-btn {
+    display: inline-block;
+    {% comment %} padding: 12px 30px; {% endcomment %}
+    color: #1D3EA0;
+    text-decoration: underline;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* product image */
+  .featured-section .product-wrapper img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  /* ================= MOBILE ================= */
+  @media (max-width: 768px) {
+
+
+  .view-all-container {
+      text-align: center;
+      padding-top: 16px;
+      padding-bottom: 24px;
+  }
+    .featured-title {
+      font-size: 32px;
+      text-align: start;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      justify-content: start;
+      gap: 4px;
+      margin-bottom: 15px;
+    }
+
+    .tab {
+      padding: 5px 10px;
+      border: 0.5px solid #C4C4C4;
+      font-size: 12px;
+    }
+
+    .tab.active {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  @media (max-width: 749px) {
+
+    .glide__slide {
+      padding: 0;
+    }
+
+    .view-all-btn {
+      font-size: 15px;
+    }
+  }
+</style>

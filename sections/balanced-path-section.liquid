@@ -1,0 +1,205 @@
+{% schema %}
+{
+  "name": "Balanced Path Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "A Balanced Path To Healthy Skin"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our formulas understand your skin's changing needs, are gentle & joy to use and deliver visibly healthy, radiant skin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "For \"The Skin You’re In\"."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Card Description",
+          "default": "Our skin’s needs shift with the day, season, and place. Our 'SkinNOW Solutions' adapt in real-time to meet these changing demands."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "INDIVIDUALIZED CARE"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Balanced Path Section",
+      "category": "Custom",
+      "blocks": [{ "type": "card" }, { "type": "card" }, { "type": "card" }]
+    }
+  ]
+}
+{% endschema %}
+
+<section class="balanced-path">
+  <div class="ug-container">
+    <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    <p class="section-subheading">{{ section.settings.subheading }}</p>
+
+    <div class="cards">
+      {% for block in section.blocks %}
+        <div class="card">
+          {% if block.settings.image %}
+            <img alt="{{ block.settings.title }}" class="hs-lazyload hs-id-4c6a05f5" loading="lazy" src="{{ block.settings.image | img_url: '600x' }}"/>
+          {% endif %}
+          <h3 style="margin-bottom: -4px;">{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+          {% if block.settings.button_text %}
+            <a href="{{ block.settings.button_link }}" class="balanced-btn ug-btn-hover">{{ block.settings.button_text }}</a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .balanced-path .section-heading {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .balanced-path .section-subheading {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+  .balanced-path .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .balanced-path .card {
+    background: #fff;
+    border-radius: 12px;
+    text-align: left;
+    padding-right: 20px;
+  }
+  .balanced-path .card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* 1:1 ratio */
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+  .balanced-path .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    {% comment %} margin-bottom: 10px; {% endcomment %}
+  }
+  .balanced-path .card p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .balanced-path .balanced-btn {
+    background: #000;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  @media(max-width: 768px) {
+    .balanced-path .section-heading {
+      font-size: 32px;
+    }
+    .balanced-path .section-subheading {
+      font-size: 15px;
+       margin-bottom: 0;
+    }
+    .balanced-path .card h3,
+    .balanced-path .card p {
+      font-size: 15px;
+    }
+    .balanced-path .cards {
+      display: block;
+    }
+      .balanced-path .card {
+    padding-right: 10px;
+    padding-left: 2px;
+    padding-top:15px;
+
+  }
+ .balanced-path .card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* 1:1 ratio */
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+  }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+
+<script>
+  jQuery(document).ready(function ($) {
+    if (window.innerWidth <= 800) {
+      $('.balanced-path .cards').slick({
+        dots: false,
+        arrows: false,
+        infinite: true,
+        slidesToShow: 2.1,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 700,
+            settings: {
+              slidesToShow: 1.02,
+              slidesToScroll: 1,
+              centerMode: true,
+              centerPadding: '5px',
+            },
+          },
+          {
+            breakpoint: 400,
+            settings: {
+              slidesToShow: 1.01,
+              slidesToScroll: 1,
+              centerMode: true,
+              centerPadding: '5px',
+            },
+          },
+        ],
+      });
+    }
+  });
+</script>

@@ -1,0 +1,304 @@
+<div class="product-block-card">
+  <!-- IMAGE -->
+  <div class="product-card-image">
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | img_url: '410x' }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          loading="lazy"
+          width="410"
+          height="410"
+        >
+      {% else %}
+        <div class="product-image-placeholder">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </a>
+  </div>
+
+  <!-- DETAILS -->
+  <div class="product-card-details">
+    <!-- CONTENT (equal height control) -->
+    <div class="product-content">
+      <!-- TOP GROUP -->
+      <div class="product-top-group">
+        {% if product.vendor != blank %}
+          <div
+            class="product-vendor AccountantSignature product-vendor-sm"
+            style="
+              padding-bottom: 9px;
+              line-height: 25px !important;
+            "
+          >
+            {{ product.vendor }}
+          </div>
+        {% endif %}
+
+        <h3 class="product-title">
+          <a href="{{ product.url }}">{{ product.title }}</a>
+        </h3>
+
+        {% if settings.prod_thumb_show_subtitle and product.metafields.descriptors.subtitle != blank %}
+          <div class="product-block__subtitle">
+            {{ product.metafields.descriptors.subtitle }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- BOTTOM GROUP -->
+      <div class="product-bottom-group">
+        <div class="price-size-container">
+          <div class="product-price">₹ {{ product.price | money_without_currency | split: '.' | first }}</div>
+
+          <div class="product-sizes">
+            {% if product.available == false %}
+              <span class="out-of-stock-text">Out of Stock</span>
+
+            {% else %}
+              {% assign shown_variant = false %}
+
+              {% for variant in product.variants %}
+                {% if variant.available and variant.title != 'Default Title' %}
+                  {% assign shown_variant = true %}
+                  <span class="size-option">{{ variant.title }}</span>
+                  {%- unless forloop.last %}/{% endunless %}
+                {% endif %}
+              {% endfor %}
+
+              {%- comment -%}
+                Agar sirf default variant hai aur product available hai,
+                to kuch mat dikhao (blank)
+              {%- endcomment -%}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="jdgm-widget jdgm-preview-badge reviews-questions-container">
+          {{ product.metafields.judgeme.badge }}
+        </div>
+      </div>
+    </div>
+    <!-- BUTTON (always bottom) -->
+    <a href="{{ product.url }}" class="view-product-btn ug-btn-hover"> View Product </a>
+  </div>
+</div>
+
+<style>
+    /* =============================
+       CARD BASE
+    ============================= */
+    .product-block-card {
+      border: 0.5px solid #000;
+      border-radius: 16px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+      font-family: Poppins, sans-serif;
+    }
+    {% comment %} .jdgm-qa-badge {
+      display:none;
+    } {% endcomment %}
+    /* Hide Judge.me Questions (only inside product card) */
+  .product-block-card .jdgm-qa-badge,
+  .product-block-card .jdgm-qa-badge__text {
+    display: none !important;
+  }
+
+
+    /* =============================
+       IMAGE
+    ============================= */
+    .product-card-image {
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+    }
+
+    .product-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px 16px 0 0;
+    }
+
+    /* =============================
+       DETAILS
+    ============================= */
+    .product-card-details {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =============================
+       TEXT
+    ============================= */
+    .product-vendor {
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      text-align: left;
+      margin-bottom:6px;
+    }
+
+    .product-title {
+      font-size: 22px;
+      font-weight: 600;
+      text-align: left;
+      margin-bottom: 8px;
+    }
+
+    .product-title a {
+      color: #000;
+      text-decoration: none;
+      display: block;
+    }
+
+    .product-block__subtitle {
+      font-size: 14px;
+      color: #626161;
+      text-align: left;
+      line-height: 1.3;
+    }
+
+    .product-vendor.AccountantSignature {
+      font-size: 32px !important;
+      margin-bottom:-20px;
+      line-height:32px !important;
+    }
+
+    /* =============================
+       PRICE & SIZE
+    ============================= */
+    .price-size-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .product-sizes {
+      font-size: 14px;
+    }
+
+    /* =============================
+       REVIEWS
+    ============================= */
+    .reviews-questions-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .reviews-section {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .divider {
+      color: #626262;
+    }
+
+    .reviews-count,
+    .questions-section {
+      font-size: 13px;
+    }
+
+    /* =============================
+       BUTTON
+    ============================= */
+    .view-product-btn {
+      margin-top: auto;
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .view-product-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* =============================
+       GROUP LAYOUT CONTROL
+    ============================= */
+    .product-top-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-bottom-group {
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+
+    /* =============================
+       MOBILE
+    ============================= */
+    @media (max-width: 767px) {
+      .product-vendor {
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+
+      .product-title {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+      .product-title a{
+      line-height: 20px;
+      padding-top:10px !important;
+      }
+
+      .product-price {
+        font-size: 14px;
+      }
+
+      .product-vendor.AccountantSignature {
+        font-size: 28px !important;
+        margin-bottom:-20px;
+            line-height:32px !important;
+
+      }
+
+      .product-block__subtitle {
+        font-size: 14px;
+        {% comment %} margin-bottom: 24px; {% endcomment %}
+      }
+
+      .reviews-count,
+      .questions-section {
+        font-size: 11px;
+      }
+
+      .reviews-questions-container {
+        margin-bottom: 10px;
+      }
+    }
+</style>

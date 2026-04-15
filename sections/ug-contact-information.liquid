@@ -1,0 +1,915 @@
+<div
+  class="multiple-content-section {% if section.settings.enable_wide_display %}wide-display{% else %}container{% endif %} {{ section.settings.section_class }}"
+  style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }}; padding: {{ section.settings.section_padding }}px 0;"
+>
+  <div class="multiple-content-wrapper">
+    {% if section.settings.section_heading != blank %}
+      <div class="section-main-heading {{ section.settings.section_heading_alignment }}">
+        <h4
+          class="section-heading-text {{ section.settings.section_heading_size }}"
+          style="
+            color: {{ section.settings.section_heading_color }};
+            font-size: 30px !important;
+            font-family: 'Poppins', sans-serif;
+          "
+        >
+          {{ section.settings.section_heading | escape }}
+        </h4>
+        {% if section.settings.show_section_underline %}
+          <div
+            class="section-heading-underline"
+            style="background-color: {{ section.settings.section_heading_color }};"
+          ></div>
+        {% endif %}
+      </div>
+      <p class="section-dest">
+        Always humans, never bots. The hands-down, sharpest and friendliest support team in the biz. Need a hand or
+        high-five, friendly folks standing by!
+      </p>
+      {% comment %} <div class="contact-option">
+        <Strong>Call: <span class="contact-ugt">+91 8591110603 </span> </Strong>
+      </div> {% endcomment %}
+    {% endif %}
+
+    <div class="content-blocks-container layout-{{ section.settings.layout_style }}">
+      {% for block in section.blocks %}
+        <div
+          class="content-block block-{{ block.type }} {{ section.settings.block_alignment }} {{ section.settings.block_spacing }}"
+          {{ block.shopify_attributes }}
+        >
+          {% case block.type %}
+            {% when 'heading' %}
+              {% if block.settings.heading != blank %}
+                <div class="block-heading">
+                  <h3
+                    class="heading-text {{ block.settings.heading_size }}"
+                    style="color: {{ block.settings.heading_color }};"
+                  >
+                    {{ block.settings.heading | escape }}
+                  </h3>
+                  {% if block.settings.show_heading_underline %}
+                    <div class="heading-underline" style="background-color: {{ block.settings.heading_color }};"></div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+            {% when 'text' %}
+              {% if block.settings.text != blank %}
+                <div class="block-text {{ block.settings.text_size }} {{ block.settings.text_alignment }}">
+                  <div class="text-content rte">
+                    {{ block.settings.text }}
+                  </div>
+                </div>
+              {% endif %}
+
+            {% when 'heading_with_text' %}
+              {% if block.settings.heading != blank %}
+                <div class="block-heading">
+                  <h3
+                    class="heading-text {{ block.settings.heading_size }}"
+                    style="color: {{ block.settings.heading_color }};"
+                  >
+                    {{ block.settings.heading | escape }}
+                  </h3>
+                  {% if block.settings.show_heading_underline %}
+                    <div class="heading-underline" style="background-color: {{ block.settings.heading_color }};"></div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="block-text {{ block.settings.text_size }} {{ block.settings.text_alignment }}">
+                  <div class="text-content rte">
+                    {{ block.settings.text }}
+                  </div>
+                </div>
+              {% endif %}
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+      .multiple-content-section {
+        margin: {{ section.settings.section_margin }}px 0;
+        box-sizing: border-box;
+        {% comment %} max-width:1360px !important; {% endcomment %}
+      }
+  .multiple-content-section,
+  .multiple-content-section * {
+    font-family: "Poppins", sans-serif !important;
+  }
+
+
+      /* Wide display styles */
+      .multiple-content-section.wide-display {
+        width: 100%;
+        max-width: 100vw;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+    .contact-ugt {
+      margin-top:10px;
+      font-weight: 400;
+      color:rgb(104, 159, 255);
+      text-decoration: underline;
+    }
+    .contact-option{
+    margin-top: 17px !important;
+      margin-bottom: 10px;  }
+
+    @media (max-width: 767px) {
+      .section-des {
+        font-size: 24px;
+      }
+    }
+
+      /* Container styles (when wide display is disabled) */
+      .multiple-content-section.container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .multiple-content-wrapper {
+        padding: {{ section.settings.content_padding }}px;
+        box-sizing: border-box;
+      }
+
+      /* Section Main Heading */
+      .section-main-heading {
+        margin-bottom: {{ section.settings.section_heading_spacing }}px;
+      }
+
+      .section-heading-text {
+        margin: 0;
+        font-weight: {{ section.settings.section_heading_weight }};
+        line-height: 1.2;
+      }
+
+      .section-heading-underline {
+        width: 80px;
+        height: 4px;
+        margin-top: 20px;
+      }
+
+      /* Content Blocks Layout */
+      .content-blocks-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: {{ section.settings.blocks_gap }}px;
+        box-sizing: border-box;
+      }
+
+      .content-blocks-container.layout-stacked {
+        flex-direction: column;
+      }
+
+      .content-blocks-container.layout-stacked .content-block {
+        width: 100%;
+      }
+
+      .content-blocks-container.layout-grid {
+        justify-content: {{ section.settings.grid_alignment }};
+      }
+
+      /* Grid layout calculations */
+      .content-blocks-container.layout-grid .content-block {
+        flex: 1 1 calc((100% / {{ section.settings.grid_columns_desktop }}) - {{ section.settings.blocks_gap }}px);
+        min-width: calc((100% / {{ section.settings.grid_columns_desktop }}) - {{ section.settings.blocks_gap }}px);
+        box-sizing: border-box;
+      }
+
+      /* Content Block Styling */
+      .content-block {
+        padding: {{ section.settings.block_padding }}px;
+        box-sizing: border-box;
+        {% if section.settings.enable_block_background %}
+        background: {{ section.settings.block_background_color }};
+        border-radius: {{ section.settings.block_border_radius }}px;
+        {% endif %}
+      }
+
+      .block-spacing-small {
+        margin-bottom: 20px;
+      }
+
+      .block-spacing-medium {
+        margin-bottom: 30px;
+      }
+
+      .block-spacing-large {
+        margin-bottom: 40px;
+      }
+      .heading-text {
+        margin: 0;
+        font-weight: {{ section.settings.block_heading_weight }};
+        line-height: 1.3;
+       font-family: "Poppins" !important;
+      font-weight:600;
+      font-size:16px !important;
+      }
+
+      .heading-underline {
+        width: 50px;
+        height: 2px;
+        margin-top: 10px;
+      }
+
+      /* Block Text */
+      .block-text {
+        line-height: 1.6;
+      }
+
+      .text-content a {
+        color: inherit;
+        text-decoration: underline;
+      }
+
+      .text-content a:hover {
+        opacity: 0.8;
+      }
+
+      /* Alignment Classes */
+      .section-heading-center { text-align: center; }
+      .section-heading-left { text-align: left; }
+      .section-heading-right { text-align: right; }
+
+      .block-center { text-align: center; }
+      .block-left { text-align: left; }
+      .block-right { text-align: right; }
+
+      .text-center { text-align: center; }
+      .text-left { text-align: left; }
+      .text-right { text-align: right; }
+      .text-justify { text-align: justify; }
+
+      /* Typography Sizes */
+      .section-heading-large { font-size: 2.5rem; }
+      .section-heading-medium { font-size: 2rem; }
+      .section-heading-small { font-size: 1.5rem; }
+
+      .heading-large { font-size: 1.75rem; }
+      .heading-medium { font-size: 1.5rem; }
+      .heading-small { font-size: 1.25rem; }
+
+      .text-large { font-size: 1.125rem; }
+      .text-medium { font-size: 1rem; }
+      .text-small { font-size: 0.875rem; }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .multiple-content-section {
+          padding: {{ section.settings.section_padding_mobile }}px 0 !important;
+          margin: {{ section.settings.section_margin_mobile }}px 0;
+        }
+
+        .multiple-content-section.container {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .multiple-content-section.wide-display .multiple-content-wrapper {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .multiple-content-wrapper {
+          padding: {{ section.settings.content_padding_mobile }}px;
+        }
+
+        .content-blocks-container.layout-grid .content-block {
+          flex: 1 1 calc((100% / {{ section.settings.grid_columns_mobile }}) - {{ section.settings.blocks_gap }}px);
+          min-width: calc((100% / {{ section.settings.grid_columns_mobile }}) - {{ section.settings.blocks_gap }}px);
+        }
+
+        .section-heading-large { font-size: 2rem; }
+        .section-heading-medium { font-size: 1.75rem; }
+        .section-heading-small { font-size: 1.25rem; }
+
+        .heading-large { font-size: 1.5rem; }
+        .heading-medium { font-size: 1.25rem; }
+        .heading-small { font-size: 1.125rem; }
+      }
+
+      @media (max-width: 480px) {
+        .section-heading-large { font-size: 1.75rem; }
+        .section-heading-medium { font-size: 1.5rem; }
+        .section-heading-small { font-size: 1.125rem; }
+
+        .heading-large { font-size: 1.25rem; }
+        .heading-medium { font-size: 1.125rem; }
+        .heading-small { font-size: 1rem; }
+
+        .content-blocks-container.layout-grid .content-block {
+          flex: 1 1 100%;
+          min-width: 100%;
+        }
+
+        .multiple-content-section.container {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .multiple-content-section.wide-display .multiple-content-wrapper {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+</style>
+
+{% schema %}
+{
+  "name": "Multiple Content Blocks",
+  "tag": "section",
+  "class": "section-multiple-content",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Main Heading",
+      "default": "Our Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_wide_display",
+      "label": "Enable Wide Display",
+      "default": false,
+      "info": "When enabled, the section will span the full width of the screen"
+    },
+    {
+      "type": "header",
+      "content": "Section Heading Settings"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_size",
+      "label": "Section Heading Size",
+      "options": [
+        {
+          "value": "section-heading-large",
+          "label": "Large"
+        },
+        {
+          "value": "section-heading-medium",
+          "label": "Medium"
+        },
+        {
+          "value": "section-heading-small",
+          "label": "Small"
+        }
+      ],
+      "default": "section-heading-medium"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_alignment",
+      "label": "Section Heading Alignment",
+      "options": [
+        {
+          "value": "section-heading-left",
+          "label": "Left"
+        },
+        {
+          "value": "section-heading-center",
+          "label": "Center"
+        },
+        {
+          "value": "section-heading-right",
+          "label": "Right"
+        }
+      ],
+      "default": "section-heading-center"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_weight",
+      "label": "Section Heading Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "600",
+          "label": "Semi Bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "section_heading_color",
+      "label": "Section Heading Color",
+      "default": "#333333"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_underline",
+      "label": "Show Section Underline",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "section_heading_spacing",
+      "label": "Section Heading Bottom Spacing",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout Style",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked (Vertical)"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "range",
+      "id": "grid_columns_desktop",
+      "label": "Grid Columns (Desktop)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_columns_mobile",
+      "label": "Grid Columns (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "grid_alignment",
+      "label": "Grid Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "blocks_gap",
+      "label": "Space Between Blocks",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "block_alignment",
+      "label": "Block Content Alignment",
+      "options": [
+        {
+          "value": "block-left",
+          "label": "Left"
+        },
+        {
+          "value": "block-center",
+          "label": "Center"
+        },
+        {
+          "value": "block-right",
+          "label": "Right"
+        }
+      ],
+      "default": "block-left"
+    },
+    {
+      "type": "select",
+      "id": "block_spacing",
+      "label": "Block Spacing",
+      "options": [
+        {
+          "value": "block-spacing-small",
+          "label": "Small"
+        },
+        {
+          "value": "block-spacing-medium",
+          "label": "Medium"
+        },
+        {
+          "value": "block-spacing-large",
+          "label": "Large"
+        }
+      ],
+      "default": "block-spacing-medium"
+    },
+    {
+      "type": "header",
+      "content": "Block Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_block_background",
+      "label": "Enable Block Background",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "block_background_color",
+      "label": "Block Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "range",
+      "id": "block_border_radius",
+      "label": "Block Border Radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "block_padding",
+      "label": "Block Padding",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "block_heading_spacing",
+      "label": "Block Heading Bottom Spacing",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 15,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "block_heading_weight",
+      "label": "Block Heading Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "600",
+          "label": "Semi Bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Section Styling"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding (Desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_mobile",
+      "label": "Section Padding (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_margin",
+      "label": "Section Margin (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_margin_mobile",
+      "label": "Section Margin (Mobile)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content Padding (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_mobile",
+      "label": "Content Padding (Mobile)",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Custom CSS Class",
+      "info": "Add additional custom CSS classes if needed"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading Only",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Feature Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading Size",
+          "options": [
+            {
+              "value": "heading-large",
+              "label": "Large"
+            },
+            {
+              "value": "heading-medium",
+              "label": "Medium"
+            },
+            {
+              "value": "heading-small",
+              "label": "Small"
+            }
+          ],
+          "default": "heading-medium"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Color",
+          "default": "#333333"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_heading_underline",
+          "label": "Show Underline",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text Only",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text Content",
+          "default": "<p>Add your text content here with rich formatting options.</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Text Size",
+          "options": [
+            {
+              "value": "text-large",
+              "label": "Large"
+            },
+            {
+              "value": "text-medium",
+              "label": "Medium"
+            },
+            {
+              "value": "text-small",
+              "label": "Small"
+            }
+          ],
+          "default": "text-medium"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            },
+            {
+              "value": "text-justify",
+              "label": "Justify"
+            }
+          ],
+          "default": "text-left"
+        }
+      ]
+    },
+    {
+      "type": "heading_with_text",
+      "name": "Heading with Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Feature Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading Size",
+          "options": [
+            {
+              "value": "heading-large",
+              "label": "Large"
+            },
+            {
+              "value": "heading-medium",
+              "label": "Medium"
+            },
+            {
+              "value": "heading-small",
+              "label": "Small"
+            }
+          ],
+          "default": "heading-medium"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Color",
+          "default": "#333333"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_heading_underline",
+          "label": "Show Underline",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text Content",
+          "default": "<p>Add your detailed text content here with rich formatting options.</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Text Size",
+          "options": [
+            {
+              "value": "text-large",
+              "label": "Large"
+            },
+            {
+              "value": "text-medium",
+              "label": "Medium"
+            },
+            {
+              "value": "text-small",
+              "label": "Small"
+            }
+          ],
+          "default": "text-medium"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            },
+            {
+              "value": "text-justify",
+              "label": "Justify"
+            }
+          ],
+          "default": "text-left"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multiple Content Blocks",
+      "category": "Content",
+      "blocks": [
+        {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Quality Products",
+            "text": "<p>We offer the highest quality products with guaranteed satisfaction.</p>"
+          }
+        },
+        {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "Fast Shipping",
+            "text": "<p>Get your orders delivered quickly with our express shipping options.</p>"
+          }
+        },
+        {
+          "type": "heading_with_text",
+          "settings": {
+            "heading": "24/7 Support",
+            "text": "<p>Our customer support team is available round the clock to help you.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

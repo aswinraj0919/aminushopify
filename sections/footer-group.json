@@ -1,0 +1,132 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "cross-page-promos": {
+      "type": "cross-page-promos",
+      "blocks": {
+        "1478526632862": {
+          "type": "icon",
+          "settings": {
+            "icon": "truck",
+            "text": "Free shipping",
+            "link_url": ""
+          }
+        },
+        "1478526645605": {
+          "type": "icon",
+          "settings": {
+            "icon": "price_tag",
+            "text": "New styles",
+            "link_url": ""
+          }
+        },
+        "1478526647261": {
+          "type": "icon",
+          "settings": {
+            "icon": "gift",
+            "text": "Gift cards",
+            "link_url": ""
+          }
+        },
+        "1478527611164": {
+          "type": "icon",
+          "settings": {
+            "icon": "star",
+            "text": "5.0 star rating",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "1478526632862",
+        "1478526645605",
+        "1478526647261",
+        "1478527611164"
+      ],
+      "disabled": true,
+      "settings": {
+        "cross_page_promo_bg": "#fbf9f4",
+        "cross_page_promo_color": "#232323",
+        "show_on_home_page": true
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "text_social_newsletter_JbiBib": {
+          "type": "text-social-newsletter",
+          "settings": {
+            "title1": "",
+            "text1": "<p>We are a care company that is all <br>about healthy skin.</p>",
+            "image1": "shopify://shop_images/Logo_in_White.png",
+            "image_width1": 120,
+            "show_social_icons1": true,
+            "show_newsletter": false,
+            "soc_icons_large1": false,
+            "text2": "",
+            "title": "",
+            "text": "",
+            "button_style": "secondary"
+          }
+        },
+        "1601374621546": {
+          "type": "menu",
+          "settings": {
+            "title": "Shop",
+            "menu": "footer"
+          }
+        },
+        "menu_aYW8gP": {
+          "type": "menu",
+          "settings": {
+            "title": "Info",
+            "menu": "info"
+          }
+        },
+        "menu_p4LP4L": {
+          "type": "menu",
+          "settings": {
+            "title": "Support",
+            "menu": "support"
+          }
+        }
+      },
+      "block_order": [
+        "text_social_newsletter_JbiBib",
+        "1601374621546",
+        "menu_aYW8gP",
+        "menu_p4LP4L"
+      ],
+      "settings": {
+        "lower_menu": "",
+        "show_payment_icons": false,
+        "footer-content-left": "<p>This site offers health, wellness, fitness and nutritional information and is designed for educational purposes only. The products are not intended to diagnose, treat, cure, or prevent any disease. You should not rely on this information as a substitute for, nor does it replace, professional medical advice, diagnosis, or treatment. If you have any concerns or questions about your health, you should always consult with a physician or other health-care professional.<br/></p>",
+        "footer-content-right": "<p>High Performance | Multi-Functional | Balanced</p>",
+        "show_country_selector": false,
+        "show_language_selector": false,
+        "contact_text": "Contact us",
+        "contact_link": "shopify://pages/contact",
+        "privacy_text": "Privacy Policy",
+        "privacy_link": "https://www.aminu.life/pages/privacy-policy",
+        "cookies_text": "Refund Policy",
+        "cookies_link": "https://www.aminu.life/policies/refund-policy",
+        "terms_text": "Terms & Conditions",
+        "terms_link": "shopify://pages/terms-conditions"
+      }
+    }
+  },
+  "order": [
+    "cross-page-promos",
+    "footer"
+  ]
+}

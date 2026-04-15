@@ -1,0 +1,89 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_date": false,
+        "show_author": false,
+        "show_article_tags": false,
+        "show_sharing_icons": false,
+        "show_featured_image": false,
+        "full_width_image": true,
+        "featured_image_height": "huge",
+        "enable_title_overlay": false,
+        "overlay_style": "shadow"
+      }
+    },
+    "infinite_slider_c6rTdT": {
+      "type": "infinite-slider",
+      "blocks": {
+        "slide_iEwKTR": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "cared"
+          }
+        },
+        "slide_RCQQwp": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "heal"
+          }
+        },
+        "slide_L8TXKm": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "Precious"
+          }
+        },
+        "slide_AdbzJ6": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "beautiful"
+          }
+        },
+        "slide_7jJ7F3": {
+          "type": "slide",
+          "settings": {
+            "infinite_slider_text": "now"
+          }
+        }
+      },
+      "block_order": [
+        "slide_iEwKTR",
+        "slide_RCQQwp",
+        "slide_L8TXKm",
+        "slide_AdbzJ6",
+        "slide_7jJ7F3"
+      ],
+      "name": "Infinite Slider",
+      "settings": {
+        "background_color1": "",
+        "animation_speed": 40,
+        "enable_top_border": true,
+        "enable_bottom_border": true
+      }
+    },
+    "blog_tagline_BM7YAw": {
+      "type": "blog-tagline",
+      "custom_css": [],
+      "name": "Blog tagline",
+      "settings": {
+        "tagline": "Come back here every day for more love and connection"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "infinite_slider_c6rTdT",
+    "blog_tagline_BM7YAw"
+  ]
+}

@@ -1,0 +1,272 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+>
+
+<section class="bg-white ">
+  <div class="ug-container relative">
+    <span class="sm:text-[40px] text-[30px] font-semibold ">
+      {{ product.metafields.custom.pairs_well_with_title }}
+    </span>
+
+    <div class="glide-pairs mt-8 mb-8 ">
+      <div class="glide__track md:mx-16 mb-5px" data-glide-el="track">
+        <ul class="glide__slides">
+          {% assign paired_products = product.metafields.custom.pairs_well_with.value %}
+          {% for paired_product in paired_products %}
+            <li class="glide__slide">
+              {% render 'product-block-card', product: paired_product %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Arrows -->
+      <div class="glide__arrows-pairs" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--prev" data-glide-dir="<">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--next" data-glide-dir=">">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .glide__track {
+  padding-bottom: 4px;
+}
+
+      .glide__arrows-pairs {
+        position: absolute;
+        top: 45%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      
+
+      .glide__arrows-pairs .glide__arrow {
+        pointer-events: auto;
+        background: white;
+        border: 1px solid black;
+        width: 26px;
+        height: 26px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+      @media (max-width: 767px) {
+              .ugp{
+                padding-bottom: 0px !important;
+              }
+        .glide__arrows-pairs { display: none; }
+      }
+
+          .glide__slides li {
+          list-style: none !important;
+  }
+
+  .glide__arrow.is-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: default;
+    filter: grayscale(1);
+  }
+  /* ===== FIX: SAME HEIGHT PRODUCT CARDS IN GLIDE ===== */
+
+/* make all slides equal height */
+.glide__slides {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+/* allow slide to stretch */
+.glide__slide {
+  display: flex !important;
+  height: auto !important;
+}
+
+/* wrapper takes full height */
+.glide__slide > * {
+  height: 100%;
+}
+
+/* product card already flex-column, just ensure full height */
+.product-block-card {
+  height: 100%;
+}
+
+</style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script async src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+<script src="{% render 'hs-cdn-script', filename: 'unico-global.js' %}" defer></script>
+<script async src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+<script>
+  let productQuantities = {};
+  let selectedVariants = {};
+  let variantIndex = 0;
+  let abcd = 0;
+
+  function increaseCollectionCount(id) {
+    const count = (productQuantities[id] || 1) + 1;
+    productQuantities[id] = count;
+    document.getElementById(`collection_product-count-${id}`).innerText = count;
+  }
+
+  function decreaseCollectionCount(id) {
+    const current = productQuantities[id] || 1;
+    if (current > 1) {
+      productQuantities[id] = current - 1;
+      document.getElementById(`collection_product-count-${id}`).innerText = current - 1;
+    }
+  }
+
+  function selectVariant(el, pid, vid, variantIndexs) {
+    selectedVariants[pid] = vid;
+    variantIndex = variantIndexs
+    abcd =  vid;
+
+    document.querySelectorAll(`.product-${pid}`).forEach((e) => {
+      e.classList.remove('text-black');
+      e.classList.add('text-[#BFBFBF]');
+      e.style.borderColor = '#BFBFBF';
+    });
+    el.classList.add('text-black');
+    el.style.borderColor = 'black';
+  }
+
+  function addInCart(defaultVid, idx) {
+    let vid;
+    console.log("➡️ addInCart called with:", defaultVid, abcd);
+    console.log("   idx (button index):", idx);
+     console.log("   variantIndex (selected index):", variantIndex);
+    if (variantIndex == idx) {
+      vid = abcd;  
+    } else {
+      vid = defaultVid;   
+    }
+
+   console.log("   idx (button index):", vid);
+    {% comment %} const vid = selectedVariants[pid] || defaultVid; {% endcomment %}
+    const qty = productQuantities[idx] || 1;
+
+    const fd = new FormData();
+    fd.append('id', vid);
+    fd.append('quantity', qty);
+
+    fetch('/cart/add', { method: 'POST', body: fd })
+      .then(() => {})
+      .catch(console.error);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const root = document.querySelector('.glide-pairs');
+    if (!root) return;
+
+         const glide = new Glide(root, {
+        type: 'slider',
+
+        perView: 3.6,
+        gap: 14,
+
+        autoplay: false,
+        rewind: false,
+        bound: false,
+
+        dragThreshold: 0,
+        touchRatio: 1.2,
+        animationDuration: 500, 
+        animationTimingFunc: 'ease-out',
+
+        breakpoints: {
+          500: {
+            perView: 1.2,
+            gap: 16,
+            dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+          800: {
+            perView: 2.2,
+            gap: 16,
+              dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+          1000: {
+            perView: 1.5,
+            gap: 16,
+              dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+        },
+      });
+
+    const arrowsWrapper = root.querySelector('.glide__arrows-pairs');
+    const prevBtn = root.querySelector('.glide__arrow--prev');
+    const nextBtn = root.querySelector('.glide__arrow--next');
+    const totalSlides = root.querySelectorAll('.glide__slide').length;
+
+    function getPerView() {
+      const w = window.innerWidth;
+      if (w <= 500) return 1.2;
+      if (w <= 800) return 2.2;
+      return 3.4;
+    }
+
+    function setDisabled(btn, on) {
+      if (!btn) return;
+      btn.disabled = on;
+      btn.classList.toggle('is-disabled', on);
+    }
+
+   function updateArrows() {
+  const perView = getPerView();
+  const isDesktop = window.innerWidth > 800;
+
+  // Always hide arrows on mobile
+  if (window.innerWidth <= 767) {
+    arrowsWrapper.style.display = 'none';
+    return;
+  }
+
+  const idx = glide.index;
+  setDisabled(prevBtn, idx <= 0);
+
+  const nextShouldDisable = (idx + perView) >= (totalSlides - 0.001);
+  setDisabled(nextBtn, nextShouldDisable);
+}
+
+
+    glide.on(['mount.after', 'run.after'], updateArrows);
+    window.addEventListener('resize', updateArrows);
+
+    glide.mount();
+  });
+</script>

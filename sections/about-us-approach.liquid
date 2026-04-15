@@ -1,0 +1,411 @@
+{% comment %}
+  <section class="about-homepage-approach bg-[#F7F7F7] about-us-border">
+    <div class="ug-container">
+      <div class="about-approach-header">
+        {% if section.settings.title != blank %}
+          <h2 class="about-approach-section-title md:mt-5">{{ section.settings.title }}</h2>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="glide about-approach-glide">
+          <!-- Slides -->
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              {% for block in section.blocks %}
+                <li class="glide__slide">
+                  <div class="about-approach-card mb-5">
+                    <a href="{{ block.settings.button_link }}" class="about-approach-image">
+                      {% if block.settings.card_image %}
+                        <img
+                          src="{{ block.settings.card_image | img_url: '600x' }}"
+                          loading="lazy"
+                          alt="{{ block.settings.card_title }}"
+                        >
+                      {% endif %}
+                    </a>
+
+                    <div class="about-approach-content">
+                      <div class="about-approach-title">
+                        <a href="{{ block.settings.button_link }}">{{ block.settings.card_title }}</a>
+                      </div>
+
+                      <p class="about-approach-excerpt">
+                        {{ block.settings.card_description }}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Glide JS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Glide('.about-approach-glide', {
+        type: 'carousel',
+        autoplay: false,
+        hoverpause: true,
+        animationDuration: 600,
+        perView: 3,
+        gap: 20,
+        breakpoints: {
+          1024: { perView: 2 },
+          767: { perView: 1.2 },
+          480: { perView: 1.2 },
+        },
+      }).mount();
+    });
+  </script>
+
+  <style>
+      .about-homepage-approach {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .about-approach-header {
+        margin-bottom: 40px;
+      }
+     @media (max-width: 768px) {
+        .about-approach-header {
+        margin-bottom: 20px;
+      }
+    }
+      .about-approach-section-title {
+        font-size: 44px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 15px;
+      }
+
+           @media (max-width: 768px) {
+        .about-approach-section-title {
+        font-size: 30px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 0px;
+      }
+           }
+      /* Card */
+      .about-approach-card {
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border: 0.5px solid #000;
+        background: #F7F7F7;
+        padding: 5px;
+      }
+
+       @media (max-width: 768px) {
+          .about-approach-card {
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border: 0.5px solid #000;
+        background: #F7F7F7;
+      }
+      }
+
+      .about-approach-image img {
+        width: 100%;
+        height: 392px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      @media (max-width: 768px) {
+        .about-approach-image img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+    }
+
+      .about-approach-title  a {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        line-height:22px !important;
+        text-decoration: none;
+
+      }
+      .about-approach-title{
+              margin-top:10px;
+              margin-bottom:5px
+
+      }
+
+      @media (max-width: 768px) {
+        .about-approach-title  a {
+        font-size: 15px;
+        font-weight: 600;
+        color: #000;
+        line-height:19px !important;
+        text-decoration: none;
+      }
+      }
+      .about-approach-excerpt {
+        font-size: 12px;
+        font-weight: 400;
+        color: #000;
+        margin-bottom: 20px;
+      }
+
+      /* Remove bullets and arrows (just to be sure) */
+      .glide__arrows,
+      .glide__bullets {
+        display: none !important;
+      }
+  </style>
+{% endcomment %}
+<section class="about-homepage-approach bg-[#F7F7F7] about-us-border">
+  <div class="ug-container">
+    <div class="about-approach-header">
+      {% if section.settings.title != blank %}
+        <h2 class="about-approach-section-title md:mt-5">{{ section.settings.title }}</h2>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="about-approach-slider">
+        <div class="about-approach-slider-container">
+          {% for block in section.blocks %}
+            <div class="about-approach-slide">
+              <div class="about-approach-card mb-5 md:mr-[20px] mr-[16px]">
+                <a href="{{ block.settings.button_link }}" class="about-approach-image">
+                  {% if block.settings.card_image %}
+                    <img
+                      src="{{ block.settings.card_image | img_url: '600x' }}"
+                      loading="lazy"
+                      alt="{{ block.settings.card_title }}"
+                    >
+                  {% endif %}
+                </a>
+
+                <div class="about-approach-content">
+                  <div class="about-approach-title">
+                    <a href="{{ block.settings.button_link }}">{{ block.settings.card_title }}</a>
+                  </div>
+
+                  <p class="about-approach-excerpt">
+                    {{ block.settings.card_description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  /* Container */
+  .about-homepage-approach {
+    font-family: "Poppins", sans-serif;
+  }
+
+  .about-approach-header {
+    margin-bottom: 40px;
+  }
+
+  .about-approach-section-title {
+    font-size: 44px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  /* Cards */
+  .about-approach-card {
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid #000;
+    background: #F7F7F7;
+    padding: 5px;
+  }
+
+  .about-approach-image img {
+    width: 100%;
+    height: 392px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .about-approach-title a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height:22px !important;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .about-approach-excerpt {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 20px;
+  }
+
+  .about-approach-slider {
+    display: block;
+    position: relative;
+  }
+
+  .about-approach-slider-container {
+    display: flex;
+    {% comment %} gap: 20px; {% endcomment %}
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 20px;
+  }
+
+  .about-approach-slider-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-approach-slide {
+    flex: 0 0 33%;
+    min-width: 33%;
+    max-width: 33%;
+    scroll-snap-align: start;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .about-approach-slide {
+      flex: 0 0 65%;
+      min-width: 65%;
+      max-width: 65%;
+    }
+      .about-approach-slider-container {
+
+    {% comment %} gap: 16px !important; {% endcomment %}
+  }
+
+
+    .about-approach-image img {
+      height: 300px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .about-approach-slide {
+      flex: 0 0 80%;
+      min-width: 80%;
+      max-width: 80%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .about-approach-image img {
+      height: 250px;
+    }
+        .about-approach-slide {
+      flex: 0 0 80%;
+      min-width: 80%;
+      max-width: 80%;
+    }
+  }
+
+
+  @media screen and (max-width: 1024px) {
+
+
+    /* Adjust card image height */
+    .about-approach-image img {
+      height: 300px;
+    }
+  }
+
+  /* Smaller screens */
+  @media screen and (max-width: 768px) {
+
+
+    .about-approach-section-title {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .about-approach-title a {
+      font-size: 15px;
+      line-height:19px !important;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+
+    .about-approach-image img {
+      height: 250px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About us Approaches Cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Our Approaches"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "approach_card",
+      "name": "Approach Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Approach Image"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Approach Title",
+          "default": "Approach Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card_description",
+          "label": "Approach Description",
+          "default": "Short description of this approach..."
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Approach Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About us Approaches Cards",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

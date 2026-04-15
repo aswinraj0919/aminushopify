@@ -1,0 +1,507 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "scrolling_banner_wQtidY": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_dBzhei": {
+          "type": "text",
+          "settings": {
+            "text": "Your scrolling text here",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_dBzhei"
+      ],
+      "disabled": true,
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 16,
+        "vertical_padding": 12,
+        "speed": 35,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": false,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "custom_liquid_ecQFGe": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "show_space": true,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>\n\n<style>\n#sm-widget-btn.snap_emi_txt {\nmargin-top:0px!important\n}\n</style>"
+      }
+    },
+    "odyssey_trunk_product_page_ug-import": {
+      "type": "odyssey_trunk_product_page_ug",
+      "blocks": {
+        "rotated_text_ywMkB8": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "healthy"
+          }
+        },
+        "rotated_text_aCqbhA": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "loved"
+          }
+        },
+        "rotated_text_CCh7Gr": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "restored"
+          }
+        },
+        "rotated_text_FNGXPn": {
+          "type": "rotated_text",
+          "settings": {
+            "rotated": "balanced"
+          }
+        },
+        "varient_image_jnQkii": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/the_core_four_5.jpg"
+          }
+        },
+        "varient_image_Yqi7gD": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/the_core_four_2.jpg"
+          }
+        },
+        "varient_image_7jY48M": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/the_core_four_4.jpg"
+          }
+        },
+        "varient_image_UtUWn4": {
+          "type": "varient_image",
+          "settings": {
+            "varient_images": "shopify://shop_images/the_core_four_3.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "rotated_text_ywMkB8",
+        "rotated_text_aCqbhA",
+        "rotated_text_CCh7Gr",
+        "rotated_text_FNGXPn",
+        "varient_image_jnQkii",
+        "varient_image_Yqi7gD",
+        "varient_image_7jY48M",
+        "varient_image_UtUWn4"
+      ],
+      "custom_css": [],
+      "settings": {
+        "collection": "copper-peptides",
+        "product": "the-core-four",
+        "url": "HOME // THE CORE FOUR",
+        "signTitle": "invest in your skin",
+        "bestVariant": 2,
+        "rating": 5,
+        "reviews": 268,
+        "moon_icon": "shopify://shop_images/am___pm.webp",
+        "subDiscription": "We are here to make your skin feel",
+        "phoneProductDiscription": "Inspired by the skin’s 4 major functions—repair, protection, exfoliation, & nourishment, this is a complete skincare routine that works quietly in the background to support your's skin health through every high & low. It keeps your skin barrier strong, boosts glow, & helps prevent early signs of aging. Expert-level in quality & beginner-friendly in simplicity, this is what your skin  needs — nothing more, nothing less!",
+        "main_video": "",
+        "trunk_contain": "<p>This set contains: </p><p><a href=\"https://www.aminu.life/products/longevity-serum\" target=\"_blank\" title=\"https://www.aminu.life/products/longevity-serum\">- Longevity serum (10 ml) x 1</a> <br/>(₹780)<br/><a href=\"https://www.aminu.life/products/radiance-face-oil\" target=\"_blank\" title=\"https://www.aminu.life/products/radiance-face-oil\">- Radiance face oil (10 ml) x 1</a><br/>(₹1450)<br/><a href=\"https://www.aminu.life/products/copper-peptide-serum\" target=\"_blank\" title=\"https://www.aminu.life/products/copper-peptide-serum\">- Copper peptide serum (10 ml)x 1</a><br/>(₹1840)<br/><a href=\"https://www.aminu.life/products/overnight-peel\" target=\"_blank\" title=\"https://www.aminu.life/products/overnight-peel\">- Overnight peel (10 ml) x 1 </a><br/>(₹1000)<br/><br/><br/></p>",
+        "save_text": "SAVE 15%",
+        "free_text": "<p>+ Get A Carry-All Pouch (worth Rs. 1250) Free!</p>"
+      }
+    },
+    "odyssey_trunk_accordion": {
+      "type": "odyssey_trunk_accordion",
+      "blocks": {
+        "how_to_use_NDGH6m": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Longevity_Serum_d0ad7348-5cf6-4944-b083-18288edd68b4.jpg",
+            "title": "<p><strong>STEP 1 - LONGEVITY SERUM</strong></p>",
+            "description": "<p><strong><br>USE</strong>: in the AM as your daily protector —<br>shielding your skin from environmental stress, pollution, and premature aging.<br><br><strong>HOW:</strong> Apply 2–3 drops on clean, dry skin after cleansing. Let it absorb fully<br>before following up with moisturizer and sunscreen.</p>"
+          }
+        },
+        "how_to_use_dtibGz": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Copper_Peptide_Serum.jpg",
+            "title": "<p><strong>STEP 2 - COPPER PEPTIDE SERUM</strong></p>",
+            "description": "<p><strong><br>USE</strong>: in the PM, 4–5 times a week, to support skin repair & collagen production.<br><br><strong>HOW</strong>: Apply 2–3 drops on clean skin after cleansing. Wait 30–60 seconds before<br>layering other serums or creams.<br>Follow up with sunscreen if applied during the day.</p>"
+          }
+        },
+        "how_to_use_A9Cd4G": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Overnight_Peel_20739447-8f2c-467a-9107-a1acb4590df6.jpg",
+            "title": "<p><strong>STEP 3 - OVERNIGHT PEEL</strong></p>",
+            "description": "<p><strong><br>USE: </strong>2–3 times a week at night (on alternate days when you’re not using the Copper Peptide Serum) to gently exfoliate, brighten,<br>and smooth your skin.<br><br><strong>HOW:</strong> Apply 1–2 drops on clean skin, apply moisturiser and leave on overnight. Follow up with sunscreen during the day.</p>"
+          }
+        },
+        "how_to_use_YEjUFF": {
+          "type": "how_to_use",
+          "settings": {
+            "image": "shopify://shop_images/Radiance_Face_Oil_fe1395cf-7862-424b-95e6-6dc9f9bc9241.jpg",
+            "title": "<p><strong>STEP 4 - RADIANCE FACE OIL</strong></p>",
+            "description": "<p><strong><br>USE</strong>: as and when needed to deeply nourish your skin and give it a soft, non-sticky glow.<br><br><strong>HOW</strong>: Massage 2–3 drops onto slightly damp skin as the final step in your routine.<br>Follow up with sunscreen during the day.</p><p><strong>TIP</strong>: It also works beautifully under makeup — mix 1–2 drops with your foundation for a dewy, seamless finish.</p>"
+          }
+        },
+        "pro_tips_qq6Nfi": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_2_6bcdcc04-4ed6-40d2-b7f2-80841de0dfe2.png",
+            "description": "Do not use strong antioxidants, AHA's, direct acids/ L-ascorbic acid / Ethylated L-Ascorbic Acid in the same routine. For eg - Use Longevity Serum in the AM & Copper Peptide Serum OR Overnight Peel in the PM! The Radiance Face Oil can be used as needed."
+          }
+        },
+        "pro_tips_44GEXY": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_4_2ec110ff-1e2f-4227-895d-c3b9e0eb4aba.png",
+            "description": "Gently tapping with your fingertips after applying the products on your face for faster absorption. You can even use the face oil for a luxurious face massage!"
+          }
+        },
+        "pro_tips_g9AhLG": {
+          "type": "pro_tips",
+          "settings": {
+            "pro_tips_image": "shopify://shop_images/DOU_Icon_3_bdc39ea0-344f-4a6a-9e03-642b97774df5.png",
+            "description": "While this set caters to different needs, providing all-round care & protection, you should assess your skin mood regularly, and choose the products you're applying accordingly."
+          }
+        },
+        "why_you_need_this_dgb8hi": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "All Your Skin Needs, In One Set",
+            "description": "This ritual supports your skin barrier, energizes tired skin, and improves tone, texture, & resilience. It helps with dryness, dark spots, dullness, puffiness, and most common skin concerns. From brightening and exfoliating to firming & healing, this is your one-stop skincare set for protection, repair, and better aging."
+          }
+        },
+        "why_you_need_this_TQDQ8G": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Powered by 40+ Cutting-Edge Actives,",
+            "description": "From around the world, this set brings to you the best of clean beauty. While niacinamide, rutin, vitamin C, and gallic acid defend against pollution & oxidative stress,  hyaluronic acid, plant ceramides, & squalane hydrate & strengthen the skin barrier. Copper peptides, silanol, & ectoin calm inflammation and promote healing. Slow-release AHAs, rainbow algae, & a patented brightening peptide exfoliate and even skin tone for a visibly healthier, more radiant complexion."
+          }
+        },
+        "why_you_need_this_z6nbfQ": {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Discovery & Travel-Friendly!",
+            "description": "Trying Aminu for the first time? Or looking for a portable skincare routine that doesn’t compromise on results? This compact set is ideal for both. It fits into any bag, works across all skin types, and delivers targeted care — anytime, anywhere."
+          }
+        },
+        "product_details_n6ERB7": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN MOODS",
+            "description": "Suitable for all skin types from dry, normal, combination to oily — and especially good for moody, unpredictable skin"
+          }
+        },
+        "product_details_Qg3rEE": {
+          "type": "product_details",
+          "settings": {
+            "title": "GOOD FOR",
+            "description": "Daily skin repair (copper peptide serum), barrier support (longevity serum), gentle exfoliation (overnight peel), & deep nourishment (radiance face oil)"
+          }
+        },
+        "product_details_8rjfqT": {
+          "type": "product_details",
+          "settings": {
+            "title": "SKIN GOALS",
+            "description": "A healthy skin barrier & smooth, even-toned skin"
+          }
+        },
+        "product_details_pEJQQY": {
+          "type": "product_details",
+          "settings": {
+            "title": "CARE THAT CARES",
+            "description": "Vegan, Cruelty-free, Multi-Functional, Balanced, Pregnancy-Safe"
+          }
+        }
+      },
+      "block_order": [
+        "how_to_use_NDGH6m",
+        "how_to_use_dtibGz",
+        "how_to_use_A9Cd4G",
+        "how_to_use_YEjUFF",
+        "pro_tips_qq6Nfi",
+        "pro_tips_44GEXY",
+        "pro_tips_g9AhLG",
+        "why_you_need_this_dgb8hi",
+        "why_you_need_this_TQDQ8G",
+        "why_you_need_this_z6nbfQ",
+        "product_details_n6ERB7",
+        "product_details_Qg3rEE",
+        "product_details_8rjfqT",
+        "product_details_pEJQQY"
+      ],
+      "settings": {
+        "application_video_poster_image": "shopify://shop_images/the_core_four_thumbnail.jpg",
+        "application_video_url": "https://cdn.shopify.com/videos/c/o/v/73a4991a4ebb4601bab2c2ce15e5f5af.mp4",
+        "why_you_need_video_des": "Your skin is the body's first line of defense & knows how to care for itself — it hydrates, heals, protects, & renews on its own. But with every thing life throws at it — from stress, screen time, late nights to pollution & more — it could use a little support. That’s where The Core Four steps in to keep your skin functioning at its best!",
+        "carousel_title": "<p><strong>STEP 1 - LONGEVITY SERUM</strong></p>",
+        "carousel_description": "<p><strong>USE</strong>: in the AM as your daily protector —<br>shielding your skin from environmental stress, pollution, and premature aging.<br><br><strong>HOW:</strong> Apply 2–3 drops on clean, dry skin after cleansing. Let it absorb fully<br>before following up with moisturizer or sunscreen.</p>"
+      }
+    },
+    "ug-eye-scrum-pairs-well": {
+      "type": "ug-eye-scrum-pairs-well",
+      "blocks": {
+        "product_pairs_well_nDHy8g": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "better-aging-bundle",
+            "custom_title": "",
+            "custom_description": "",
+            "custom_price": "",
+            "rating_count": "0",
+            "questions_count": "0",
+            "size_variants": "S/M/L/XL"
+          }
+        },
+        "product_pairs_well_mYRYXT": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "double-cleansing-duo",
+            "custom_title": "",
+            "custom_description": "",
+            "custom_price": "",
+            "rating_count": "0",
+            "questions_count": "0",
+            "size_variants": "S/M/L/XL"
+          }
+        },
+        "product_pairs_well_7NQ96k": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "daily-care-set",
+            "custom_title": "",
+            "custom_description": "",
+            "custom_price": "",
+            "rating_count": "0",
+            "questions_count": "0",
+            "size_variants": "S/M/L/XL"
+          }
+        },
+        "product_pairs_well_7r8H6V": {
+          "type": "product_pairs_well",
+          "settings": {
+            "pairs_product": "the-glow-essentials",
+            "custom_title": "",
+            "custom_description": "",
+            "custom_price": "",
+            "rating_count": "0",
+            "questions_count": "0",
+            "size_variants": "S/M/L/XL"
+          }
+        }
+      },
+      "block_order": [
+        "product_pairs_well_nDHy8g",
+        "product_pairs_well_mYRYXT",
+        "product_pairs_well_7NQ96k",
+        "product_pairs_well_7r8H6V"
+      ],
+      "settings": {
+        "title": "Other Ritual Sets",
+        "accountant_signature_font": "AccountantSignature",
+        "card_border_color": "#000000",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "title_color": "#000000",
+        "desktop_columns": 4,
+        "tablet_columns": 3,
+        "mobile_columns": 1
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "unico-landing-More-in-one-import": {
+      "type": "unico-landing-More-in-one",
+      "blocks": {
+        "feature_JTEKTg": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Melting_Balm_Cleanser_copy_2.png",
+            "title": "Melting Balm Cleanser",
+            "description": "Your skin’s first defense against oil-based impurities, dirt, and makeup, it works well solo or as the first step of a double cleanse."
+          }
+        },
+        "feature_fNVqJY": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Eye_Serum.png",
+            "title": "Eye Serum",
+            "description": "Thoughtfully crafted to nourish & protect, this is the daily & travel essential your eyes will thank you for."
+          }
+        },
+        "feature_hn4APq": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Radiance_Face_Oil_3.png",
+            "title": "Radiance Face Oil",
+            "description": "This high-powered moisturiser will leave your skin glowing, soft, and radiant every time. It also acts as the perfect base under makeup!"
+          }
+        },
+        "feature_Vhq4ax": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/Vit_c_Body_Oil__2.png",
+            "title": "Vitamin C Body Oil",
+            "description": "As perfect for the beach as the mountains, it brightens, revitalizes, and tones the skin in one go, keeping it smooth & healthy!"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JTEKTg",
+        "feature_fNVqJY",
+        "feature_hn4APq",
+        "feature_Vhq4ax"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "A trunk full of treasures!",
+        "description": "",
+        "underLineText": "Simply put, it's an investment in your skin health for now and for the long run."
+      }
+    },
+    "unico-landing-community-says-import": {
+      "type": "unico-landing-community-says",
+      "blocks": {
+        "blogs_MKcxz6": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ankita_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/534b291c72fc47599764c0de5d205f6a.mp4",
+            "review_title": "copper peptide is something you should include",
+            "review_summary": "If you're serious about long term skin health.",
+            "review_author": "Ankita"
+          }
+        },
+        "blogs_tpRTGB": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/ruchika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/f20417e2fe4647329b3257fbc2e64393.mp4",
+            "review_title": "The best investment",
+            "review_summary": "Treat the signs of ageing even before they start appearing.",
+            "review_author": "Ruchika"
+          }
+        },
+        "blogs_Xay8kG": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/prarthanajagan_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/02ca921dc7764fcc86a0a8c2195b1174.mp4",
+            "review_title": "It will sit well with your skin",
+            "review_summary": "This serum has a lot of skin loving ingredients",
+            "review_author": "Prarthanajagan"
+          }
+        },
+        "blogs_WQ9w8N": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mihika_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/ea41fe6715cd41988031f35974bd11be.mp4",
+            "review_title": "Incredible benefits all in one bottle.",
+            "review_summary": "Makes my skin barrier firmer, hydrated, and reduces the texture on it.",
+            "review_author": "Mihika"
+          }
+        },
+        "blogs_T3Map3": {
+          "type": "blogs",
+          "settings": {
+            "video_poster_image": "shopify://shop_images/mahek_thumbnail.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/29034781ee224cb8b6e258f433b4ad68.mp4",
+            "review_title": "I finished more than half the bottle",
+            "review_summary": "This serum has been an incredible experience for me",
+            "review_author": "Mahek"
+          }
+        },
+        "blogs_7n8XxW": {
+          "type": "blogs",
+          "settings": {
+            "video_url": "",
+            "review_title": "",
+            "review_summary": "",
+            "review_author": ""
+          }
+        }
+      },
+      "block_order": [
+        "blogs_MKcxz6",
+        "blogs_tpRTGB",
+        "blogs_Xay8kG",
+        "blogs_WQ9w8N",
+        "blogs_T3Map3",
+        "blogs_7n8XxW"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "See What Our Community Is Saying!"
+      }
+    },
+    "unico-landing-how-works-import": {
+      "type": "unico-landing-how-works",
+      "disabled": true,
+      "settings": {
+        "title": "Why You Need This",
+        "description": "The Odyssey Trunk is your ultimate skincare companion, thoughtfully curated to deliver top-to-toe care with maximum benefits. \n<br><br>\n<b>New year, fresh look, same beloved products!</b><br>\nAs we step into 2025, we’re leveling up & taking you along on the journey. With the Odyssey Trunk, be among the first to experience our refreshed look! \n<br><br>\n<b>Everything You Need, Anywhere You Go</b><br>\nCrafted to suit all skin moods, you can cleanse with the Melting Balm Cleanser, hydrate and brighten with the Eye Serum, nourish your face with the Radiance Face Oil, and the body with the Vitamin C Body Oil.\n<br><br>\n<b>Ready. Set. Glow.</b><br>\nWith the Aminu Passport to help you understand your products & double as a travel checklist, and the Glow-Trotter luggage tag, you will be prepared, no matter where life takes you.",
+        "more_text": "",
+        "video_poster_image": "shopify://shop_images/cover_picture_trunk_5a075d66-333b-4d84-aeda-7b7c38037857.jpg",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/d679171f9f534eaca12e1adbaaa50e0c.mp4"
+      }
+    },
+    "unico-landing-easy-to-use-import": {
+      "type": "unico-landing-easy-to-use",
+      "disabled": true,
+      "settings": {
+        "heading": "Super Easy to Use",
+        "image": "shopify://shop_images/5_Odyssey_Trunk.jpg",
+        "how": "<p><strong>WHEN:</strong> AM & PM, depending on your skin's mood & needs<br/><br/><strong>ORDER OF APPLICATION</strong> </p><p>Cleanse -&gt; Apply Eye Serum -&gt; Radiance Face Oil -&gt; Vit C Body Oil<br/><br/>For detailed instructions on how to use the cleanser, <a href=\"https://www.aminu.life/products/melting-balm-cleanser\" target=\"_blank\">click below:</a> </p>",
+        "where": "",
+        "when": "",
+        "hiddenText": "<p><strong>PRO-TIP:</strong> </p><p>When using the Melting Balm Cleanser, don’t forget to massage the cleansing balm near your hairline and along your jawline, as these are often-overlooked areas.</p><p>The Eye Serum can be used under eye makeup to keep skin hydrated & prevent creasing/ caking & the Radiance Face Oil can function as a primer too. </p><p>Apply the Vit C Body Oil before shaving for a smooth glide and a closer shave!</p>",
+        "readMore": "Read More",
+        "readLess": "Read Less"
+      }
+    }
+  },
+  "order": [
+    "scrolling_banner_wQtidY",
+    "custom_liquid_ecQFGe",
+    "odyssey_trunk_product_page_ug-import",
+    "odyssey_trunk_accordion",
+    "ug-eye-scrum-pairs-well",
+    "main",
+    "unico-landing-More-in-one-import",
+    "unico-landing-community-says-import",
+    "unico-landing-how-works-import",
+    "unico-landing-easy-to-use-import"
+  ]
+}

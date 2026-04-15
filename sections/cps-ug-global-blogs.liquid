@@ -1,0 +1,869 @@
+{% comment %} <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+>
+
+<section class="blogs-section blog-border">
+  <div class="ug-container">
+    <h2 class="blogs-title">
+      {{ product.metafields.custom.blogs_title }}
+    </h2>
+    <p class="blogs-subtitle">
+      {{ product.metafields.custom.blogs_subtitle }}
+    </p>
+
+    <div class="glide-blogs">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {% for blog in product.metafields.custom.blog_details.value %}
+            <li class="glide__slide" onclick="window.location.href='{{ blog.blog_redirect_url }}'">
+              <div class="blog-card">
+                <img
+                  src="{{ blog.blog_image_url }}"
+                  alt="Blog Image"
+                  class="blog-image"
+                >
+                <div class="blog-content">
+                  <h3 class="blog-title">
+                    {{ blog.blog_title }}
+                  </h3>
+                  <p class="blog-description">
+                    {{ blog.blog_description }}
+                  </p>
+                  <a class="blog-link">Read More</a>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Arrows -->
+      <div class="glide__arrows-blogs" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--prev" data-glide-dir="<">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--next" data-glide-dir=">">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glide.js JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js defer"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const root = document.querySelector('.glide-blogs');
+      if (!root) return;
+
+      const glide = new Glide(root, {
+        type: 'slider',
+        perView: 3.6,
+        gap: 14,
+        autoplay: false,
+        rewind: false,
+        bound: false,
+        dragThreshold: 0,
+        touchRatio: 1.2,
+        animationDuration: 600, // Increased for smoother animation
+        animationTimingFunc: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', // Smoother easing function
+        throttle: 10, // Reduced throttle for more responsive dragging
+        swipeThreshold: 10, // Adjusted for better touch response
+        
+        // Improved breakpoints with smooth transitions
+        breakpoints: {
+          500: {
+            perView: 1.2,
+            gap: 16,
+            dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+          800: {
+            perView: 2.2,
+            gap: 16,
+            dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+          1000: {
+            perView: 1.5,
+            gap: 16,
+            dragThreshold: 0,
+            touchRatio: 1.2,
+          },
+        },
+      });
+
+      const arrowsWrapper = root.querySelector('.glide__arrows-blogs');
+      const prevBtn = root.querySelector('.glide__arrow--prev');
+      const nextBtn = root.querySelector('.glide__arrow--next');
+      const totalSlides = root.querySelectorAll('.glide__slide').length;
+
+      function getPerView() {
+        const w = window.innerWidth;
+        if (w <= 500) return 1.2;
+        if (w <= 800) return 2.2;
+        return 3.6;
+      }
+
+      function setDisabled(btn, on) {
+        if (!btn) return;
+        btn.disabled = on;
+        btn.classList.toggle('is-disabled', on);
+      }
+
+      function updateArrows() {
+        const perView = getPerView();
+        const isDesktop = window.innerWidth > 800;
+
+        if (window.innerWidth <= 767) {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'none';
+          return;
+        }
+
+        if (isDesktop && totalSlides <= perView) {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'none';
+          return;
+        } else {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'flex';
+        }
+
+        const idx = glide.index;
+        setDisabled(prevBtn, idx <= 0);
+        const nextShouldDisable = idx + perView >= totalSlides - 0.001;
+        setDisabled(nextBtn, nextShouldDisable);
+      }
+
+      glide.on(['mount.after', 'run.after'], updateArrows);
+      window.addEventListener('resize', updateArrows);
+
+      // Add smooth transitions on window resize
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          glide.update();
+          updateArrows();
+        }, 150);
+      });
+
+      // Add smooth click transition
+      const slides = root.querySelectorAll('.glide__slide');
+      slides.forEach(slide => {
+        slide.addEventListener('click', function(e) {
+          e.preventDefault();
+          setTimeout(() => {
+            window.location.href = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+          }, 300);
+        });
+      });
+
+      glide.mount();
+    });
+  </script>
+
+  <style>
+      /* ========== BASE SECTION STYLES ========== */
+      .blogs-section {
+        background: #fff;
+        overflow: hidden; /* Prevent horizontal scroll during animation */
+      }
+      
+      @media (max-width: 640px) {
+          .blogs-section {
+              background: #fff;
+          }
+      }
+
+      .blogs-title {
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 48px;
+        margin-bottom: 0.5rem;
+      }
+
+      .blogs-subtitle {
+        font-size: 15px;
+        line-height: 19px;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 1.25rem;
+      }
+
+      @media (min-width: 640px) {
+        .blogs-title {
+          font-size: 40px;
+          line-height: 66px;
+          margin-bottom: 1rem;
+        }
+        .blogs-subtitle {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 3rem;
+        }
+      }
+
+      /* ========== BLOG CARD ========== */
+      @media (min-width: 640px) {
+          .blog-card {
+              background: #f7f7f7;
+              border: 1px solid #000;
+              border-radius: 4px;
+              width: 350px;
+              margin: auto;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              cursor: pointer;
+              transition: transform 0.3s ease;
+              will-change: transform; /* Optimize for animations */
+          }
+          
+          .blog-card:hover {
+              transform: translateY(-2px);
+          }
+      }
+
+      @media (max-width: 640px) {
+          .blog-card {
+              background: #f7f7f7;
+              border: 0.5px solid #000;
+              border-radius: 4px;
+              margin: auto;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              width: 100%;
+              cursor: pointer;
+          }
+      }
+
+      .blog-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 4px 4px 0 0;
+        backface-visibility: hidden; /* Improve animation performance */
+      }
+
+      .blog-content {
+        background: #f7f7f7;
+        padding: 1rem;
+        border-radius: 0 0 4px 4px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+      }
+
+      .blog-title {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 20px;
+        margin-bottom: 0.5rem;
+      }
+
+      .blog-description {
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 300;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        overflow: hidden;
+      }
+
+      .blog-link {
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 400;
+        color: #689fff;
+        text-decoration: underline;
+      }
+
+      @media (min-width: 640px) {
+        .blog-title {
+          font-size: 18px;
+          line-height: 24px;
+        }
+        .blog-description {
+          font-size: 12px;
+        }
+      }
+
+      /* ========== ARROWS ========== */
+      .glide__arrows-blogs {
+        position: absolute;
+        top: 45%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .glide__arrows-blogs .glide__arrow {
+        pointer-events: auto;
+        background: white;
+        border: 1px solid black;
+        width: 26px;
+        height: 26px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: pointer;
+      }
+
+      .glide__arrows-blogs .glide__arrow:hover {
+        background: #f2f2f2;
+        transform: scale(1.05);
+      }
+
+      .glide__arrow.is-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+        filter: grayscale(1);
+        transform: none !important;
+      }
+
+      @media (max-width: 767px) {
+        .glide__arrows-blogs {
+          display: none;
+        }
+      }
+
+      /* ========== GLIDE CUSTOM STYLES FOR SMOOTHNESS ========== */
+      .glide__slides li {
+        list-style: none !important;
+      }
+
+      /* Keep all cards same height */
+      .glide__slide {
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide transition */
+      }
+
+      .blog-card {
+        min-height: 460px;
+        box-sizing: border-box;
+      }
+
+      .glide__slides {
+        padding-bottom: 4px;
+        backface-visibility: hidden; /* Improve animation performance */
+        transform-style: preserve-3d;
+      }
+
+      .glide__track {
+        overflow: visible; /* Allow smooth transitions */
+      }
+
+      /* Glide.js default animation improvements */
+      .glide__slide--active {
+        z-index: 1;
+      }
+
+      /* Smooth dragging experience */
+      .glide--swipeable {
+        cursor: grab;
+      }
+
+      .glide--dragging {
+        cursor: grabbing;
+      }
+
+      /* Prevent layout shifts during animation */
+      .glide__slides > * {
+        backface-visibility: hidden;
+      }
+
+
+      .blog-border{
+
+  {% if product.metafields.custom.show_blogs_top_border == true %}
+    border-top: 1px solid #000000;
+  {% else %}
+    border-top: none; 
+  {% endif %}
+
+  /* Desktop Bottom (default = true) */
+  {% if product.metafields.custom.show_blogs_bottom_border != false %}
+    border-bottom: 1px solid #000000; 
+  {% else %}
+    border-bottom: 1px solid #000000; 
+  {% endif %}
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .blog-border {
+
+    /* Mobile Top (default = false) */
+    {% if product.metafields.custom.show_blogs_top_border == true %}
+      border-top: 0.5px solid #000000;
+    {% else %}
+      border-top: none; 
+    {% endif %}
+
+    /* Mobile Bottom (default = true) */
+    {% if product.metafields.custom.show_blogs_bottom_border != false %}
+      border-bottom: 0.5px solid #000000; 
+    {% else %}
+      border-bottom: 0.5px solid #000000; 
+    {% endif %}
+
+  }
+}
+  </style>
+</section> {% endcomment %}
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css"
+>
+
+<section class="blogs-section blog-border">
+  <div class="ug-container">
+    <h2 class="blogs-title">
+      {{ product.metafields.custom.blogs_title }}
+    </h2>
+    <p class="blogs-subtitle">
+      {{ product.metafields.custom.blogs_subtitle }}
+    </p>
+
+    <div class="glide-blogs">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          {% for blog in product.metafields.custom.blog_details.value %}
+            <li class="glide__slide" onclick="window.location.href='{{ blog.blog_redirect_url }}'">
+              <div class="blog-card">
+                <img
+                  src="{{ blog.blog_image_url }}"
+                  alt="Blog Image"
+                  class="blog-image"
+                >
+                <div class="blog-content">
+                  <h3 class="blog-title">
+                    {{ blog.blog_title }}
+                  </h3>
+                  <p class="blog-description">
+                    {{ blog.blog_description }}
+                  </p>
+                  <a class="blog-link">Read More</a>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Arrows -->
+      <div class="glide__arrows-blogs" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--prev" data-glide-dir="<">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--next" data-glide-dir=">">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glide.js JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const root = document.querySelector('.glide-blogs');
+      if (!root) return;
+
+      const glide = new Glide(root, {
+        type: 'slider',
+        perView: 3.6,
+        gap: 14,
+        autoplay: false,
+        rewind: false,
+        bound: false,
+        dragThreshold: 80,        // ✅ FIX 1: 80px threshold for better drag detection
+        touchRatio: 1.5,          // ✅ FIX 2: Increased for better touch response
+        animationDuration: 600,
+        animationTimingFunc: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        throttle: 50,             // ✅ FIX 3: Increased throttle for smoother drag
+        swipeThreshold: 50,       // ✅ FIX 4: Lower threshold for easier swipe
+        peek: 0,                  // ✅ FIX 5: Added peek to prevent edge clipping
+        
+        breakpoints: {
+          500: {
+            perView: 1.2,
+            gap: 16,
+            dragThreshold: 60,
+            touchRatio: 1.5,
+            swipeThreshold: 40,
+          },
+          800: {
+            perView: 2.2,
+            gap: 16,
+            dragThreshold: 70,
+            touchRatio: 1.5,
+            swipeThreshold: 45,
+          },
+          1000: {
+            perView: 3.2,         // ✅ FIX 6: Reduced from 3.6 for better boundaries
+            gap: 16,
+            dragThreshold: 80,
+            touchRatio: 1.5,
+            swipeThreshold: 50,
+          },
+        },
+      });
+
+      const arrowsWrapper = root.querySelector('.glide__arrows-blogs');
+      const prevBtn = root.querySelector('.glide__arrow--prev');
+      const nextBtn = root.querySelector('.glide__arrow--next');
+      const totalSlides = root.querySelectorAll('.glide__slide').length;
+
+      function getPerView() {
+        const w = window.innerWidth;
+        if (w <= 500) return 1.2;
+        if (w <= 800) return 2.2;
+        if (w <= 1000) return 3.2;
+        return 3.6;
+      }
+
+      function setDisabled(btn, on) {
+        if (!btn) return;
+        btn.disabled = on;
+        btn.classList.toggle('is-disabled', on);
+      }
+
+      function updateArrows() {
+        const perView = getPerView();
+        const isDesktop = window.innerWidth > 800;
+
+        if (window.innerWidth <= 767) {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'none';
+          return;
+        }
+
+        if (isDesktop && totalSlides <= perView) {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'none';
+          return;
+        } else {
+          if (arrowsWrapper) arrowsWrapper.style.display = 'flex';
+        }
+
+        const idx = glide.index;
+        setDisabled(prevBtn, idx <= 0);
+        const nextShouldDisable = idx + perView >= totalSlides - 0.001;
+        setDisabled(nextBtn, nextShouldDisable);
+      }
+
+      glide.on(['mount.after', 'run.after'], updateArrows);
+      window.addEventListener('resize', updateArrows);
+
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          glide.update();
+          updateArrows();
+        }, 150);
+      });
+
+      glide.mount();
+    });
+  </script>
+
+  <style>
+      /* ========== BASE SECTION STYLES ========== */
+      .blogs-section {
+        background: #fff;
+        overflow-x: clip;  /* ✅ FIX 7: clip instead of hidden to allow drag but prevent scrollbar */
+      }
+      
+      @media (max-width: 640px) {
+          .blogs-section {
+              background: #fff;
+          }
+      }
+
+      .blogs-title {
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 48px;
+        margin-bottom: 0.5rem;
+      }
+
+      .blogs-subtitle {
+        font-size: 15px;
+        line-height: 19px;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 1.25rem;
+      }
+
+      @media (min-width: 640px) {
+        .blogs-title {
+          font-size: 40px;
+          line-height: 66px;
+          margin-bottom: 1rem;
+        }
+        .blogs-subtitle {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 3rem;
+        }
+      }
+
+      /* ========== BLOG CARD ========== */
+      @media (min-width: 640px) {
+          .blog-card {
+              background: #f7f7f7;
+              border: 1px solid #000;
+              border-radius: 4px;
+              width: 350px;
+              margin: auto;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              cursor: pointer;
+              transition: transform 0.3s ease;
+              will-change: transform;
+          }
+          
+          .blog-card:hover {
+              transform: translateY(-2px);
+          }
+      }
+
+      @media (max-width: 640px) {
+          .blog-card {
+              background: #f7f7f7;
+              border: 0.5px solid #000;
+              border-radius: 4px;
+              margin: auto;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              width: 100%;
+              cursor: pointer;
+          }
+      }
+
+      .blog-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 4px 4px 0 0;
+        backface-visibility: hidden;
+        pointer-events: none;  /* ✅ FIX 8: Prevents image from blocking drag on touch devices */
+      }
+
+      .blog-content {
+        background: #f7f7f7;
+        padding: 1rem;
+        border-radius: 0 0 4px 4px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+      }
+
+      .blog-title {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 20px;
+        margin-bottom: 0.5rem;
+      }
+
+      .blog-description {
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 300;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        overflow: hidden;
+      }
+
+      .blog-link {
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 400;
+        color: #689fff;
+        text-decoration: underline;
+      }
+
+      @media (min-width: 640px) {
+        .blog-title {
+          font-size: 18px;
+          line-height: 24px;
+        }
+        .blog-description {
+          font-size: 12px;
+        }
+      }
+
+      /* ========== ARROWS ========== */
+      .glide__arrows-blogs {
+        position: absolute;
+        top: 45%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .glide__arrows-blogs .glide__arrow {
+        pointer-events: auto;
+        background: white;
+        border: 1px solid black;
+        width: 26px;
+        height: 26px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: pointer;
+      }
+
+      .glide__arrows-blogs .glide__arrow:hover {
+        background: #f2f2f2;
+        transform: scale(1.05);
+      }
+
+      .glide__arrow.is-disabled {
+        opacity: 0.35;
+        pointer-events: none;
+        filter: grayscale(1);
+        transform: none !important;
+      }
+
+      @media (max-width: 767px) {
+        .glide__arrows-blogs {
+          display: none;
+        }
+      }
+
+      /* ========== GLIDE CUSTOM STYLES FOR SMOOTHNESS ========== */
+      .glide__slides li {
+        list-style: none !important;
+      }
+
+      .glide__slide {
+        height: 100%;
+      }
+
+      .blog-card {
+        min-height: 460px;
+        box-sizing: border-box;
+      }
+
+      .glide__slides {
+        padding-bottom: 4px;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+      }
+
+      /* ✅ FIX 9: Allow track to be draggable */
+      .glide__track {
+        overflow: visible;
+        cursor: grab;
+      }
+      
+      .glide__track:active {
+        cursor: grabbing;
+      }
+
+      .glide__slide--active {
+        z-index: 1;
+      }
+
+      /* ✅ FIX 10: Ensure slides don't block drag on children */
+      .glide__slide * {
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .blog-border {
+        {% if product.metafields.custom.show_blogs_top_border == true %}
+          border-top: 1px solid #000000;
+        {% else %}
+          border-top: none; 
+        {% endif %}
+
+        {% if product.metafields.custom.show_blogs_bottom_border != false %}
+          border-bottom: 1px solid #000000; 
+        {% else %}
+          border-bottom: 1px solid #000000; 
+        {% endif %}
+      }
+
+      @media (max-width: 640px) {
+        .blog-border {
+          {% if product.metafields.custom.show_blogs_top_border == true %}
+            border-top: 0.5px solid #000000;
+          {% else %}
+            border-top: none; 
+          {% endif %}
+
+          {% if product.metafields.custom.show_blogs_bottom_border != false %}
+            border-bottom: 0.5px solid #000000; 
+          {% else %}
+            border-bottom: 0.5px solid #000000; 
+          {% endif %}
+        }
+      }
+  </style>
+</section>

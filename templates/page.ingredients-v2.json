@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_BDrF69": {
+      "type": "custom-liquid",
+      "settings": {
+        "full_width": true,
+        "show_space": false,
+        "code": "<script src=\"https://cdn.tailwindcss.com\"></script>\n    <script src=\"https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js\"></script>\n    <script src=\"{{ 'unico-global.js' | asset_url }}\" defer></script>"
+      }
+    },
+    "scrolling_banner_n7ipE9": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_aGX4GU": {
+          "type": "text",
+          "settings": {
+            "text": "LESS EFFORT, MORE RESULT",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_8dT8dC": {
+          "type": "text",
+          "settings": {
+            "text": "BALANCED",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_b4NfgD": {
+          "type": "text",
+          "settings": {
+            "text": "SELF - LOVE + SIMPLICITY",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": false,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        },
+        "text_aNB7Tp": {
+          "type": "text",
+          "settings": {
+            "text": "THE BEST OF NATURE'S OFFERING",
+            "color": "rgba(0,0,0,0)",
+            "link": "",
+            "use_h1": true,
+            "stencil_all_text": false,
+            "stencil_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_aGX4GU",
+        "text_8dT8dC",
+        "text_b4NfgD",
+        "text_aNB7Tp"
+      ],
+      "name": "Scrolling banner",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "default",
+        "text_size": 16,
+        "vertical_padding": 20,
+        "speed": 10,
+        "direction": "left",
+        "font": "heading",
+        "space": 50,
+        "show_border_top": true,
+        "show_border_bottom": true,
+        "border_thickness": 0.5,
+        "border_color": "#000000",
+        "border_style": "solid"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "unico_ingredients_page": {
+      "type": "unico_ingredients_section",
+      "settings": {
+        "hero_section_title": "Our Ingredients",
+        "hero_section_desc": "We pack one bottle with holistic ingredients to address primary and secondary skin concerns, keeping your skincare      minimalist, quick, and adaptable to daily changes."
+      }
+    },
+    "featured_nutrients_h83UiX": {
+      "type": "featured_nutrients",
+      "blocks": {
+        "nutrient_nLTGt7": {
+          "type": "nutrient",
+          "settings": {
+            "title": "Nordic Peat",
+            "description": "Peat originates in swamp, where it naturally develops over hundreds of years. Finnish nature is unique due to its summers with long days and winters with freezing temperatures. Therefore, the plants have a short but intense growth season and are richer in nutrients than plants grown elsewhere. Herbs, flowers, and plants are naturally macerated by microbial action enriching the peat with a high concentration of bio-active substances.",
+            "image": "shopify://shop_images/featured-nutrients-3_04fca706-42a4-4129-a558-55ec5451303b.jpg",
+            "link": "https://www.aminu.life/products/nordic-mud-mask?_pos=1&_psq=nordic&_ss=e&_v=1.0"
+          }
+        },
+        "nutrient_rJ6QUT": {
+          "type": "nutrient",
+          "settings": {
+            "title": "Biden Pilosa",
+            "description": "BioRetinol is a super critical fluid apolar extract of Bidens pilosa. Rich phytochemical composition, standardized in phytol. It is with retinoids receptors activity, mimicking the same positive results that retinoids to fight against skin aging. Skin visibly younger, luminous and firm, reducing wrinkles, improves skin elasticity and hydration.",
+            "image": "shopify://shop_images/featured-nutrients-2.webp",
+            "link": "https://www.aminu.life/products/bio-retinol-cream"
+          }
+        },
+        "nutrient_87Gafq": {
+          "type": "nutrient",
+          "settings": {
+            "title": "Manicouagan Clay",
+            "description": "Located in the northern part of Canada, is one of the richest in minerals and trace elements in the world. Of the 102 known elements of the earth, we find more than 42 contents in this unique clay. Manicouagan Lake was born first by the impact of a meteorite more than 200 million years ago, which gives it its rounded shape visible from space.",
+            "image": "shopify://shop_images/featured-nutrients.webp",
+            "link": "https://www.aminu.life/products/marine-clay-mask"
+          }
+        }
+      },
+      "block_order": [
+        "nutrient_nLTGt7",
+        "nutrient_rJ6QUT",
+        "nutrient_87Gafq"
+      ],
+      "settings": {}
+    },
+    "unico_ingredients_library": {
+      "type": "ingredient_library",
+      "settings": {
+        "default_library_button": "A"
+      }
+    },
+    "unico_country_hFVmWx": {
+      "type": "unico_country",
+      "blocks": {
+        "card_kyBUNb": {
+          "type": "card",
+          "settings": {
+            "number": "40+",
+            "title": "COUNTRIES",
+            "description": "We scout the world to source high quality ingredients, precious plant extracts, magical oils, and unique molecules. Efficacy, safety, and sustainability are our criteria of selection, ensuring that each formula improves the way your skin looks and feels good."
+          }
+        },
+        "card_3pewtB": {
+          "type": "card",
+          "settings": {
+            "number": "80+",
+            "title": "HIGH PERFORMANCE INGREDIENTS",
+            "description": "We focus on multi-targeted solutions for your skin. Hence our products are filled with a unique blend of active nutrients. Experience the care, peptides, vitamins, botanical extracts, energizing minerals, amino-acids and many more powered with advanced technologies."
+          }
+        },
+        "card_tVdWhp": {
+          "type": "card",
+          "settings": {
+            "number": "200+",
+            "title": "RAW INGREDIENTS",
+            "description": "Unique base ingredients with long lasting hydrating effect, nourishing seed oils, energizing essential oils, floral waters, et.al. We’re always innovating and upgrading with revolutionary ingredients, understanding the skin science to make suitable products and provide a feeling of wellbeing."
+          }
+        }
+      },
+      "block_order": [
+        "card_kyBUNb",
+        "card_3pewtB",
+        "card_tVdWhp"
+      ],
+      "settings": {}
+    },
+    "consultation_hyFGxp": {
+      "type": "consultation",
+      "settings": {
+        "shop_heading": "The Shop",
+        "shop_description": "A green online shop dedicated to heal skin and make you glow inside out",
+        "shop_button_link": "https://www.aminu.life/collections/all",
+        "shop_button_text": "CHECK OUR COLLECTION",
+        "consultation_description": "Schedule a one-on-one consultation with one of our skin experts",
+        "consultation_button_link": "https://api.whatsapp.com/send?phone=919324752679&text=Hello,%20I%20would%20like%20to%20talk%20to%20your%20skin%20expert!",
+        "consultation_button_text": "BOOK PERSONAL CONSULTATION"
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_BDrF69",
+    "scrolling_banner_n7ipE9",
+    "main",
+    "unico_ingredients_page",
+    "featured_nutrients_h83UiX",
+    "unico_ingredients_library",
+    "unico_country_hFVmWx",
+    "consultation_hyFGxp"
+  ]
+}

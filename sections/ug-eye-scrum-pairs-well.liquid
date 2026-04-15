@@ -1,0 +1,631 @@
+
+{% schema %}
+{
+  "name": "eye scrum pairs well",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Section Title",
+      "default": "Pairs Well With"
+    },
+    {
+      "type": "text",
+      "id": "accountant_signature_font",
+      "label": "Accountant Signature Font Name",
+      "default": "AccountantSignature"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Products per row (Desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "tablet_columns",
+      "label": "Products per row (Tablet)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Products per row (Mobile)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_pairs_well",
+      "name": "Products",
+      "settings": [
+        {
+          "type": "product",
+          "id": "pairs_product",
+          "label": "Select Product"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title (Optional)",
+          "info": "Leave empty to use product title"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_description",
+          "label": "Custom Description (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price (Optional)",
+          "info": "Leave empty to use product price"
+        },
+        {
+          "type": "text",
+          "id": "rating_count",
+          "label": "Rating Count",
+          "default": "0"
+        },
+        {
+          "type": "text",
+          "id": "questions_count",
+          "label": "Questions Count",
+          "default": "0"
+        },
+        {
+          "type": "text",
+          "id": "size_variants",
+          "label": "Size Variants",
+          "default": "S/M/L/XL",
+          "info": "Separate sizes with /"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pairs Well Section",
+      "category": "Custom Sections",
+      "settings": {
+        "title": "Pairs Well With",
+        "desktop_columns": 4,
+        "tablet_columns": 3,
+        "mobile_columns": 2
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<section class="eye-scrum-pairs-well-section" id="eye-scrum-pairs-well-{{ section.id }}">
+  <div class="eye-scrum-pairs-well-container">
+    <h2 class="eye-scrum-pairs-well-title" style="color: {{ section.settings.title_color }};">
+      {{ section.settings.title }}
+    </h2>
+
+    <div class="swiper eye-scrum-pairs-well-swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'product_pairs_well' %}
+            {% assign current_product = block.settings.pairs_product %}
+            <div class="swiper-slide eye-scrum-pairs-well-slide">
+              <div class="eye-scrum-pairs-well-card">
+                <!-- Product Image -->
+                <div class="eye-scrum-pairs-well-card-image">
+                  <a href="{{ current_product.url | default: '#' }}">
+                    {% if current_product.featured_image %}
+                      <img
+                        src="{{ current_product.featured_image | img_url: '410x' }}"
+                        alt="{{ current_product.featured_image.alt | escape | default: 'Product Image' }}"
+                        class="eye-scrum-pairs-well-product-image"
+                        loading="lazy"
+                        width="410"
+                        height="410"
+                      >
+                    {% else %}
+                      <div class="eye-scrum-pairs-well-image-placeholder">
+                        {{ 'product-1' | placeholder_svg_tag: 'eye-scrum-pairs-well-placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </a>
+                </div>
+
+                <!-- Product Details -->
+                <div class="eye-scrum-pairs-well-card-details">
+                  {% if current_product.vendor != blank %}
+                    <div class="eye-scrum-pairs-well-product-vendor {{ section.settings.accountant_signature_font }}">
+                      {{ current_product.vendor }}
+                    </div>
+                  {% endif %}
+
+                  <h3 class="eye-scrum-pairs-well-product-title">
+                    <a href="{{ current_product.url | default: '#' }}">
+                      {% if block.settings.custom_title != blank %}
+                        {{ block.settings.custom_title }}
+                      {% else %}
+                        {{ current_product.title | default: 'Product Title' }}
+                      {% endif %}
+                    </a>
+                  </h3>
+
+                  {% if block.settings.custom_description != blank %}
+                    <div class="eye-scrum-pairs-well-product-description">
+                      {{ block.settings.custom_description }}
+                    </div>
+                  {% endif %}
+
+                  <div class="eye-scrum-pairs-well-price-size-container">
+                    <div class="eye-scrum-pairs-well-product-price">
+                      {% if block.settings.custom_price != blank %}
+                        {{ block.settings.custom_price }}
+                      {% else %}
+                        ₹ {{ current_product.price | money_without_currency | split: '.' | first | default: '0' }}
+                      {% endif %}
+                    </div>
+                  </div>
+<!-- Start of Judge.me code -->
+      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge p-b' data-id='{{ product.id }}' data-auto-install='false'>
+        {{ product.metafields.judgeme.badge }}
+      </div>
+      <!-- End of Judge.me code -->
+                  <!-- View Product Button -->
+                  <a href="{{ current_product.url | default: '#' }}" class="eye-scrum-pairs-well-view-product-btn">
+                    View Product
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="swiper-button-next eye-scrum-pairs-well-next-btn"></div>
+      <div class="swiper-button-prev eye-scrum-pairs-well-prev-btn"></div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination eye-scrum-pairs-well-pagination hidden"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Section Styles */
+  .eye-scrum-pairs-well-section {
+    background-color: white;
+    padding-top: 24px;
+    padding-bottom: 48px;
+    border-bottom: 0.5px solid black;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .eye-scrum-pairs-well-container {
+    max-width: 1350px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .p-b{
+    padding-bottom:16px;
+  }
+
+  .eye-scrum-pairs-well-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  @media (min-width: 640px) {
+    .eye-scrum-pairs-well-section {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .eye-scrum-pairs-well-title {
+      font-size: 44px;
+      margin-bottom: 56px;
+    }
+  }
+
+  /* Swiper Container */
+  .eye-scrum-pairs-well-swiper {
+    width: 100%;
+    {% comment %} padding-bottom: 50px; {% endcomment %}
+    overflow: hidden;
+  }
+
+  .eye-scrum-pairs-well-slide {
+    height: auto;
+  }
+
+  /* Product Card Styles */
+  .eye-scrum-pairs-well-card {
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .eye-scrum-pairs-well-card-image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .eye-scrum-pairs-well-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .eye-scrum-pairs-well-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .eye-scrum-pairs-well-placeholder-svg {
+    width: 100px;
+    height: 100px;
+    color: #ddd;
+  }
+
+  .eye-scrum-pairs-well-card-details {
+    padding: 20px 15px 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-between;
+  }
+
+  .eye-scrum-pairs-well-product-vendor {
+    font-size: 32px;
+    font-weight: 400;
+    color: #000;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    font-family: var(--accountant-signature-font, inherit);
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-product-vendor {
+      font-size: 28px;
+    }
+  }
+
+  .eye-scrum-pairs-well-product-title {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 26px;
+    color: #000;
+  }
+
+  .eye-scrum-pairs-well-product-title a {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .eye-scrum-pairs-well-product-description {
+    font-size: 14px;
+    color: #626161;
+    line-height: 20px;
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+
+  .eye-scrum-pairs-well-price-size-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .eye-scrum-pairs-well-product-price {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-product-price {
+      font-size: 20px;
+    }
+    .eye-scrum-pairs-well-section {
+      padding-bottom: 32px;
+    }
+
+  }
+
+  .eye-scrum-pairs-well-product-sizes {
+    font-size: 14px;
+    color: #000;
+    font-weight: 400;
+  }
+
+  .eye-scrum-pairs-well-size-option {
+    display: inline-block;
+  }
+
+  .eye-scrum-pairs-well-reviews-questions-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 20px;
+    gap: 5px;
+  }
+
+  .eye-scrum-pairs-well-reviews-section {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .eye-scrum-pairs-well-rating-stars {
+    display: flex;
+  }
+
+  .eye-scrum-pairs-well-star-icon {
+    width: 16px;
+    height: 16px;
+    color: #000;
+  }
+
+  .eye-scrum-pairs-well-reviews-count {
+    font-size: 13px;
+    font-weight: 400;
+    color: #000;
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-reviews-count {
+      font-size: 14px;
+      color: #626262;
+    }
+  }
+
+  .eye-scrum-pairs-well-divider {
+    margin: 0 3px;
+    color: #626262;
+  }
+
+  .eye-scrum-pairs-well-questions-section {
+    font-size: 13px;
+    line-height: 21px;
+    color: #000;
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-questions-section {
+      font-size: 14px;
+      color: #626262;
+    }
+  }
+
+  .eye-scrum-pairs-well-view-product-btn {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    background: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-view-product-btn {
+      font-weight: 400;
+      padding: 12px 0;
+    }
+  }
+
+  /* Swiper Navigation Styles */
+  .eye-scrum-pairs-well-next-btn,
+  .eye-scrum-pairs-well-prev-btn {
+    color: #000 !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+  }
+  .eye-scrum-pairs-well-next-btn:after,
+  .eye-scrum-pairs-well-prev-btn:after {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    display:none !important;
+  }
+
+  .eye-scrum-pairs-well-next-btn {
+    right: 10px !important;
+    display:none !important;
+  }
+
+  .eye-scrum-pairs-well-prev-btn {
+    left: 10px !important;
+    display:none !important;
+  }
+
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-next-btn,
+    .eye-scrum-pairs-well-prev-btn {
+      width: 36px !important;
+      height: 36px !important;
+      display: none !important;
+    }
+  }
+
+  .eye-scrum-pairs-well-pagination {
+    bottom: 0 !important;
+  }
+
+  .eye-scrum-pairs-well-pagination .swiper-pagination-bullet {
+    background: #ccc !important;
+    opacity: 1 !important;
+    width: 8px !important;
+    height: 8px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .eye-scrum-pairs-well-pagination .swiper-pagination-bullet-active {
+    background: #000 !important;
+    width: 24px !important;
+    border-radius: 4px !important;
+  }
+
+  /* Responsive Columns */
+  @media (max-width: 767px) {
+    .eye-scrum-pairs-well-swiper {
+      {% comment %} padding-bottom: 40px; {% endcomment %}
+    }
+
+    .eye-scrum-pairs-well-slide {
+      width: calc((100% - 16px * ({{ section.settings.mobile_columns }} - 1)) / {{ section.settings.mobile_columns }}) !important;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .eye-scrum-pairs-well-slide {
+      width: calc((100% - 20px * ({{ section.settings.tablet_columns }} - 1)) / {{ section.settings.tablet_columns }}) !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .eye-scrum-pairs-well-slide {
+      width: calc((100% - 24px * ({{ section.settings.desktop_columns }} - 1)) / {{ section.settings.desktop_columns }}) !important;
+    }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const sectionId = '{{ section.id }}';
+      const swiperElement = document.querySelector('#eye-scrum-pairs-well-' + sectionId + ' .eye-scrum-pairs-well-swiper');
+
+      if (!swiperElement) return;
+
+      // Calculate initial slides per view based on screen width
+      function calculateSlidesPerView() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth < 768) {
+          return {{ section.settings.mobile_columns }};
+        } else if (screenWidth < 1024) {
+          return {{ section.settings.tablet_columns }};
+        } else {
+          return {{ section.settings.desktop_columns }};
+        }
+      }
+
+      const swiperInstance = new Swiper(swiperElement, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        loop: false,
+        grabCursor: true,
+        watchOverflow: true,
+
+        navigation: {
+          nextEl: swiperElement.querySelector('.eye-scrum-pairs-well-next-btn'),
+          prevEl: swiperElement.querySelector('.eye-scrum-pairs-well-prev-btn'),
+        },
+
+        pagination: {
+          el: swiperElement.querySelector('.eye-scrum-pairs-well-pagination'),
+          clickable: true,
+        },
+
+        breakpoints: {
+          320: {
+            spaceBetween: 16,
+            slidesPerView: 'auto'
+          },
+          768: {
+            spaceBetween: 20,
+            slidesPerView: 'auto'
+          },
+          1024: {
+            spaceBetween: 24,
+            slidesPerView: 'auto'
+          }
+        }
+      });
+
+      // Update swiper on window resize
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          swiperInstance.update();
+        }, 250);
+      });
+    });
+  })();
+</script>

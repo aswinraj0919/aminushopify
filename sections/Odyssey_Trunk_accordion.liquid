@@ -1,0 +1,1757 @@
+{% schema %}
+{
+  "name": "Information Accordion",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Why You Need This Section Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "application_video_poster_image",
+      "label": "Video Poster Image",
+      "info": "Recommended size: 350x350px"
+    },
+    {
+      "type": "text",
+      "id": "application_video_url",
+      "label": "Video URL",
+      "info": "Add direct MP4 video URL"
+    },
+    {
+      "type": "textarea",
+      "id": "why_you_need_video_des",
+      "label": "Video Description",
+      "default": "Watch how this product transforms your routine."
+    },
+    {
+      "type": "header",
+      "content": "How to Use Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "carousel_title",
+      "label": "Default Carousel Title",
+      "default": "How to Use Our Product"
+    },
+    {
+      "type": "richtext",
+      "id": "carousel_description",
+      "label": "Default Carousel Description",
+      "default": "<p>Follow these <strong>simple steps</strong> to get the best results.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_details",
+      "name": "Product Detail Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Detail Title",
+          "default": "Product Specification"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Detail Description",
+          "default": "Detailed information about this product feature."
+        }
+      ]
+    },
+    {
+      "type": "why_you_need_this",
+      "name": "Why You Need This Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Title",
+          "default": "Key Benefit"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Benefit Description",
+          "default": "Explain why this benefit matters to the customer."
+        }
+      ]
+    },
+    {
+      "type": "how_to_use",
+      "name": "How to Use Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step Image",
+          "info": "Recommended size: 300x300px for desktop, 240x280px for mobile"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Step Title",
+          "default": "<p>Step 1</p>"
+        },
+
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Step Description",
+          "default": "<p>Follow these <strong>simple steps</strong> to get the best results.</p>"
+        }
+      ]
+    },
+    {
+      "type": "pro_tips",
+      "name": "Pro Tip",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pro_tips_image",
+          "label": "Tip Icon/Image",
+          "info": "Recommended size: 60x60px"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Tip Description",
+          "default": "Share a professional tip or trick for better results."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Information Accordion",
+      "blocks": [
+        {
+          "type": "product_details",
+          "settings": {
+            "title": "Material & Quality",
+            "description": "Made from premium materials that ensure durability and comfort."
+          }
+        },
+        {
+          "type": "product_details",
+          "settings": {
+            "title": "Care Instructions",
+            "description": "Easy to clean and maintain. Follow simple care instructions for long-lasting use."
+          }
+        },
+        {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Saves Time & Effort",
+            "description": "Our product streamlines your daily routine, saving you valuable time and effort."
+          }
+        },
+        {
+          "type": "why_you_need_this",
+          "settings": {
+            "title": "Enhances Results",
+            "description": "Experience significantly better outcomes compared to traditional methods."
+          }
+        },
+       
+        {
+          "type": "pro_tips",
+          "settings": {
+            "description": "For best results, use the product consistently as part of your daily routine."
+          }
+        },
+        {
+          "type": "pro_tips",
+          "settings": {
+            "description": "Store in a cool, dry place away from direct sunlight to maintain product quality."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Desktop Version -->
+<section class="product-accordion-desktop">
+  <div class="product-accordion-desktop__container">
+    <div class="product-accordion-desktop__grid">
+      <!-- Left column for accordion titles -->
+      <div class="product-accordion-desktop__nav">
+        <button
+          class="product-accordion-desktop__nav-button product-accordion-desktop__nav-button--active"
+          onclick="showContent(0)"
+        >
+          <span class="product-accordion-desktop__nav-icon">-</span>
+          <div class="product-accordion-desktop__nav-text">Product Details</div>
+        </button>
+        <button class="product-accordion-desktop__nav-button" onclick="showContent(1)">
+          <span class="product-accordion-desktop__nav-icon">+</span>
+          <span class="product-accordion-desktop__nav-text">Why you need this</span>
+        </button>
+        <button class="product-accordion-desktop__nav-button" onclick="showContent(2)">
+          <span class="product-accordion-desktop__nav-icon">+</span>
+          <span class="product-accordion-desktop__nav-text">How to Use</span>
+        </button>
+        <button class="product-accordion-desktop__nav-button" onclick="showContent(3)">
+          <span class="product-accordion-desktop__nav-icon">+</span>
+          <span class="product-accordion-desktop__nav-text">Pro tips</span>
+        </button>
+      </div>
+
+      <!-- Right column for content display -->
+      <div class="product-accordion-desktop__content">
+        <!-- Product Details Content -->
+        <div id="content-0" class="product-accordion-desktop__content-pane">
+          {% for block in section.blocks %}
+            {% if block.type == 'product_details' %}
+              <button class="product-accordion-desktop__sub-accordion">{{ block.settings.title }}</button>
+              <div class="product-accordion-desktop__sub-panel">
+                <p>{{ block.settings.description }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Why You Need This Content -->
+        <div
+          id="content-1"
+          class="product-accordion-desktop__content-pane product-accordion-desktop__content-pane--hidden"
+        >
+          <div class="product-accordion-desktop__video-section">
+            <div id="video-section-1" class="product-accordion-desktop__video-container">
+              <div id="video-content-1" class="product-accordion-desktop__video-content">
+                {% if section.settings.application_video_poster_image %}
+                  <img
+                    alt="Video Poster"
+                    class="product-accordion-desktop__video-poster"
+                    loading="lazy"
+                    src="{{ section.settings.application_video_poster_image | img_url: 'master' }}"
+                  >
+                {% else %}
+                  <div class="product-accordion-desktop__video-placeholder">
+                    <span>Video Thumbnail</span>
+                  </div>
+                {% endif %}
+                <div id="video-control-1" class="product-accordion-desktop__video-control" onclick="showDesktopVideo()">
+                  <a class="product-accordion-desktop__video-play" aria-label="Play video">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div id="video-wrapper-1" class="product-accordion-desktop__video-wrapper">
+                {% if section.settings.application_video_url %}
+                  <video id="video-iframe-1" class="product-accordion-desktop__video-element" controls>
+                    <source src="{{ section.settings.application_video_url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="product-accordion-desktop__text-content">
+            {% if section.settings.why_you_need_video_des %}
+              <p class="product-accordion-desktop__video-description">
+                {{ section.settings.why_you_need_video_des }}
+              </p>
+            {% endif %}
+            {% for block in section.blocks %}
+              {% if block.type == 'why_you_need_this' %}
+                <div class="product-accordion-desktop__text-block">
+                  {% if block.settings.title %}
+                    <p class="product-accordion-desktop__text-title">{{ block.settings.title }}</p>
+                  {% endif %}
+                  {% if block.settings.description %}
+                    <p class="product-accordion-desktop__text-description">{{ block.settings.description }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- How to Use Content -->
+        <div
+          id="content-2"
+          class="product-accordion-desktop__content-pane product-accordion-desktop__content-pane--hidden"
+        >
+          <div class="product-accordion-desktop__carousel-section">
+            <div class="product-accordion-desktop__carousel-container">
+              {% assign how_to_use_blocks = section.blocks | where: 'type', 'how_to_use' %}
+              {% if how_to_use_blocks.size > 0 %}
+                <div class="product-accordion-desktop__carousel">
+                  {% for block in how_to_use_blocks %}
+                    <div class="product-accordion-desktop__carousel-slide">
+                      <div
+                        class="product-accordion-desktop__carousel-item"
+                        data-title="{{ block.settings.title | escape }}"
+                        data-description="{{ block.settings.description }}"
+                      >
+                        {% if block.settings.image %}
+                          <img
+                            src="{{ block.settings.image | image_url: width: 300, height: 300, crop: 'center' }}"
+                            alt="{{ block.settings.title | strip_html | escape }}"
+                            class="product-accordion-desktop__carousel-image"
+                            loading="lazy"
+                          >
+                        {% else %}
+                          <div class="product-accordion-desktop__carousel-placeholder">
+                            <span>Image {{ forloop.index }}</span>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+
+                {% if how_to_use_blocks.size > 1 %}
+                  <button
+                    id="carousel-prev-accor"
+                    class="product-accordion-desktop__carousel-button product-accordion-desktop__carousel-button--prev"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2.5"
+                      stroke="currentColor"
+                    >
+                      <path d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                    </svg>
+                  </button>
+
+                  <button
+                    id="carousel-next-accor"
+                    class="product-accordion-desktop__carousel-button product-accordion-desktop__carousel-button--next"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2.5"
+                      stroke="currentColor"
+                    >
+                      <path d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                    </svg>
+                  </button>
+                {% endif %}
+              {% else %}
+                <div class="product-accordion-desktop__carousel-empty">
+                  <p>No images added for How to Use section</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="product-accordion-desktop__carousel-text">
+            <div id="defaultText">
+              {% if section.settings.carousel_title %}
+                <div class="product-accordion-desktop__carousel-main-title">{{ section.settings.carousel_title }}</div>
+              {% endif %}
+              {% if section.settings.carousel_description %}
+                <div class="product-accordion-desktop__carousel-main-description">
+                  {{ section.settings.carousel_description }}
+                </div>
+              {% endif %}
+            </div>
+            <div id="carousel-title" class="product-accordion-desktop__dynamic-content"></div>
+          </div>
+        </div>
+
+        <!-- Pro Tips Content -->
+        <div
+          id="content-3"
+          class="product-accordion-desktop__content-pane product-accordion-desktop__content-pane--hidden"
+        >
+          <div class="product-accordion-desktop__tips-section">
+            <div class="product-accordion-desktop__tips-container">
+              {% for block in section.blocks %}
+                {% if block.type == 'pro_tips' %}
+                  <div class="product-accordion-desktop__tip-item">
+                    {% if block.settings.pro_tips_image %}
+                      <div class="product-accordion-desktop__tip-icon">
+                        <img
+                          alt="Icon"
+                          class="product-accordion-desktop__tip-image"
+                          loading="lazy"
+                          src="{{ block.settings.pro_tips_image | img_url: 'master' }}"
+                        >
+                      </div>
+                    {% endif %}
+                    {% if block.settings.description %}
+                      <p class="product-accordion-desktop__tip-text">{{ block.settings.description }}</p>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile Version -->
+<section class="product-accordion-mobile">
+  <div class="product-accordion-mobile__container">
+    <!-- Product Details Mobile -->
+    <button
+      class="product-accordion-mobile__header product-accordion-mobile__header--active"
+      onclick="showContentMobile(0)"
+    >
+      <span class="product-accordion-mobile__header-icon">-</span>
+      <div class="product-accordion-mobile__header-text">Product Details</div>
+    </button>
+    <div id="mobile-content-0" class="product-accordion-mobile__content">
+      <div class="product-accordion-mobile__inner-content">
+        {% for block in section.blocks %}
+          {% if block.type == 'product_details' %}
+            <button class="product-accordion-mobile__sub-accordion">{{ block.settings.title }}</button>
+            <div class="product-accordion-mobile__sub-panel">
+              <p>{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Why You Need This Mobile -->
+    <button class="product-accordion-mobile__header" onclick="showContentMobile(1)">
+      <span class="product-accordion-mobile__header-icon">+</span>
+      <span class="product-accordion-mobile__header-text">Why you need this</span>
+    </button>
+    <div id="mobile-content-1" class="product-accordion-mobile__content product-accordion-mobile__content--hidden">
+      <div class="product-accordion-mobile__video-section">
+        <div id="unique-video-section-1" class="product-accordion-mobile__video-container">
+          <div id="unique-video-content-1" class="product-accordion-mobile__video-content">
+            {% if section.settings.application_video_poster_image %}
+              <img
+                alt="Video Poster"
+                class="product-accordion-mobile__video-poster"
+                loading="lazy"
+                src="{{ section.settings.application_video_poster_image | img_url: 'master' }}"
+              >
+            {% else %}
+              <div class="product-accordion-mobile__video-placeholder">
+                <span>Video Thumbnail</span>
+              </div>
+            {% endif %}
+            <div
+              id="unique-video-control-1"
+              class="product-accordion-mobile__video-control"
+              onclick="showUniqueVideo()"
+            >
+              <a class="product-accordion-mobile__video-play" aria-label="Play video">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div id="unique-video-wrapper-1" class="product-accordion-mobile__video-wrapper">
+            {% if section.settings.application_video_url %}
+              <video id="unique-video-iframe-1" class="product-accordion-mobile__video-element" controls>
+                <source src="{{ section.settings.application_video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="product-accordion-mobile__text-content">
+        {% if section.settings.why_you_need_video_des %}
+          <p class="product-accordion-mobile__video-description">{{ section.settings.why_you_need_video_des }}</p>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'why_you_need_this' %}
+            <div class="product-accordion-mobile__text-block">
+              {% if block.settings.title %}
+                <p class="product-accordion-mobile__text-title">{{ block.settings.title }}</p>
+              {% endif %}
+              {% if block.settings.description %}
+                <p class="product-accordion-mobile__text-description">{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- How to Use Mobile -->
+    <button class="product-accordion-mobile__header" onclick="showContentMobile(2)">
+      <span class="product-accordion-mobile__header-icon">+</span>
+      <span class="product-accordion-mobile__header-text">How to Use</span>
+    </button>
+    <div id="mobile-content-2" class="product-accordion-mobile__content product-accordion-mobile__content--hidden">
+      <div class="product-accordion-mobile__carousel-section">
+        <div class="product-accordion-mobile__carousel-container">
+          {% assign how_to_use_blocks = section.blocks | where: 'type', 'how_to_use' %}
+          {% if how_to_use_blocks.size > 0 %}
+            <div class="product-accordion-mobile__carousel">
+              {% for block in how_to_use_blocks %}
+                <div class="product-accordion-mobile__carousel-slide">
+                  <div
+                    class="product-accordion-mobile__carousel-item"
+                    data-title="{{ block.settings.title | escape }}"
+                    data-description="{{ block.settings.description }}"
+                  >
+                    {% if block.settings.image %}
+                      <img
+                        src="{{ block.settings.image | image_url: width: 240, height: 280, crop: 'center' }}"
+                        alt="{{ block.settings.title | strip_html | escape }}"
+                        class="product-accordion-mobile__carousel-image"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      <div class="product-accordion-mobile__carousel-placeholder">
+                        <span>Image {{ forloop.index }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if how_to_use_blocks.size > 1 %}
+              <button
+                id="carousel-prev-accor-2"
+                class="product-accordion-mobile__carousel-button product-accordion-mobile__carousel-button--prev"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                >
+                  <path d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                </svg>
+              </button>
+
+              <button
+                id="carousel-next-accor-2"
+                class="product-accordion-mobile__carousel-button product-accordion-mobile__carousel-button--next"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                >
+                  <path d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                </svg>
+              </button>
+            {% endif %}
+          {% else %}
+            <div class="product-accordion-mobile__carousel-empty">
+              <p>No images added for How to Use section</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="product-accordion-mobile__carousel-text">
+        <div id="defaultText-1">
+          {% if section.settings.carousel_title %}
+            <p class="product-accordion-mobile__carousel-main-title">{{ section.settings.carousel_title }}</p>
+          {% endif %}
+          {% if section.settings.carousel_description %}
+            <p class="product-accordion-mobile__carousel-main-description">
+              {{ section.settings.carousel_description }}
+            </p>
+          {% endif %}
+        </div>
+        <div id="carousel-title-1" class="product-accordion-mobile__dynamic-content"></div>
+      </div>
+    </div>
+
+    <!-- Pro Tips Mobile -->
+    <button class="product-accordion-mobile__header" onclick="showContentMobile(3)">
+      <span class="product-accordion-mobile__header-icon">+</span>
+      <span class="product-accordion-mobile__header-text">Pro tips</span>
+    </button>
+    <div id="mobile-content-3" class="product-accordion-mobile__content product-accordion-mobile__content--hidden">
+      <div class="product-accordion-mobile__tips-section">
+        <div class="product-accordion-mobile__tips-container">
+          {% for block in section.blocks %}
+            {% if block.type == 'pro_tips' %}
+              <div class="product-accordion-mobile__tip-item">
+                {% if block.settings.pro_tips_image %}
+                  <div class="product-accordion-mobile__tip-icon">
+                    <img
+                      alt="Icon"
+                      class="product-accordion-mobile__tip-image"
+                      loading="lazy"
+                      src="{{ block.settings.pro_tips_image | img_url: 'master' }}"
+                    >
+                  </div>
+                {% endif %}
+                {% if block.settings.description %}
+                  <p class="product-accordion-mobile__tip-text">{{ block.settings.description }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Reset and Base Styles */
+  .product-accordion-desktop,
+  .product-accordion-mobile {
+    box-sizing: border-box;
+  }
+
+  .product-accordion-desktop *,
+  .product-accordion-mobile * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hide mobile on desktop and desktop on mobile */
+  @media (min-width: 769px) {
+    .product-accordion-mobile {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .product-accordion-desktop {
+      display: none !important;
+    }
+  }
+
+  /* Desktop Version Styles */
+  .product-accordion-desktop {
+    border-top: 0.5px solid #000000;
+    background-color: white;
+  }
+
+  .product-accordion-desktop__container {
+    max-width: 1350px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 48px 0;
+  }
+
+  .product-accordion-desktop__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 96px;
+    align-items: start;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  /* Desktop Navigation */
+  .product-accordion-desktop__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-accordion-desktop__nav-button {
+    padding: 8px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: #F9EBDA;
+    transition: all 0.3s ease;
+  }
+
+  .product-accordion-desktop__nav-button:hover {
+    background-color: #FFFFFF;
+  }
+
+  .product-accordion-desktop__nav-button--active {
+    background-color: #FFFFFF;
+  }
+
+  .product-accordion-desktop__nav-button--active .product-accordion-desktop__nav-icon {
+    color: #000;
+  }
+
+  .product-accordion-desktop__nav-icon {
+    margin-right: 16px;
+    font-size: 40px;
+    font-weight: 100;
+    color: #000;
+  }
+
+  .product-accordion-desktop__nav-text {
+    font-size: 40px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  /* Desktop Content */
+  .product-accordion-desktop__content {
+    width: 100%;
+  }
+
+  .product-accordion-desktop__content-pane {
+    display: block;
+  }
+
+  .product-accordion-desktop__content-pane--hidden {
+    display: none;
+  }
+
+  /* Desktop Sub Accordion */
+  .product-accordion-desktop__sub-accordion {
+    background-color: #fff;
+    color: #000000;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    padding: 16px 0;
+    font-size: 24px;
+    font-weight: 500;
+    transition: 0.4s;
+  }
+
+  .product-accordion-desktop__sub-accordion:hover {
+    background-color: #f9f9f9;
+  }
+
+  .product-accordion-desktop__sub-panel {
+    display: none;
+    padding-bottom: 20px;
+    border-bottom: 0.5px solid #000000;
+  }
+
+  .product-accordion-desktop__sub-panel.show {
+    display: block;
+  }
+
+  .product-accordion-desktop__sub-panel p {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  /* Desktop Video Styles */
+  .product-accordion-desktop__video-section {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+
+  .product-accordion-desktop__video-container {
+    position: relative;
+    max-width: 350px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .product-accordion-desktop__video-content {
+    position: relative;
+  }
+
+  .product-accordion-desktop__video-poster {
+    cursor: pointer;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid black;
+  }
+
+  .product-accordion-desktop__video-placeholder {
+    width: 100%;
+    height: 350px;
+    background-color: #e5e7eb;
+    border-radius: 14px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-accordion-desktop__video-placeholder span {
+    color: #6b7280;
+  }
+
+  .product-accordion-desktop__video-control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 66px;
+    height: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-accordion-desktop__video-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .product-accordion-desktop__video-wrapper {
+    display: none;
+  }
+
+  .product-accordion-desktop__video-element {
+    width: 100%;
+    height: 350px;
+    border-radius: 14px;
+    border: 1px solid black;
+  }
+
+  /* Desktop Text Content */
+  .product-accordion-desktop__text-content {
+    color: #1f2937;
+  }
+
+  .product-accordion-desktop__video-description {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .product-accordion-desktop__text-block {
+    margin: 32px 0;
+  }
+
+  .product-accordion-desktop__text-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .product-accordion-desktop__text-description {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  /* Desktop Carousel */
+  .product-accordion-desktop__carousel-section {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+
+  .product-accordion-desktop__carousel-container {
+    position: relative;
+    max-width: 330px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .product-accordion-desktop__carousel {
+    position: relative;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .product-accordion-desktop__carousel-slide {
+    flex: 0 0 100%;
+    outline: none;
+  }
+
+  .product-accordion-desktop__carousel-item {
+    width: 100%;
+  }
+
+  .product-accordion-desktop__carousel-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 0.4px solid black;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-desktop__carousel-placeholder {
+    width: 100%;
+    height: 300px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    border: 0.4px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-desktop__carousel-button {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .product-accordion-desktop__carousel-button:hover {
+    background: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .product-accordion-desktop__carousel-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .product-accordion-desktop__carousel-button--prev {
+    left: -50px;
+  }
+
+  .product-accordion-desktop__carousel-button--next {
+    right: -50px;
+  }
+
+  .product-accordion-desktop__carousel-empty {
+    text-align: center;
+    padding: 32px 0;
+  }
+
+  .product-accordion-desktop__carousel-empty p {
+    color: #6b7280;
+  }
+
+  /* Desktop Carousel Text */
+  .product-accordion-desktop__carousel-text {
+    color: #1f2937;
+    font-size:20px;
+  }
+
+  .product-accordion-desktop__dynamic-content {
+    display: none;
+  }
+
+  .product-accordion-desktop__carousel-main-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-desktop__carousel-main-description {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  /* Desktop Tips */
+  .product-accordion-desktop__tips-section {
+    background-color: white;
+  }
+
+  .product-accordion-desktop__tips-container {
+    margin-bottom: 24px;
+  }
+
+  .product-accordion-desktop__tip-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .product-accordion-desktop__tip-icon {
+    height: 60px;
+    width: 60px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .product-accordion-desktop__tip-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-accordion-desktop__tip-text {
+    font-size: 20px;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  /* Mobile Version Styles */
+  .product-accordion-mobile {
+    border-top: 0.2px solid #000000;
+    background-color: white;
+  }
+
+  .product-accordion-mobile__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  /* Mobile Header */
+  .product-accordion-mobile__header {
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: #F9EBDA;
+    transition: all 0.3s ease;
+  }
+
+  .product-accordion-mobile__header:hover {
+    background-color: #ffffff;
+  }
+
+  .product-accordion-mobile__header--active {
+    background-color: #FFFFFF;
+  }
+
+  .product-accordion-mobile__header-icon {
+    margin-right: 16px;
+    font-size: 28px;
+    font-weight: 100;
+    color: #000;
+  }
+
+  .product-accordion-mobile__header-text {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  /* Mobile Content */
+  .product-accordion-mobile__content {
+    display: block;
+    padding: 0 20px;
+    margin-bottom: 24px;
+    margin-top: 20px;
+  }
+
+  .product-accordion-mobile__content--hidden {
+    display: none;
+  }
+
+  .product-accordion-mobile__inner-content {
+    background-color: white;
+  }
+
+  /* Mobile Sub Accordion */
+  .product-accordion-mobile__sub-accordion {
+    background-color: #fff;
+    color: #000000;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.4s;
+  }
+
+  .product-accordion-mobile__sub-accordion:hover {
+    background-color: #f9f9f9;
+  }
+
+  .product-accordion-mobile__sub-panel {
+    display: none;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid #000000;
+  }
+
+  .product-accordion-mobile__sub-panel.show {
+    display: block;
+  }
+
+  .product-accordion-mobile__sub-panel p {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  /* Mobile Video Styles */
+  .product-accordion-mobile__video-section {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+
+  .product-accordion-mobile__video-container {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .product-accordion-mobile__video-content {
+    position: relative;
+  }
+
+  .product-accordion-mobile__video-poster {
+    cursor: pointer;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid black;
+  }
+
+  .product-accordion-mobile__video-placeholder {
+    width: 100%;
+    height: 350px;
+    background-color: #e5e7eb;
+    border-radius: 14px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-accordion-mobile__video-placeholder span {
+    color: #6b7280;
+  }
+
+  .product-accordion-mobile__video-control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-accordion-mobile__video-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .product-accordion-mobile__video-wrapper {
+    display: none;
+  }
+
+  .product-accordion-mobile__video-element {
+    width: 100%;
+    height: 350px;
+    border-radius: 14px;
+    border: 1px solid black;
+    object-fit: cover;
+  }
+
+  /* Mobile Text Content */
+  .product-accordion-mobile__text-content {
+    color: #1f2937;
+  }
+
+  .product-accordion-mobile__video-description {
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-mobile__text-block {
+    margin: 20px 0;
+  }
+
+  .product-accordion-mobile__text-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .product-accordion-mobile__text-description {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* Mobile Carousel */
+  .product-accordion-mobile__carousel-section {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+
+  .product-accordion-mobile__carousel-container {
+    position: relative;
+    max-width: 270px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .product-accordion-mobile__carousel {
+    position: relative;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .product-accordion-mobile__carousel-slide {
+    flex: 0 0 100%;
+    outline: none;
+  }
+
+  .product-accordion-mobile__carousel-item {
+    width: 100%;
+  }
+
+  .product-accordion-mobile__carousel-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 0.4px solid black;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-mobile__carousel-placeholder {
+    width: 100%;
+    height: 280px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    border: 0.4px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .product-accordion-mobile__carousel-button {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .product-accordion-mobile__carousel-button:hover {
+    background: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .product-accordion-mobile__carousel-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .product-accordion-mobile__carousel-button--prev {
+    left: -15px;
+  }
+
+  .product-accordion-mobile__carousel-button--next {
+    right: -15px;
+  }
+
+  .product-accordion-mobile__carousel-empty {
+    text-align: center;
+    padding: 32px 0;
+  }
+
+  .product-accordion-mobile__carousel-empty p {
+    color: #6b7280;
+  }
+
+  /* Mobile Carousel Text */
+  .product-accordion-mobile__carousel-text {
+    color: #1f2937;
+  }
+
+  .product-accordion-mobile__dynamic-content {
+    display: none;
+  }
+
+  .product-accordion-mobile__carousel-main-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .product-accordion-mobile__carousel-main-description {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* Mobile Tips */
+  .product-accordion-mobile__tips-section {
+    background-color: white;
+  }
+
+  .product-accordion-mobile__tips-container {
+    margin-bottom: 24px;
+  }
+
+  .product-accordion-mobile__tip-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .product-accordion-mobile__tip-icon {
+    height: 45px;
+    width: 60px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .product-accordion-mobile__tip-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-accordion-mobile__tip-text {
+    font-size: 14px;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  /* Responsive adjustments for mobile */
+  @media (max-width: 768px) {
+    .product-accordion-desktop__carousel-button--prev,
+    .product-accordion-desktop__carousel-button--next {
+      display: none !important;
+    }
+  }
+</style>
+
+<!-- Add jQuery and Slick JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM Loaded - Initializing accordion and carousels');
+  
+  // Initialize accordions
+  initAccordion();
+  initMobileAccordion();
+  
+  // Initialize carousels
+  initCarousels();
+  
+  // Show first content on desktop
+  showContent(0);
+  
+  // Show first content on mobile
+  showContentMobile(0);
+});
+
+// Desktop Accordion Functions
+function showContent(index) {
+  console.log('Showing content for index:', index);
+  
+  // Hide all content panes
+  document.querySelectorAll('.product-accordion-desktop__content-pane').forEach(content => {
+    content.classList.add('product-accordion-desktop__content-pane--hidden');
+  });
+  
+  // Reset all navigation buttons
+  document.querySelectorAll('.product-accordion-desktop__nav-button').forEach((button, idx) => {
+    const icon = button.querySelector('.product-accordion-desktop__nav-icon');
+    if (idx === index) {
+      button.classList.remove('product-accordion-desktop__nav-button--inactive');
+      button.classList.add('product-accordion-desktop__nav-button--active');
+      icon.textContent = '-';
+    } else {
+      button.classList.remove('product-accordion-desktop__nav-button--active');
+      button.classList.add('product-accordion-desktop__nav-button--inactive');
+      icon.textContent = '+';
+    }
+  });
+  
+  // Show selected content
+  const content = document.getElementById(`content-${index}`);
+  if (content) {
+    content.classList.remove('product-accordion-desktop__content-pane--hidden');
+    
+    // If showing carousel content, refresh slick
+    if (index === 2) {
+      setTimeout(() => {
+        if ($('.product-accordion-desktop__carousel').hasClass('slick-initialized')) {
+          $('.product-accordion-desktop__carousel').slick('refresh');
+        }
+      }, 100);
+    }
+  }
+}
+
+// Mobile Accordion Functions
+function showContentMobile(index) {
+  const content = document.getElementById(`mobile-content-${index}`);
+  const header = document.querySelectorAll('.product-accordion-mobile__header')[index];
+  const icon = header.querySelector('.product-accordion-mobile__header-icon');
+  
+  if (content.classList.contains('product-accordion-mobile__content--hidden')) {
+    // Hide all other contents
+    document.querySelectorAll('.product-accordion-mobile__content').forEach(content => {
+      content.classList.add('product-accordion-mobile__content--hidden');
+    });
+    
+    // Reset all other headers
+    document.querySelectorAll('.product-accordion-mobile__header').forEach((h, idx) => {
+      const ic = h.querySelector('.product-accordion-mobile__header-icon');
+      if (idx !== index) {
+        h.classList.remove('product-accordion-mobile__header--active');
+        h.classList.add('product-accordion-mobile__header--inactive');
+        ic.textContent = '+';
+      }
+    });
+    
+    // Show current content
+    content.classList.remove('product-accordion-mobile__content--hidden');
+    header.classList.remove('product-accordion-mobile__header--inactive');
+    header.classList.add('product-accordion-mobile__header--active');
+    icon.textContent = '-';
+    
+    // If showing carousel content, refresh slick
+    if (index === 2) {
+      setTimeout(() => {
+        if ($('.product-accordion-mobile__carousel').hasClass('slick-initialized')) {
+          $('.product-accordion-mobile__carousel').slick('refresh');
+        }
+      }, 100);
+    }
+    
+    // Scroll to header
+    setTimeout(() => {
+      header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  } else {
+    content.classList.add('product-accordion-mobile__content--hidden');
+    header.classList.remove('product-accordion-mobile__header--active');
+    header.classList.add('product-accordion-mobile__header--inactive');
+    icon.textContent = '+';
+  }
+}
+
+// Video Functions
+function showDesktopVideo() {
+  const videoWrapper = document.getElementById('video-wrapper-1');
+  const videoContent = document.getElementById('video-content-1');
+  const videoIframe = document.getElementById('video-iframe-1');
+  
+  if (videoWrapper && videoIframe) {
+    videoWrapper.style.display = 'block';
+    videoContent.style.display = 'none';
+    videoIframe.play().catch(e => console.log('Video play failed:', e));
+  }
+}
+
+function showUniqueVideo() {
+  const videoWrapper = document.getElementById('unique-video-wrapper-1');
+  const videoContent = document.getElementById('unique-video-content-1');
+  const videoIframe = document.getElementById('unique-video-iframe-1');
+  
+  if (videoWrapper && videoIframe) {
+    videoWrapper.style.display = 'block';
+    videoContent.style.display = 'none';
+    videoIframe.play().catch(e => console.log('Video play failed:', e));
+  }
+}
+
+// Carousel Functions
+function initCarousels() {
+  console.log('Initializing carousels...');
+  
+  // Desktop Carousel
+  if ($('.product-accordion-desktop__carousel').length && $('.product-accordion-desktop__carousel').children().length > 0) {
+    console.log('Initializing desktop carousel');
+    
+    $('.product-accordion-desktop__carousel').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: false,
+      infinite: false,
+      speed: 300,
+      adaptiveHeight: true,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false
+          }
+        }
+      ]
+    });
+    
+    // Arrow event handlers
+    $('#carousel-prev-accor').off('click').on('click', function() {
+      console.log('Desktop prev clicked');
+      $('.product-accordion-desktop__carousel').slick('slickPrev');
+      updateCarouselContent('desktop');
+    });
+    
+    $('#carousel-next-accor').off('click').on('click', function() {
+      console.log('Desktop next clicked');
+      $('.product-accordion-desktop__carousel').slick('slickNext');
+      updateCarouselContent('desktop');
+    });
+    
+    // Slide change event
+    $('.product-accordion-desktop__carousel').on('afterChange', function(event, slick, currentSlide) {
+      console.log('Desktop slide changed to:', currentSlide);
+      updateCarouselContent('desktop');
+    });
+  }
+  
+  // Mobile Carousel
+  if ($('.product-accordion-mobile__carousel').length && $('.product-accordion-mobile__carousel').children().length > 0) {
+    console.log('Initializing mobile carousel');
+    
+    $('.product-accordion-mobile__carousel').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: false,
+      infinite: false,
+      speed: 300,
+      adaptiveHeight: true
+    });
+    
+    // Arrow event handlers
+    $('#carousel-prev-accor-2').off('click').on('click', function() {
+      console.log('Mobile prev clicked');
+      $('.product-accordion-mobile__carousel').slick('slickPrev');
+      updateCarouselContent('mobile');
+    });
+    
+    $('#carousel-next-accor-2').off('click').on('click', function() {
+      console.log('Mobile next clicked');
+      $('.product-accordion-mobile__carousel').slick('slickNext');
+      updateCarouselContent('mobile');
+    });
+    
+    // Slide change event
+    $('.product-accordion-mobile__carousel').on('afterChange', function(event, slick, currentSlide) {
+      console.log('Mobile slide changed to:', currentSlide);
+      updateCarouselContent('mobile');
+    });
+  }
+}
+
+function updateCarouselContent(type) {
+  const isMobile = type === 'mobile';
+
+  {% comment %} console.log("lakjskldjkc ===>>", type); {% endcomment %}
+
+  const carousel = isMobile ? $('.product-accordion-mobile__carousel') : $('.product-accordion-desktop__carousel');
+  const currentSlide = carousel.slick('slickCurrentSlide');
+  const slideElement = carousel.find('.slick-slide').eq(currentSlide);
+  {% comment %} const carouselItem = slideElement.find('.product-accordion-desktop__carousel-item') || 
+                      slideElement.find('.product-accordion-mobile__carousel-item'); {% endcomment %}
+
+  const carouselItem = slideElement.find(
+    isMobile
+      ? '.product-accordion-mobile__carousel-item'
+      : '.product-accordion-desktop__carousel-item'
+  );
+  
+  {% comment %} console.log('Updating carousel content for', type, 'slide:', currentSlide, "carousel ===>>", carousel, " carouselItem ====>>>", carouselItem); {% endcomment %}
+  
+  if (carouselItem.length) {
+    const title = carouselItem.data('title');
+    const description = carouselItem.data('description');
+    
+    console.log('Found carousel item data:', { title, description });
+    
+    if (title || description) {
+      const titleElementId = isMobile ? 'carousel-title-1' : 'carousel-title';
+      const defaultTextId = isMobile ? 'defaultText-1' : 'defaultText';
+      
+      const titleElement = document.getElementById(titleElementId);
+      const defaultText = document.getElementById(defaultTextId);
+      
+      if (titleElement && defaultText) {
+        let html = '';
+        if (title) {
+          const titleClass = isMobile ? 'product-accordion-mobile__carousel-main-title' : 'product-accordion-desktop__carousel-main-title';
+          html += `<p class="${titleClass}">${title}</p>`;
+        }
+        if (description) {
+          const descClass = isMobile ? 'product-accordion-mobile__carousel-main-description' : 'product-accordion-desktop__carousel-main-description';
+          html += `<p class="${descClass}">${description}</p>`;
+        }
+        
+        titleElement.innerHTML = html;
+        titleElement.classList.remove('product-accordion-desktop__dynamic-content');
+        titleElement.classList.remove('product-accordion-mobile__dynamic-content');
+        defaultText.style.display = 'none';
+      }
+    }
+  }
+}
+
+// Accordion Toggle Functions
+function initAccordion() {
+  console.log('Initializing desktop accordion');
+
+  const accordionButtons = document.querySelectorAll(
+    '.product-accordion-desktop__sub-accordion'
+  );
+
+  accordionButtons.forEach(button => {
+    const panel = button.nextElementSibling;
+
+    /* 🔥 DEFAULT OPEN */
+    button.classList.add(
+      'product-accordion-desktop__sub-accordion--active'
+    );
+    panel.classList.add('show');
+
+    /* Click toggle */
+    button.addEventListener('click', function () {
+      this.classList.toggle(
+        'product-accordion-desktop__sub-accordion--active'
+      );
+      panel.classList.toggle('show');
+    });
+  });
+}
+
+
+function initMobileAccordion() {
+  console.log('Initializing mobile accordion');
+
+  const accordionButtons = document.querySelectorAll(
+    '.product-accordion-mobile__sub-accordion'
+  );
+
+  accordionButtons.forEach(button => {
+    const panel = button.nextElementSibling;
+
+    /* 🔥 DEFAULT OPEN */
+    button.classList.add(
+      'product-accordion-mobile__sub-accordion--active'
+    );
+    panel.classList.add('show');
+
+    /* Click toggle */
+    button.addEventListener('click', function () {
+      this.classList.toggle(
+        'product-accordion-mobile__sub-accordion--active'
+      );
+      panel.classList.toggle('show');
+    });
+  });
+}
+
+
+// Handle window resize
+window.addEventListener('resize', function() {
+  // Refresh carousels on resize
+  if ($('.product-accordion-desktop__carousel').hasClass('slick-initialized')) {
+    $('.product-accordion-desktop__carousel').slick('refresh');
+  }
+  if ($('.product-accordion-mobile__carousel').hasClass('slick-initialized')) {
+    $('.product-accordion-mobile__carousel').slick('refresh');
+  }
+});
+
+// Add CSS for inactive state
+document.head.insertAdjacentHTML('beforeend', `
+  <style>
+    .product-accordion-desktop__nav-button--inactive {
+      background-color: #F9EBDA;
+    }
+    
+    .product-accordion-desktop__nav-button--inactive:hover {
+      background-color: #FFFFFF;
+    }
+    
+    .product-accordion-mobile__header--inactive {
+      background-color: #F9EBDA;
+    }
+    
+    .product-accordion-mobile__header--inactive:hover {
+      background-color: #ffffff;
+    }
+    
+    .product-accordion-desktop__sub-accordion--active {
+      background-color: #f9f9f9;
+    }
+    
+    .product-accordion-mobile__sub-accordion--active {
+      background-color: #f9f9f9;
+    }
+  </style>
+`);
+</script>

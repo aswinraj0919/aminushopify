@@ -1,0 +1,118 @@
+body {
+  font-family: "Poppins";
+  margin: 0;
+  padding: 0;
+}
+
+.shopify-section.page-section-spacing {
+    margin-top: 0;
+}
+
+.transform {
+    transform: translate(50px, 50px rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)));
+}
+
+ #shopify-section-{{ section.id }}  section.featureicon_rotating.features-area.isolate {
+         border-bottom: 0.3px solid #000;
+     }
+
+.container-sub {
+  max-width: 90%;
+  margin: auto;
+ 
+}
+  @media (min-width: 640px) {
+
+.b-border{
+ border-bottom: 1px solid black;
+}
+  }
+/* Border Part - Horizontal Scrollable Menu */
+.border-part {
+  background-color: #ffffff;
+  padding: 13px 0;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+.menu-item img {
+  width: fit-content;
+}
+
+.menu-item span {
+  font-size: 15px;
+  color: #000;
+  font-weight: 300;
+  font-family: "Inter", sans-serif;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+  font-size: 12px;
+  font-family: "Poppins";
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-top:30px;
+}
+
+.breadcrumb a {
+  color: #000;
+  text-decoration: none;
+}
+
+/*  Our Ingredient Section */
+
+.heading {
+  font-weight: 600;
+  line-height: 52px;
+}
+
+@media (max-width: 600px) {
+  .content {
+    width: 100vw;
+  }
+}
+
+/*  Our Featured Nutrients  */
+
+.heading-third {
+  font-weight: 600;
+}
+
+.grid-cols-16 {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.shopify-section {
+  border-bottom: none !important;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .grid-cols-16 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-16 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-cols-16 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

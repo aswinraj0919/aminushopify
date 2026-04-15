@@ -1,0 +1,104 @@
+{% schema %}
+{
+  "name": "Column Cards",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card_text",
+          "label": "Card Text",
+          "default": "Card description goes here."
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card Image"
+        }
+      ]
+    }
+  ],
+    "presets": [
+      {
+  "name": "Column Cards",
+      }
+     ]
+}
+{% endschema %}
+
+<section class=" bg-white hidden sm:block mb-10">
+  <div class="sm:max-w-[1300px] max-w-[90%] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+    {% for block in section.blocks %}
+      <!-- Card Block -->
+      <div class="bg-[#F7F7F7] p-2 flex flex-col items-center">
+        <img alt="{{ block.settings.card_title }}" class="lg:w-[436px] w-full h-[236px] object-cover rounded-[4px] hs-lazyload hs-id-6e99fa57" loading="lazy" src="{{ block.settings.card_image | img_url: 'master' }}"/>
+        <div class="">
+          <h3 class="text-[20px] font-semibold mb-2 mt-6">
+            {{ block.settings.card_title }}
+          </h3>
+          <p class="text-[16px] font-light mb-4 mt-3">
+            {{ block.settings.card_text }}
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Mobile Carousel -->
+<div class="relative pt-4 sm:hidden block bg-[#F7F7F7] pb-5 px-3">
+  <div class="relative overflow-hidden rounded-lg owl-carousel owl-theme ">
+    {% for block in section.blocks %}
+      <div class=" duration-700 mb-10 w-[95vw] ">
+        <div class="bg-[#F7F7F7] p-2 flex flex-col items-center">
+          <img alt="{{ block.settings.card_title }}" class="w-full h-[194px] object-cover rounded-[4px] hs-lazyload hs-id-67771f0b" loading="lazy" src="{{ block.settings.card_image | img_url: 'master' }}"/>
+          <div class="">
+            <h3 class="text-[20px] font-semibold mb-2 mt-6">
+              {{ block.settings.card_title }}
+            </h3>
+            <p class="text-[16px] font-light mb-4 mt-3">
+              {{ block.settings.card_text }}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<link id="None" rel="stylesheet" href="{{ 'unico_ingredients.css' | asset_url }}">
+
+<style>
+      .owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot.active {
+      background: none;
+  }
+</style>
+
+<script>
+     $(document).ready(function(){
+    $(".owl-carousel").owlCarousel({
+          autoWidth:true,
+          // nav:true,
+      responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:5
+        }
+    }
+    });
+  });
+</script>

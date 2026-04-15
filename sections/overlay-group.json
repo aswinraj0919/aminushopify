@@ -1,0 +1,135 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "aside",
+  "name": "Overlay Group",
+  "sections": {
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "disabled": true,
+      "settings": {
+        "show_order_note": true,
+        "show_tax_and_shipping": true,
+        "enable_direct_cart": false,
+        "cart_terms_page": "",
+        "show_backorder_text": true,
+        "show_inventory_notice": "low",
+        "show_inventory_count": "low",
+        "inventory_threshold": 10,
+        "show_announcement": true,
+        "announcement_position": "above-items",
+        "announcement_text": "Check <a href=\"/collections/winter-care\" title=\"Winter Care\"><strong>Winter specials</strong></a> here!",
+        "announcement_icon": "eye",
+        "announcement_icon_size": "small",
+        "announcement_enable_box": true,
+        "announcement_box_color": "#ececec",
+        "empty_icon": "bag",
+        "empty_heading": "No items in the cart",
+        "empty_text": "<p>Looking for ideas?</p>",
+        "empty_button_text": "Start exploring",
+        "empty_button_link": "shopify://collections/all",
+        "empty_button_style": "primary",
+        "empty_enable_custom_colors": false,
+        "empty_color_background": "#ffffff",
+        "empty_color_background_gradient": "",
+        "empty_color_text": "#171717",
+        "enable_cross_sells": true,
+        "cross_sell_title": "You may also need this winter",
+        "cross_sell_products": [
+          "vit-c-body-oil",
+          "hydrating-cream",
+          "cream-cleanser"
+        ],
+        "enable_automatic_cross_sells": true,
+        "croll_sell_color_scheme": "default"
+      }
+    },
+    "pop-up": {
+      "type": "pop-up",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "sorry, we popped up.",
+            "heading_size": "h3"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>but..this interruption is for glow, offers, nerdy tips inside.</strong></p>",
+            "text_size": ""
+          }
+        },
+        "newsletter-signup": {
+          "type": "newsletter-signup",
+          "settings": {
+            "button_style": "secondary"
+          }
+        },
+        "21558aaf-7983-4c39-a2d9-5e803d85df82": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/CLINICAL_PROVEN_INGREDIENTS_TECHNOLOGIES_3e86ad21-149a-4a79-895d-33e8e5eaffce.jpg",
+            "image_position_desktop": "right",
+            "image_position_mobile": "top"
+          }
+        },
+        "b8e4317d-d3d2-4b4c-818a-cd6ee79463b2": {
+          "type": "social",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "newsletter-signup",
+        "21558aaf-7983-4c39-a2d9-5e803d85df82",
+        "b8e4317d-d3d2-4b4c-818a-cd6ee79463b2"
+      ],
+      "disabled": true,
+      "settings": {
+        "trigger": "delay",
+        "delay": 10,
+        "show_to_guests_only": false,
+        "show_on_mobile": true,
+        "dismiss_days": 0,
+        "position": "justify-center items-center",
+        "text_align": "text-start",
+        "heading_color": "#bf4f4f",
+        "text_color": "#bf570a",
+        "bg_color": "#f9f9f9",
+        "bg_grad": "",
+        "tint_opacity": 0
+      }
+    },
+    "whatsapp_sticky_EEkaYK": {
+      "type": "whatsapp-sticky",
+      "name": "WhatsApp Sticky Button",
+      "settings": {
+        "enable_whatsapp": true,
+        "whatsapp_number": "+919324752679",
+        "default_message": "Hello Aminu, need some assistance!",
+        "icon_size": 56,
+        "bg_color": "#232323",
+        "icon_color": "#ffffff",
+        "position": "right",
+        "bottom_spacing": 30,
+        "side_spacing": 20
+      }
+    }
+  },
+  "order": [
+    "cart-drawer",
+    "pop-up",
+    "whatsapp_sticky_EEkaYK"
+  ]
+}

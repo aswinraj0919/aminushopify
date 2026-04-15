@@ -1,0 +1,85 @@
+
+  <!-- Book personal consultation -->
+  <section class=" bg-[#F7F7F7] custom-border-consultation ">
+    <div class="ug-container flex md:flex-row flex-col justify-between">
+         <h2 class="sm:text-[44px] text-[32px] font-semibold  mt-4">
+       {{ product.metafields.custom.is_for_me_title }}
+      </h2>
+      <div class=" sm:px-2 sm:pb-10 pb-5 sm:px-5 px-0">
+        <div class="px-1">
+          <!-- Description -->
+          <p class="sm:text-[20px] text-[14px] font-normal  pt-4 sm:w-[550px] w-full">
+           {{ product.metafields.custom.is_for_me_description }}
+          </p>
+
+         
+
+          <!-- Button -->
+          <div class="flex mt-4 ">
+            <a
+             href="{{ product.metafields.custom.is_for_me_button_link }}"
+              class="cursor-pointer flex justify-between sm:w-[550px] w-full sm:text-[16px] text-[14px] sm:font-normal sm:px-4 px-3 py-2 sm:py-2 border-[0.5px] hover:bg-black bg-white border-black rounded-[45px]  hover:text-white text-black font-semibold"
+              style="border: 0.5px solid black"
+            >
+              <span class="sm:text-[16px] text-[14px] font-[600] uppercase">{{ product.metafields.custom.is_for_me_button_text }}</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+                class="w-[15px]"
+              >
+                <path
+                  d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="{% render 'hs-cdn-script', filename: 'unico-global.js' %}" defer></script>
+<script> 
+  console.log("Button link object:", {{ product.metafields.custom.is_for_me_button_link}});
+</script>
+
+
+<style>
+.custom-border-consultation {
+
+  {% if product.metafields.custom.show_consultation_top_border != false %}
+    border-top: 1px solid #000000;
+  {% else %}
+    border-top: 1px solid #000000; 
+  {% endif %}
+
+  {% if product.metafields.custom.show_consultation_bottom_border == true %}
+    border-bottom: 1px solid #000000;
+  {% else %}
+    border-bottom: none; 
+  {% endif %}
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .custom-border-consultation {
+
+    {% if product.metafields.custom.show_consultation_top_border != false %}
+      border-top: 0.5px solid #000000;
+    {% else %}
+      border-top: 0.5px solid #000000;
+    {% endif %}
+
+    {% if product.metafields.custom.show_consultation_bottom_border == true %}
+      border-bottom: 0.5px solid #000000;
+    {% else %}
+      border-bottom: none; 
+    {% endif %}
+
+  }
+}
+</style>

@@ -1,0 +1,122 @@
+<div class="relative overflow-hidden w-full h-[62px] flex items-center "   style="  border-bottom: 1px solid black; border-top: 1px solid black; padding-top:10px;padding-bottom:10px "
+>
+  <div class="marquee">
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- duplicate once -->
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- duplicate once -->
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+
+    <!-- duplicate once -->
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+
+    <!-- duplicate once -->
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+
+
+    <!-- duplicate once -->
+    <div class="marquee-inner">
+      {% for block in product.metafields.custom.infinite_slider.value %}
+        <div class="flex items-center gap-4 md:mr-44 mr-20 shrink-0">
+          {% if block.infinite_slider_image != blank %}
+            <img class="md:h-[50px] h-[30px] object-contain"
+                 src="{{ block.infinite_slider_image | image_url }}" alt="">
+          {% endif %}
+          <span class="marquee-text">{{ block.infinite_slider_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.marquee {
+  display: flex;
+  width: fit-content;
+  animation: marquee 40s linear infinite;
+  padding:12px 0 !important;
+}
+
+.marquee-inner {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  line-height: 26px;
+  text-align: center;
+  font-size: 22px;
+}
+
+@media (min-width: 768px) {
+  .marquee-text {
+    font-size: 20px;
+  }
+}
+</style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="{% render 'hs-cdn-script', filename: 'unico-global.js' %}" defer></script>

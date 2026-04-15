@@ -1,0 +1,136 @@
+{% schema %}
+{
+  "name": "landing easy to use",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "richtext",
+      "id": "how",
+      "label": "How"
+    },
+    {
+      "type": "richtext",
+      "id": "where",
+      "label": "Where"
+    },
+    {
+      "type": "richtext",
+      "id": "when",
+      "label": "When"
+    },
+    {
+      "type": "richtext",
+      "id": "hiddenText",
+      "label": "Hidden Text"
+    },
+    {
+      "type": "text",
+      "id": "readMore",
+      "label": "Read More Button Name",
+      "default":"Read More"
+    },
+    {
+      "type": "text",
+      "id": "readLess",
+      "label": "Read Less Button Name",
+      "default":"Read Less"
+    }
+  ]
+}
+{% endschema %}
+
+<section
+  class="bg-white sm:pt-12 pt-6 sm:pb-16 pb-8"
+>
+  <div class="lg:max-w-[1350px] max-w-[90%] mx-auto">
+    <div class="flex flex-col lg:flex-row bg-white items-start justify-between mx-auto">
+      <!-- Text Section -->
+      <div class="lg:max-w-[700px]">
+        <h2 class="sm:text-[44px] text-[36px] leading-[45px] font-[600] mb-4">
+          {{ section.settings.heading }}
+        </h2>
+        <div class="flex-1 block sm:hidden ml-0 mx-auto">
+          <img
+            src="{{ section.settings.image | image_url }}"
+            alt="{{ section.settings.heading }}"
+            class="object-cover rounded-[16px] w-full mb-6 h-[290px] mx-auto"
+          >
+        </div>
+
+        <div class="font-[400] mb-4 sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px] ">
+          {{ section.settings.how }}
+        </div>
+
+        <div class="font-[400] mb-4 sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px]">
+          {{ section.settings.when }}
+        </div>
+
+        <div class="font-[400] mb-4 sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px]">
+          {{ section.settings.where }}
+        </div>
+
+        <div id="show-text" class="hidden mb-0 font-[400] sm:text-[20px] text-[14px] gap-y-2">
+          <p>{{ section.settings.hiddenText | newline_to_br }}</p>
+        </div>
+
+        <button
+          id="more-btn"
+          class="sm:mt-0 font-[600] sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px] text-[#0066CB] mt-2 focus:outline-none hover:bg-transparent focus:bg-transparent border-none "
+          onclick="showMore()"
+        >
+          {{ section.settings.readMore }}
+        </button>
+        <button
+          id="less-btn"
+          class="hidden sm:mt-0 font-[600] sm:text-[20px] text-[14px] sm:leading-[32px] leading-[19px] text-[#0066CB] mt-2 focus:outline-none hover:bg-transparent focus:bg-transparent border-none"
+          onclick="showLess()"
+        >
+          {{ section.settings.readLess }}
+        </button>
+      </div>
+
+      <div class="sm:block hidden sm:mt-6 mx-auto">
+        <img
+          src="{{ section.settings.image | image_url }}"
+          alt="{{ section.settings.heading }}"
+          class="object-cover rounded-[16px] w-[500px] lg:h-[400px]"
+        >
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showMore() {
+      // Show the hidden text
+      document.getElementById("show-text").classList.remove("hidden");
+      // Hide the "Read More" button
+      document.getElementById("more-btn").classList.add("hidden");
+      // Show the "Read Less" button
+      document.getElementById("less-btn").classList.remove("hidden");
+    }
+
+    function showLess() {
+      // Hide the text again
+      document.getElementById("show-text").classList.add("hidden");
+      // Show the "Read More" button
+      document.getElementById("more-btn").classList.remove("hidden");
+      // Hide the "Read Less" button
+      document.getElementById("less-btn").classList.add("hidden");
+    }
+  </script>
+
+  <style>
+    #show-text p{
+       margin-top:20px;
+    }
+  </style>
+</section>

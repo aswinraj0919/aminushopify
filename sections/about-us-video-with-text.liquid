@@ -1,0 +1,170 @@
+{% schema %}
+{
+  "name": "Unico Video with Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "A range of skin solutions that understands.."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Pair text with a video to give customers insight into your brand. Tell a story, explain a product detail, or describe a new promotion.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_image",
+      "label": "Video Poster Image"
+    },
+    {
+      "type": "text",
+      "id": "youtube_video_id",
+      "label": "YouTube Video ID",
+      "default": "dQw4w9WgXcQ"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Unico Video with Text",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="sm:border-b-[0.5px] border-b-[0.2px] border-black">
+  <div class="sm:max-w-[1300px] max-w-[95%] m-auto grid md:grid-cols-2 grid-cols-1 justify-center items-center gap-5 bg-white pb-0 mt-6 sm:pb-6">
+    <!-- Video Section -->
+    <div class="custom-video__container sm:m-[1rem] relative">
+      <div class="custom-video__content">
+        <img alt="Video Poster" class="custom-video__video object-cover sm:w-[687px] sm:h-[370px] h-[188px] w-full hs-lazyload hs-id-878a3ab3" loading="lazy" src="{{ section.settings.video_poster_image | img_url: 'master' }}"/>
+        <div class="custom-video__control" onclick="showVideo()">
+          <a class="video-container__play" aria-label="Play video">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-play-circle"
+            >
+              <title>Play</title><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div id="video-wrapper" class="hidden">
+        <iframe
+          id="video-iframe"
+          class="w-full h-[370px] sm:h-[370px] object-cover"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Text Section -->
+    <div class="justify-center sm:ml-2 ml-3">
+      <h2
+        class="font-semibold md:text-[44px] sm:mb-5 mb-3 md:leading-[52px] text-[20px] leading-[31px]"
+      >
+        {{ section.settings.section_title }}
+      </h2>
+      <div class="richtext md:text-[20px] text-[14px] font-light ml-[2rem] sm:ml-[3rem]">
+        {{ section.settings.text }}
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="my-5 bg-black h-[0.9px] sm:block hidden">
+<hr class="my-5 bg-black h-[0.9px] block sm:hidden">
+
+<script>
+  function showVideo() {
+    var videoWrapper = document.getElementById('video-wrapper');
+    var videoIframe = document.getElementById('video-iframe');
+    var videoID = '{{ section.settings.youtube_video_id }}';
+
+    if (videoWrapper) {
+      videoIframe.src = 'https://www.youtube.com/embed/' + videoID + '?autoplay=1';
+      videoWrapper.classList.remove('hidden');
+      document.querySelector('.custom-video__content').classList.add('hidden');
+    }
+  }
+</script>
+
+<style>
+  .custom-video__container {
+    position: relative;
+  }
+
+  .custom-video__content {
+    position: relative;
+  }
+
+  .custom-video__video {
+    cursor: pointer;
+  }
+
+  .custom-video__control {
+    position: absolute;
+    top: 40%;
+    left: 46%;
+    border-radius: 50%;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    width: 66px;
+    height: 66px;
+    background-color: #CF8476;
+    padding: 13px 0;
+    /* border: 3.33px solid #FFFFFF; */
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .custom-video__control {
+      top: 30%;
+      left: 40%;
+    }
+  }
+
+  video::-webkit-media-controls {
+    position: relative;
+    z-index: 1;
+  }
+
+  .custom-list li {
+    position: relative;
+    padding-left: 1.5em;
+  }
+
+  .custom-list li::before {
+    content: '•';
+    font-size: 25px;
+    color: #000000;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  @media (max-width: 640px) {
+    .custom-list li::before {
+      font-size: 15px;
+    }
+  }
+  .my-5 {
+    margin-top: 1.25rem;
+    margin-bottom: 0rem;
+}
+</style>

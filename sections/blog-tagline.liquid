@@ -1,0 +1,86 @@
+{% schema %}
+{
+  "name": "Blog tagline",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Text",
+      "default": "Come back here every day for more love and connection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog tagline"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.center-text-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  width: 100%;
+  gap: 14px;
+}
+
+.center-text-divider::before,
+.center-text-divider::after {
+  content: "";
+  width: 180px;
+  border-bottom: 2px solid #000;
+}
+
+.center-text-divider span {
+  font-family: 'a Accountant Signature', sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #000;
+  text-align: center;
+}
+
+.center-text-divider .nowrap-end {
+  white-space: nowrap; /* keeps last word + heart locked on same line */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.center-text-divider svg {
+  width: 22px;
+  height: 22px;
+  fill: #000;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .center-text-divider::before,
+  .center-text-divider::after {
+    display: none;
+  }
+
+  .center-text-divider span {
+    font-size: 22px;
+  }
+
+  .center-text-divider svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+</style>
+
+<div class="center-text-divider">
+  <span class="AccountantSignature">
+    {{section.settings.tagline}}
+    <span class="nowrap-end">
+   
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21s-6.716-4.686-9.373-9.373C.373 7.716 2.06 3 6 3c2.373 0 4 1.627 6 4 2-2.373 3.627-4 6-4 3.94 0 5.627 4.716 3.373 8.627C18.716 16.314 12 21 12 21z"/>
+      </svg>
+    </span>
+  </span>
+</div>

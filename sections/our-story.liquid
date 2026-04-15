@@ -1,0 +1,286 @@
+{% schema %}
+{
+  "name": "Our Story Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Story"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>\"pronounced as uh-mee-nu\"</p><p>At Aminu, we bring together the best of science and art to bring you your healthiest skin ever. We draw inspiration from everywhere—from the powerhouse nutrients in superfoods to the fascinating world of microbiology, material sciences, art, and culture. Our journey goes beyond skincare—it's deeply personal. It's shaped by real experiences and a genuine understanding of what it means to care for your skin in a way that feels balanced and fits into the balance of your life.</p><p><strong>Skincare shouldn't be complicated, so we've simplified it for you. Healthy, radiant skin is just a routine away!</strong></p><p>— Prachi</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right Side Image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "KNOW MORE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Story Section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="our-story-section">
+  <div class="ug-container">
+    <!-- Mobile Heading - Only visible on mobile -->
+    <h2 class="mobile-heading">{{ section.settings.heading }}</h2>
+
+    <div class="our-story-container">
+      <div class="our-story-text">
+        <!-- Desktop Heading - Only visible on desktop -->
+        <h2 class="desktop-heading">{{ section.settings.heading }}</h2>
+        <div class="rte">{{ section.settings.content }}</div>
+        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+          <a href="{{ section.settings.button_link }}" class="our-story-btn ug-btn-hover">
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+      <div class="our-story-image">
+        {% if section.settings.image != blank %}
+          <img
+            src="{{ section.settings.image | image_url: width: 800 }}"
+            alt="Our Story"
+            loading="lazy"
+            class="story-image"
+          >
+        {% else %}
+          <div class="placeholder-image">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .our-story-section {
+    background: #F1F1EF;
+   font-family: "Poppins";
+
+  }
+
+
+  .our-story-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* Desktop Heading - Visible only on desktop */
+  .desktop-heading {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: #000;
+  }
+
+  /* Mobile Heading - Hidden on desktop */
+  .mobile-heading {
+    display: none;
+  }
+
+  .our-story-text .rte p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .our-story-text .rte strong {
+    color: #000;
+    font-weight: 700;
+  }
+
+  .our-story-btn {
+    display: inline-block;
+    padding: 12px 60px;
+    background: #000;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    border: 2px solid #000;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .our-story-btn:hover {
+    background: #333;
+    border-color: #333;
+    transform: translateY(-2px);
+  }
+
+  .story-image {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .placeholder-image {
+    width: 100%;
+    height: 500px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+  }
+
+  .placeholder-svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Tablet Responsive */
+  @media screen and (max-width: 1024px) {
+    .our-story-container {
+      gap: 60px;
+    }
+
+    .desktop-heading {
+      font-size: 36px;
+    }
+
+    .our-story-text .rte p {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .story-image {
+    aspect-ratio: 1 / 1;
+    }
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    .our-story-container {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    /* Hide desktop heading on mobile */
+    .desktop-heading {
+      display: none;
+    }
+
+    /* Show mobile heading on mobile */
+    .mobile-heading {
+      display: block;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      line-height: 1.2;
+      color: #000;
+    }
+
+    .our-story-image {
+      order: -1;
+    }
+
+    .our-story-text .rte p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .story-image {
+    aspect-ratio: 1 / 1;
+      border-radius: 6px;
+          max-width: 280px;
+    }
+
+    .placeholder-image {
+      height: 350px;
+    }
+
+    .our-story-btn {
+      padding: 8px 40px;
+      font-size: 15px;
+    }
+  }
+
+  /* Small Mobile Responsive */
+  @media screen and (max-width: 480px) {
+
+    .our-story-container {
+      gap: 25px;
+    }
+
+    .mobile-heading {
+      font-size: 30px;
+      margin-bottom: 25px;
+    }
+
+    .our-story-text .rte p {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .story-image {
+    aspect-ratio: 1 / 1;
+        max-width: 280px;
+
+    }
+
+    .placeholder-image {
+      height: 280px;
+    }
+
+    .our-story-btn {
+      padding: 8px 24px;
+      font-size: 14px;
+      max-width: 180px;
+    }
+  }
+
+  /* Extra Small Mobile */
+  @media screen and (max-width: 360px) {
+    .mobile-heading {
+      font-size: 24px;
+    }
+
+    .our-story-text .rte p {
+      font-size: 14px;
+    }
+
+    .story-image {
+    aspect-ratio: 1 / 1;
+        max-width: 280px;
+
+    }
+
+    .placeholder-image {
+      height: 250px;
+    }
+  }
+</style>

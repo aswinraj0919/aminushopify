@@ -1,0 +1,367 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+    .video-text-container .line-1 {
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 20px;
+    text-align: left;
+  }
+@media (max-width: 640px) {
+  .center .slick-list {
+    {% comment %} padding-left: 52px !important; {% endcomment %}
+    padding-right: 53px !important;
+  }
+}
+
+  @media (min-width: 640px) {
+    .video-text-container .line-1 {
+      font-size: 12px;
+    }
+  }
+
+  .video-text-container .line-2 {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  @media (min-width: 640px) {
+    .video-text-container .line-2 {
+      font-size: 16px;
+    }
+  }
+
+  .video-text-container .line-3 {
+    font-size: 11px;
+    font-weight: 300;
+    text-align: left;
+  }
+
+  @media (min-width: 640px) {
+    .video-text-container .line-3 {
+      font-size: 12px;
+    }
+  }
+
+      @media (min-width: 768px) {
+      .center .slick-track {
+        display: flex !important;
+        align-items: center !important;
+      }
+    }
+
+      .carousel-item {
+        padding: 0 5px;
+        text-align: center;
+        display: flex !important;
+        flex-direction: column;
+        align-items: start;
+      }
+       @media (max-width: 768px) {
+    .carousel-item {
+        padding: 0 8px;
+        text-align: center;
+        display: flex !important;
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+      .carousel-item .media {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        border-radius: 10px;
+        width: 100%;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .carousel-item video {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      /* Play icon */
+      .play-icon {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        color: black;
+        border: 3px solid black;
+        border-radius: 50%;
+        height: 80px;
+        width: 80px;
+        z-index: 2;
+        transition: opacity 0.3s ease;
+        background: transparent;
+      }
+      .slick-center .play-icon {
+        display: flex;
+            display: flex;
+    align-items: center;
+    justify-content: center;
+      }
+      .play-icon i {
+        pointer-events: none;
+      }
+
+      /* ✅ Desktop sizes */
+      .center .slick-center .media video {
+        height: 553px !important;
+      }
+      .center .slick-slide:not(.slick-center) .media video {
+        height: 440px !important;
+      }
+
+      /* ✅ Mobile size override */
+      @media (max-width: 768px) {
+        .center .slick-center .media,
+        .center .slick-slide .media,
+        .center .slick-center .media video,
+        .center .slick-slide .media video {
+          height: 470px !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+      .center .slick-slide:not(.slick-center) .media video {
+        height: 470px !important;
+      }
+      }
+  .slick-prev,
+  .slick-next {
+    background: white !important;
+    border: 1px solid black !important;
+    border-radius: 4px !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    content: none !important;
+  }
+
+  .slick-prev svg,
+  .slick-next svg {
+    width: 20px;
+    height: 20px;
+    stroke: black; /* arrow color */
+  }
+
+      .slick-prev { left: -60px !important; }
+      .slick-next { right: -60px !important; }
+
+
+
+      .custom-border-community {
+
+  {% if product.metafields.custom.show_community_top_border == true %}
+    border-top: 1px solid #000000;
+  {% else %}
+    border-top: none; 
+  {% endif %}
+
+  /* Desktop Bottom (default = true) */
+  {% if product.metafields.custom.show_community_bottom_border != false %}
+    border-bottom: 1px solid #000000; 
+  {% else %}
+    border-bottom: 1px solid #000000; 
+  {% endif %}
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .custom-border-community {
+
+    /* Mobile Top (default = false) */
+    {% if product.metafields.custom.show_community_top_border == true %}
+      border-top: 0.5px solid #000000;
+    {% else %}
+      border-top: none; 
+    {% endif %}
+
+    /* Mobile Bottom (default = true) */
+    {% if product.metafields.custom.show_community_bottom_border != false %}
+      border-bottom: 0.5px solid #000000; 
+    {% else %}
+      border-bottom: 0.5px solid #000000; 
+    {% endif %}
+
+  }
+}
+
+</style>
+
+{% if product.metafields.custom.hide_testimonial != true %}
+  <section class="flex items-center justify-center bg-white sm:pt-12 pt-6 sm:pb-16 pb-8 custom-border-community">
+    <div class="lg:max-w-[1200px] max-w-[100%] md:px-0 px-[16px] m-auto">
+      <h2 class="sm:text-[40px] text-[30px] leading-[40px] font-[600] sm:leading-[66px] mb-6">
+        {{ product.metafields.custom.video_carousal_title }}
+      </h2>
+      <div>
+        <div class="center"></div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+{% for video in product.metafields.custom.video_carousel_data.value %}
+$('.center').append(`
+  <div class="carousel-item">
+    <div class="media">
+      <video class="carousel-video" preload="auto" playsinline webkit-playsinline controls  poster= "{{ video.video_thumbnail | file_url }}">
+        <source src="{{ video.video_url | file_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+<div class="play-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="black" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="5 3 19 12 5 21 5 3"/>
+  </svg>
+</div>
+    </div>
+<div class="video-text-container">
+  <p class="line-1">{{ video.video_carousal_line_1 }}</p>
+  <p class="line-2">{{ video.video_carousal_line_2 }}</p>
+  <p class="line-3">{{ video.video_carousal_name }}</p>
+</div>
+
+  </div>
+`);
+{% endfor %}
+
+/* Slick setup */
+$('.center').slick({
+  centerMode: true,
+  centerPadding: '120px',   // ✅ desktop padding
+  slidesToShow: 3,
+  arrows: true,
+
+  prevArrow: `
+    <button type="button" class="slick-prev">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>`,
+
+  nextArrow: `
+    <button type="button" class="slick-next">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>`,
+
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        centerPadding: '80px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '60px',   // ✅ balanced tablet
+        slidesToShow: 1
+      }
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '19px',   // ✅ ✅ MAGIC NUMBER (balanced)
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+
+
+
+/* Reset and show only center video play icon */
+function updateControls(){
+  $('.carousel-item .carousel-video').each(function(){
+    this.controls = false;
+    $(this).siblings('.play-icon').hide();
+  });
+
+  var centerMedia = $('.slick-center .media');
+  var centerVideo = centerMedia.find('.carousel-video')[0];
+  if(centerVideo){
+    if(centerVideo.paused){
+      centerMedia.find('.play-icon').show();
+      centerVideo.controls = false;
+    } else {
+      centerMedia.find('.play-icon').hide();
+      centerVideo.controls = true;
+    }
+  }
+}
+
+/*  Click play icon → always start playing */
+$(document).on('click', '.slick-center .play-icon', function(e){
+  e.stopPropagation();
+  var video = $(this).siblings('.carousel-video')[0];
+
+  // Pause all other videos
+  $('.carousel-item .carousel-video').each(function(){
+    this.pause();
+    this.controls = false;
+    $(this).siblings('.play-icon').hide();
+  });
+
+  // Play selected
+  video.play();
+  video.controls = true;   // keep controls ON
+  $(this).hide();
+});
+
+/* Native play event */
+$(document).on('play', '.carousel-item .carousel-video', function(){
+  $(this).siblings('.play-icon').hide();
+  this.controls = true; // keep showing controls
+});
+
+/* Native pause event */
+$(document).on('pause', '.carousel-item .carousel-video', function(){
+  $(this).siblings('.play-icon').show();
+  this.controls = true; // still allow controls so pause button works
+});
+
+
+/* Reset when changing slides */
+$('.center').on('beforeChange', function(){
+  $('.carousel-video').each(function(){
+    this.pause();
+    this.controls = false;
+    $(this).siblings('.play-icon').hide();
+  });
+});
+
+$('.center').on('afterChange', function(){
+  updateControls();
+});
+
+updateControls();
+</script>

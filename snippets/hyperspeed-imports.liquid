@@ -1,0 +1,87 @@
+{% comment %}DO NOT MODIFY. Any changes made here may be overwritten by Hyperspeed.{% endcomment %}
+<!-- Hyperspeed:730732 -->
+<!-- hs-shared_id:6ef332f1 -->
+
+
+
+<script>window.HS_JS_OVERRIDES = {{ shop.metaobjects['app--2675107--hyperspeed_script_settings']['app--2675107--hyperspeed-script-settings-mzgqja2c'].scripts.value.smart_defer_js | json }};</script>
+<script>!function(e,t){if("object"==typeof exports&&"object"==typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var n=t();for(var s in n)("object"==typeof exports?exports:e)[s]=n[s]}}(self,()=>(()=>{"use strict";const e="hyperscript/defer-load",t="ON_ACTION",n=["window.Station.Apps.Tabs",".replace('no-js', 'js')","onLoadStylesheet()","window.onpageshow","spratlyThemeSettings","lazysizes","window.MinimogSettings","onloadt4relcss","asyncLoad","_bstrLocale","window.PandectesSettings","window.Rivo.common","__engine_loaded","window.AVADA_JOY"],s=window.HS_JS_OVERRIDES||[];function i(e,t){const i=!e||"string"!=typeof e,o=t&&t.hasAttribute("hs-ignore"),r=t&&t.innerHTML,c=t&&"application/ld+json"===t.getAttribute("type")||r&&n.some(e=>t.innerHTML.includes(e));if(!t&&i||o||c)return null;{const n=s.find(n=>function(e,t,n){if(!e)return!1;if("APP_EMBED_JS"===e.match_type&&e.file_name)return function(e,t){if(!t)return!1;const n=function(e){let t;try{t=new URL(e,window.location.origin).pathname}catch(n){if(!e.startsWith("/"))return null;t=e}if(!t)return null;const n=t.replace(/^\/+/,"").split("/");if(n.length<4||"extensions"!==n[0])return null;const s=n.indexOf("assets");if(s<=0||s>=n.length-1)return null;const i=n[1],o=n[n.length-1];return i&&o?{extensionId:i,fileName:o}:null}(t);return!!n&&(n.extensionId===e.extension_id&&n.fileName===e.file_name)}(e,t);const s=n&&e.match&&n.includes(e.match),i=t&&e.match&&t.includes(e.match);return Boolean(i||s)}(n,e,r?t.innerHTML:null));return n?function(e,t){let n=t;if(e.cdn){n=`https://cdn.hyperspeed.me/script/${t.replace(/^(http:\/\/|https:\/\/|\/\/)/,"")}`}return{load_method:e.load_method||"default",pages:e.pages||null,src:n}}(n,e):null}}window.HS_LOAD_ON_ACTION_SCRIPTS=window.HS_LOAD_ON_ACTION_SCRIPTS||[];const o=document.createElement,r={src:Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,"src"),type:Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,"type")},c=HTMLScriptElement.prototype.setAttribute,l=Symbol("hs-setting");function a(t,n,s){s&&window.HS_LOAD_ON_ACTION_SCRIPTS.push([t,n]),t.type=e;const i=function(n){t.getAttribute("type")===e&&n.preventDefault(),t.removeEventListener("beforescriptexecute",i)};t.addEventListener("beforescriptexecute",i)}function u(e){if(!e||!Array.isArray(e))return!0;const t=function(){if(void 0!==window.SHOPIFY_PAGE_TYPE)return window.SHOPIFY_PAGE_TYPE;const e=window.location.pathname;return"/"===e||"/index"===e?"HOME":e.includes("/collections/")?"COLLECTIONS":e.includes("/products/")?"PRODUCT":e.includes("/cart")?"CART":"OTHER"}();return e.includes(t)}return document.createElement=function(...n){if("script"!==n[0].toLowerCase()||window.hsUnblocked)return o.apply(document,n);const s=o.apply(document,n);try{Object.defineProperties(s,{src:{...r.src,set(n){if(this[l])r.src.set.call(this,n);else{this[l]=!0;try{const s=i(n,null),o=s&&s.load_method===t,c=s?s.src:n;o&&r.type.set.call(this,e),r.src.set.call(this,c)}finally{this[l]=!1}}}},type:{...r.type,set(n){if(this[l])return void r.type.set.call(this,n);const o=i(s.src,null),c=o&&o.load_method===t;r.type.set.call(this,c?e:n)}}}),s.setAttribute=function(e,t){if("src"===e||"type"===e){if(this[l])return void r[e].set.call(this,t);this[l]=!0;try{this[e]=t}finally{this[l]=!1}}else c.call(this,e,t)}}catch(e){console.warn("HyperScripts: unable to prevent script execution for script src ",s.src,".\n",'A likely cause would be because you are using a third-party browser extension that monkey patches the "document.createElement" function.')}return s},window.hsScriptObserver=new MutationObserver(n=>{for(let s=0;s<n.length;s++){const{addedNodes:o}=n[s];for(let n=0;n<o.length;n++){const s=o[n];if(1===s.nodeType&&"SCRIPT"===s.tagName){const n=s.type,o=i(s.src,s);if(n===e)a(s,null,u(o&&o.pages));else if(o){const n=u(o.pages),i=s.type===e?null:s.type;switch(o.load_method){case t:a(s,i,n);break;case"DEFER":n||a(s,i,!1)}}}}}}),window.hsScriptObserver.observe(document.documentElement,{childList:!0,subtree:!0}),{}})());</script>
+
+
+<!-- Third party app optimization -->
+<!-- Is an app not updating? Just click Rebuild Cache in Hyperspeed. -->
+<!-- Or, stop deferring the app by clicking View Details on App Optimization in your Theme Optimization settings. -->
+<script hs-ignore>{% render 'hs-3p-optimize.js' %}</script>
+
+<!-- instant.load -->
+<script defer src="{{ 'hs-instantload.min.js' | asset_url }}"></script>
+
+<!-- defer JS until action -->
+<script async src="{{ 'hs-script-loader.min.js' | asset_url }}"></script>
+
+
+
+<style>
+    	body > * {
+          visibility: hidden;
+        }
+        header:first-of-type, nav:first-of-type, #shopify-section-header, #shopify-section-announcement, #shopify-section-AnnouncementBar, #shopify-section-announcement-bar, #shopify-section-header-template {
+          visibility: visible;
+        }
+</style>
+<script>
+      window.addEventListener("DOMContentLoaded", function() {
+        document.head.insertAdjacentHTML("beforeend", `<style>body > *{visibility:visible;}</style>`)
+      })
+</script>
+<noscript>
+  <style>body > *{visibility:visible;}</style>
+</noscript>
+
+{%- assign preloads = shop.metaobjects['app--2675107--hyperspeed_image_preloads']['app--2675107--hyperspeed-image-preloads-cdlpb9yl'].image_preloads.value -%}
+
+{% if template.name == 'index' %}
+<!-- Preload LCP Image -->
+{% assign base_url = 'https://' | append: request.host -%}
+{%- for preload in preloads.home -%}
+{%- assign preload_sizes = preload.sizes -%}
+{%- assign preload_src = preload.src | replace: 'HS_URL_PLACEHOLDER', base_url -%}
+{%- assign preload_srcset = preload.srcset | replace: 'HS_URL_PLACEHOLDER', base_url -%}
+{%- assign preload_media = preload.media -%}
+<link
+    rel="preload"
+    as="image"
+    href="{{ preload_src }}"
+    imagesrcset="{{ preload_srcset }}"
+    imagesizes="{{ preload_sizes }}"
+    media="{{ preload_media }}"
+/>
+{%- endfor -%}
+{%- endif -%}
+
+{% if template.name == 'product' %}
+<!-- Preload LCP Product Image -->
+{% for preload in preloads.product -%}
+{%- assign preload_src_width = preload.src -%}
+{%- assign preload_product = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+{%- assign widths = preload.srcset | split: "," -%}
+{%- if preload.tag_type == 'img_url' -%}
+<link
+    rel="preload"
+    as="image"
+    href="{{ preload_product.src | img_url: preload_src_width }}"
+    imagesizes="{{ preload.sizes }}"
+    {% if widths -%}imagesrcset="{% for width in widths %}{{ preload_product.src | img_url: width }} {{ width }}w{% unless forloop.last %}, {% endunless %}{% endfor %}"{%- endif -%}
+/>
+{%- elsif preload.tag_type == 'image_url' -%}
+<link
+    rel="preload"
+    as="image"
+    href="{{ preload_product.src | image_url: width: preload_src_width }}"
+    imagesizes="{{ preload.sizes }}"
+    {% if widths -%}imagesrcset="{% for width in widths %}{{ preload_product.src | image_url: width: width }} {{ width }}w{% unless forloop.last %}, {% endunless %}{% endfor %}"{%- endif -%}
+/>
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}
+

@@ -1,0 +1,372 @@
+{% comment %}
+  Section: Final Advanced Video Reel Slider (Perfect Center Zoom + Clean Controls)
+{% endcomment %}
+
+<section class="custom-video-reel" id="section-{{ section.id }}">
+  <div class="ug-container page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="reel-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="reel-slider-container">
+      <div class="reel-slider">
+        {% for block in section.blocks %}
+          <div class="reel-slide">
+            <div class="reel-card">
+              <div class="reel-video-container">
+                <video
+                  class="reel-video"
+                  preload="metadata"
+                  playsinline
+                  loop
+                  poster="{{ block.settings.thumbnail | img_url: '800x' }}"
+                >
+                  <source src="{{ block.settings.video_url }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+                <div class="reel-controls">
+                  <button class="reel-play-btn">
+                    <svg class="play-icon" width="60" height="60" viewBox="0 0 60 60">
+                      <circle cx="30" cy="30" r="30" fill="white" fill-opacity="0.9"/>
+                      <path d="M25 20L40 30L25 40V20Z" fill="black"/>
+                    </svg>
+                    <svg class="pause-icon" width="60" height="60" viewBox="0 0 60 60" style="display:none">
+                      <circle cx="30" cy="30" r="30" fill="white" fill-opacity="0.9"/>
+                      <rect x="22" y="20" width="4" height="20" fill="black"/>
+                      <rect x="34" y="20" width="4" height="20" fill="black"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {% if block.settings.description != blank %}
+                <div class="reel-description">
+                  <p>{{ block.settings.description }}</p>
+                  {% comment %} <button class="desc-toggle">More</button> {% endcomment %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Floating Controls -->
+      <div class="floating-controls">
+        <button class="reel-prev" aria-label="Previous Slide">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+        <button class="reel-next" aria-label="Next Slide">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+      .custom-video-reel {
+        padding: 70px 0;
+        background: #fff;
+        position: relative;
+      }
+
+      .reel-wrapper {
+        max-width: 1400px;
+        margin: auto;
+        padding: 0 20px;
+      }
+
+      .reel-heading {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 42px;
+        text-align: left;
+        margin-bottom: 50px;
+      }
+
+      /* Floating Controls (Right aligned, vertically centered near last visible card) */
+     .floating-controls {
+      position: absolute;
+      top: -4%;
+      right: 3%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 14px;
+      z-index: 3;
+      }
+
+      .floating-controls button {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000000;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .floating-controls button:hover {
+        background: #000;
+        color: #fff;
+      }
+
+      /* Reel Slider Container */
+      .reel-slider-container {
+        position: relative;
+        overflow: visible;
+      }
+
+      /* Reel Slider */
+      .reel-slider {
+        position: relative;
+      }
+
+      .reel-slide {
+        padding: 20px 0; /* Add padding to prevent cutting */
+      }
+
+      .reel-card {
+        background: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 0 10px; /* Reduced margin */
+        transition: all 0.5s ease;
+        transform-origin: center center; /* Changed from bottom to center */
+        position: relative;
+      }
+            @media screen and (max-width: 800px) {
+
+        .reel-card {
+        background: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 0 25px; /* Reduced margin */
+        transition: all 0.5s ease;
+        transform-origin: center center; /* Changed from bottom to center */
+        position: relative;
+      }
+    }
+
+            @media screen and (max-width: 375px) {
+         .reel-card {
+        background: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 0 15px; /* Reduced margin */
+        transition: all 0.5s ease;
+        transform-origin: center center; /* Changed from bottom to center */
+        position: relative;
+      }
+    }
+      /* Maintain perfect 9:16 ratio */
+      .reel-video-container  video{
+        position: relative;
+        aspect-ratio: 9 / 16;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top:10px;
+      }
+
+      .reel-video {
+        height: 450px;
+        aspect-ratio: 9 / 16;
+        width: 100%;;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .reel-controls {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .reel-description {
+    border-radius: 4px;
+    padding: 15px 12px; 
+    margin: 0;
+    text-align: center;
+    background: #EEEEEE;
+    transition: all 0.4s ease;
+    height: auto;
+    overflow: visible;
+    width: 100%; 
+    position: relative; 
+    top: 0; 
+    margin-top: -5px; 
+    z-index: 1; 
+}
+
+.reel-description p {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    overflow: visible;
+    text-overflow: unset;
+    display: block;
+    white-space: normal; 
+    line-height: 1.4; 
+    word-wrap: break-word; 
+    max-width: 100%; 
+}
+
+      .reel-card.center-active .reel-controls {
+        opacity: 1;
+      }
+
+      /* Center slide zoom (without cutting) */
+        .slick-center .reel-card {
+      transform: scale(1.08);
+      z-index: 2;
+      /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25); */
+  }
+
+
+      /* Side slides smaller */
+      .slick-slide:not(.slick-center) .reel-card {
+        transform: scale(0.9);
+        opacity: 0.85;
+      }
+      @media screen and (max-width: 768px) {
+         .slick-slide:not(.slick-center) .reel-card {
+        transform: scale(1.08);
+        opacity: 0.85;
+        margin-left:10px;
+        margin-right:10px;
+      }
+
+      .reel-card.slick-center .reel-description {
+        height: auto;
+      }
+
+ /* Responsive Tweaks */
+      @media screen and (max-width: 1024px) {
+        .floating-controls {
+          right: 4%;
+        }
+        .reel-heading { font-size: 34px; }
+      }
+
+      @media screen and (max-width: 768px) {
+        .reel-heading { font-size: 26px; }
+        .floating-controls {
+          visibility: hidden;
+          flex-direction: row;
+          right: 50%;
+          transform: translate(50%, -50%);
+          gap: 10px;
+          top: auto;
+          bottom: -50px;
+        }
+         .reel-video {
+          width: 100%;
+          height: 470px;
+        }
+      }
+</style>
+
+<script>
+  function initVideoReelSlider() {
+    if (typeof jQuery === 'undefined' || !jQuery.fn.slick) {
+      setTimeout(initVideoReelSlider, 150);
+      return;
+    }
+
+    const $slider = jQuery('.reel-slider');
+
+    $slider.slick({
+      slidesToShow: 3,
+      centerMode: true,
+      infinite: true,
+      arrows: false,
+      centerPadding: '15%', // Increased padding to prevent cutting
+      speed: 500,
+      responsive: [
+        { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: '15%' } },
+        { breakpoint: 600, settings: { slidesToShow: 1, centerPadding: '6%' } },
+      ],
+    });
+
+    jQuery('.reel-prev').click(() => $slider.slick('slickPrev'));
+    jQuery('.reel-next').click(() => $slider.slick('slickNext'));
+
+    // Center slide management
+    $slider.on('afterChange', function (event, slick, currentSlide) {
+      jQuery('.reel-card').removeClass('center-active');
+      const $center = jQuery('.slick-center .reel-card');
+      $center.addClass('center-active');
+
+      jQuery('.reel-video').each(function () {
+        this.pause();
+      });
+      jQuery('.play-icon').show();
+      jQuery('.pause-icon').hide();
+    });
+
+    // Play/Pause toggle
+    $slider.on('click', '.reel-play-btn', function () {
+      const $card = jQuery(this).closest('.reel-card');
+      if (!$card.hasClass('center-active')) return;
+
+      const video = jQuery(this).closest('.reel-video-container').find('video')[0];
+      const playIcon = jQuery(this).find('.play-icon');
+      const pauseIcon = jQuery(this).find('.pause-icon');
+
+      if (video.paused) {
+        video.play().then(() => {
+          playIcon.hide();
+          pauseIcon.show();
+        });
+      } else {
+        video.pause();
+        playIcon.show();
+        pauseIcon.hide();
+      }
+    });
+
+    // Description toggle
+    jQuery(document).on('click', '.desc-toggle', function () {
+      const desc = jQuery(this).closest('.reel-description');
+      desc.toggleClass('expanded');
+      jQuery(this).text(desc.hasClass('expanded') ? 'Less' : 'More');
+    });
+
+    // Initialize center
+    setTimeout(() => $slider.trigger('afterChange'), 300);
+  }
+
+  document.addEventListener('DOMContentLoaded', initVideoReelSlider);
+</script>
+
+{% schema %}
+{
+  "name": "Perfect Video Reel Slider",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Video Reels" }],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        { "type": "url", "id": "video_url", "label": "Video URL" },
+        { "type": "image_picker", "id": "thumbnail", "label": "Thumbnail" },
+        { "type": "text", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Perfect Video Reel Slider", "category": "Video" }],
+  "max_blocks": 10
+}
+{% endschema %}

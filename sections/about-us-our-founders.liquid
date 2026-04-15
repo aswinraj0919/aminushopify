@@ -1,0 +1,95 @@
+{% schema %}
+{
+  "name": "Our Founders",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Our Founders"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "founder",
+      "name": "Founder",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "founder_image",
+          "label": "Founder Image"
+        },
+        {
+          "type": "text",
+          "id": "founder_name",
+          "label": "Founder Name",
+          "default": "Founder Name"
+        },
+        {
+          "type": "richtext",
+          "id": "founder_bio",
+          "label": "Founder Description",
+          "default": "<p>Short introduction about the founder goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Founders",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="ug-container about-us-border">
+  <!-- Section Heading -->
+  <h2 class="font-[600] md:text-[44px] text-[30px] leading-[44px] mb-5">
+    {{ section.settings.section_heading }}
+  </h2>
+
+  <!-- Founder Loop -->
+  {% for block in section.blocks %}
+    <div
+      class="m-auto grid md:grid-cols-2 grid-cols-1 justify-center items-start md:gap-5 gap-2 md:mb-1 mb-5"
+      {{ block.shopify_attributes }}
+    >
+      <!-- Image -->
+      <div class="sm:m-[1rem] md:order-1">
+        {% if block.settings.founder_image %}
+          <img
+            src="{{ block.settings.founder_image | img_url: 'master' }}"
+            alt="{{ block.settings.founder_name }}"
+            class="object-cover sm:w-[604px] sm:h-[402px] h-[188px] w-full"
+            loading="lazy"
+          >
+        {% endif %}
+      </div>
+
+      <!-- Text -->
+      <div class="justify-center md:ml-2  md:order-2">
+        <h3 class="font-[700] md:text-[18px] text-[15px] leading-[30px] mt-3">
+          {{ block.settings.founder_name }}
+        </h3>
+        <div class="richtext md:text-[18px] text-[15px] font-[400] md:leading-[30px] leading-[20px]">
+          {{ block.settings.founder_bio }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+<style>
+  .richtext ul {
+    list-style: disc !important;
+    margin-left: 1.5rem;
+  }
+  .richtext ol {
+    list-style: decimal !important;
+    margin-left: 1.5rem;
+  }
+  .richtext li {
+    margin-bottom: 6px;
+  }
+</style>

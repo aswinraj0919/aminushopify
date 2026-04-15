@@ -1,0 +1,134 @@
+<div class="header-account dropdown">
+  {% if customer %}
+    <a
+      class="header-account-link dropdown-toggle"
+
+      aria-label="{{ 'layout.customer.account' | t | escape }}"
+      aria-haspopup="true"
+      aria-expanded="false"
+      tabindex="0"
+    >
+      <span class="header-account-link__text desktop-only{% if section.settings.icon_strategy == 'icons_only' %} visually-hidden{% endif %}">
+        {{ 'layout.customer.account' | t | escape }}
+      </span>
+      <span class="header-account-link__icon{% if section.settings.icon_strategy == 'icons_cart_search' %} mobile-only{% endif %}">
+        {%- render 'svg-user' -%}
+      </span>
+    </a>
+  {% else %}
+    <a
+      class="header-account-link dropdown-toggle"
+
+      aria-label="{{ 'layout.customer.account' | t | escape }}"
+      aria-haspopup="true"
+      aria-expanded="false"
+      tabindex="0"
+    >
+      <span class="header-account-link__text desktop-only{% if section.settings.icon_strategy == 'icons_only' %} visually-hidden{% endif %}">
+        {{ 'layout.customer.account' | t | escape }}
+      </span>
+      <span class="header-account-link__icon{% if section.settings.icon_strategy == 'icons_cart_search' %} mobile-only{% endif %}">
+        {%- render 'svg-user' -%}
+      </span>
+    </a>
+  {% endif %}
+
+  <div class="dropdown-menu" style="display: none;">
+    <ul class="flex flex-col">
+            <li>
+        <a href="{{ routes.account_url }}/orders">
+          <svg
+            width="200px"
+            height="200px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="9" cy="8" r="3" stroke="#000000" stroke-width="2"/>
+            <path d="M3 20C3 16.6863 5.6863 14 9 14C12.3137 14 15 16.6863 15 20"
+                  stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span> Login </span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.account_url }}/orders">
+          <svg width="200px" height="200px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.0156 10H6.99999M3.0156 10V6M3.0156 10L6.34315 6.34315C9.46734 3.21895 14.5327 3.21895 17.6569 6.34315C20.781 9.46734 20.781 14.5327 17.6569 17.6569C14.5327 20.781 9.46734 20.781 6.34315 17.6569C5.55928 16.873 4.97209 15.9669 4.58158 15M12 9V13L15 14.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span> Order History </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  window.setTimeout(function () {
+    $('.header-account.dropdown').hover(
+      function () {
+        $(this).addClass('open');
+        $(this).find('.dropdown-menu').stop(true, true).fadeIn('fast');
+        $(this).find('a.dropdown-toggle').attr('aria-expanded', 'true');
+      },
+      function () {
+        $(this).removeClass('open');
+        $(this).find('.dropdown-menu').stop(true, true).fadeOut('fast');
+        $(this).find('a.dropdown-toggle').attr('aria-expanded', 'false');
+      }
+    );
+  }, 1000);
+</script>
+
+<style>
+    .header-account.dropdown {
+      position: relative;
+    }
+    .header-account .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: white;
+      border: 1px solid #ddd;
+      z-index: 999;
+      min-width: 200px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .header-account .dropdown-menu ul {
+      display: flex; /* This makes the menu items horizontal */
+      list-style: none;
+      margin: 0; padding: 0;
+
+    }
+
+    .header-account .dropdown-menu li {
+      /* border-right: 1px solid #eee; */
+       list-style: none;
+    }
+    .header-account .dropdown-menu li:last-child {
+      border-right: none;
+    }
+    .header-account .dropdown-menu li a {
+      display: flex;
+      padding: 10px 15px;
+      /* text-decoration: none;
+      white-space: nowrap; */
+      font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 30px;
+  color: rgb(51, 51, 51);
+
+      text-transform: none !important;
+    }
+    .header-account .dropdown-menu li a:hover {
+      /* background: #f5f5f5; */
+    }
+    svg {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      transition: fill 100ms;
+  }
+</style>
