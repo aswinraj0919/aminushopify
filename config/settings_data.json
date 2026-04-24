@@ -201,33 +201,6 @@
         "disabled": true,
         "settings": {}
       },
-      "874288169526732210": {
-        "type": "shopify://apps/sagepilot-aminu-life/blocks/lead_capture_popup/019b7865-a3ad-7518-80e2-1ec5e33aaa03",
-        "disabled": false,
-        "settings": {
-          "enabled": true,
-          "image": "shopify://shop_images/mobile_popup.webp",
-          "title": "Better skin starts with better conversations…",
-          "description": "Free expert consultations, early access & freebies for your skin!",
-          "form_type": "both",
-          "delay": 5
-        }
-      },
-      "2519459661274782089": {
-        "type": "shopify://apps/bik/blocks/bikTracker/4ee0506d-3abc-448e-9d32-1ea2950714ec",
-        "disabled": true,
-        "settings": {}
-      },
-      "10482958812443994587": {
-        "type": "shopify://apps/bik/blocks/bikScripts/4ee0506d-3abc-448e-9d32-1ea2950714ec",
-        "disabled": true,
-        "settings": {}
-      },
-      "11604910539244711675": {
-        "type": "shopify://apps/bik/blocks/bikWebpush/4ee0506d-3abc-448e-9d32-1ea2950714ec",
-        "disabled": true,
-        "settings": {}
-      },
       "9010622670419788200": {
         "type": "shopify://apps/avada-seo-suite/blocks/avada-site-verification/15507c6e-1aa3-45d3-b698-7e175e033440",
         "disabled": false,
@@ -275,6 +248,19 @@
         "disabled": false,
         "settings": {
           "position": "right"
+        }
+      },
+      "874288169526732210": {
+        "type": "shopify://apps/sagepilot-aminu-life/blocks/lead_capture_popup/019b7865-a3ad-7518-80e2-1ec5e33aaa03",
+        "disabled": false,
+        "settings": {
+          "enabled": true,
+          "image": "shopify://shop_images/newpopup.webp",
+          "title": "Good skin? It starts here.",
+          "description": "Drop your email and we'll send you a little gift (it's a discount on your very first order 🎁)",
+          "form_type": "both",
+          "popup_bg_color": "#ffffff",
+          "delay": 5
         }
       }
     }

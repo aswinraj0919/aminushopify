@@ -14,6 +14,7 @@
       "blocks": {
         "image_hxX6UJ": {
           "type": "image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/desktop_banner.webp",
             "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy.webp",
@@ -33,42 +34,128 @@
             "text_alignment": "center left"
           }
         },
+        "image_irqz4x": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2048_x_1024_px_copy_3_8f84b589-aa48-4053-88d8-a39d980bba45.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_2_93a35e15-7628-4e99-a869-a29d50051d93.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 15,
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "use_h1": false,
+            "text": "<p>And optional subtext</p>",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center center"
+          }
+        },
+        "image_tjg3U4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2048_x_1024_px_copy_6_bcbcf18f-0025-4621-a462-c53b2d80079e.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_7_089dd227-3b32-4eb9-b690-32aba55722c2.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 15,
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "use_h1": false,
+            "text": "",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center center"
+          }
+        },
+        "image_jGMLR3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2048_x_1024_px_copy_5_13cc7060-ae83-4a8d-8f73-b9699afbee62.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_5_0b1534d9-84cf-4644-868c-0c9141cfb20e.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 15,
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "use_h1": false,
+            "text": "<p>And optional subtext</p>",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center center"
+          }
+        },
+        "image_KbaMJX": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2048_x_1024_px_copy_4_a010028c-76d6-4784-b5b3-c0712e2bdf66.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_6_5c7c8d9d-5206-4fb5-aeca-da43f5037688.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 15,
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "use_h1": false,
+            "text": "",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center center"
+          }
+        },
+        "image_mTqrCC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2048_x_1024_px_copy_8_b9339f44-d041-4271-969f-0904235c546d.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_3.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
+            "heading_max_width": 15,
+            "title_size": 84,
+            "title_size_mobile": 46,
+            "use_h1": false,
+            "text": "",
+            "enlarge_text": true,
+            "button_label_1": "",
+            "button_url_1": "",
+            "button_label_2": "",
+            "button_url_2": "",
+            "text_alignment": "center center"
+          }
+        },
         "image_DDUQhd": {
           "type": "image",
-          "disabled": true,
           "settings": {
-            "slide_link": "",
-            "subheading": "that feel good fit",
-            "title": "Iconic style, maximum heat.",
+            "image": "shopify://shop_images/2048_x_1024_px_copy_7_6d923485-c638-4412-873b-4a058053877c.webp",
+            "mobile_image": "shopify://shop_images/Mobile_banner_1024_x_1024_px_copy_4_2aa8bb3e-caa5-4375-8e6e-5c561451ebff.webp",
+            "slide_link": "https://www.aminu.life/collections/best-sellers",
+            "subheading": "",
+            "title": "",
             "heading_max_width": 8,
             "title_size": 60,
             "title_size_mobile": 40,
             "use_h1": false,
             "text": "",
             "enlarge_text": false,
-            "button_label_1": "Shop Swimwear",
+            "button_label_1": "",
             "button_url_1": "",
             "button_label_2": "",
-            "button_url_2": "",
-            "text_alignment": "center left"
-          }
-        },
-        "image_9Wyhwe": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "slide_link": "",
-            "subheading": "just landed",
-            "title": "Blending beauty with purpose.",
-            "heading_max_width": 8,
-            "title_size": 60,
-            "title_size_mobile": 40,
-            "use_h1": false,
-            "text": "<p>Be the first to shop the drop</p>",
-            "enlarge_text": false,
-            "button_label_1": "Shop tops",
-            "button_url_1": "",
-            "button_label_2": "Shop bottoms",
             "button_url_2": "",
             "text_alignment": "center left"
           }
@@ -76,8 +163,12 @@
       },
       "block_order": [
         "image_hxX6UJ",
-        "image_DDUQhd",
-        "image_9Wyhwe"
+        "image_irqz4x",
+        "image_tjg3U4",
+        "image_jGMLR3",
+        "image_KbaMJX",
+        "image_mTqrCC",
+        "image_DDUQhd"
       ],
       "settings": {
         "height": "fixed",
@@ -87,7 +178,7 @@
         "mobile_overlay_under": false,
         "overlay_style": "shadow",
         "transition": "slide-fade",
-        "navigation": "dots",
+        "navigation": "none",
         "autoplay": true,
         "autoplay_speed": 6,
         "accessibility_info": ""
@@ -165,22 +256,12 @@
     "balanced-path-section": {
       "type": "balanced-path-section",
       "blocks": {
-        "card_3DhmcF": {
-          "type": "card",
-          "settings": {
-            "image": "shopify://shop_images/GENTLE_FORMULAS_6f8b0fcc-7662-421f-b857-397fbaec0648.webp",
-            "title": "Always effective, gentle & fun",
-            "description": "We make multi-pathway, multi-functional formulas designed to adapt to your environment, genetics and lifestyle to deliver unmatched care and healthy, resilient skin.",
-            "button_text": "Shop Aminu Products",
-            "button_link": "https://www.aminu.life/collections/all"
-          }
-        },
         "card_87wXWj": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/INDIVIDUALISED_REGIME_860660dc-7066-43c3-8cb2-a608ea89f648.webp",
-            "title": "Skincare that you need NOW",
-            "description": "Your skin's needs change with day, season, year, location, age. Our SkinNow algorithm in few minutes helps you choose the right skincare that your skin needs NOW!",
+            "image": "shopify://shop_images/Shop_Aminu_Products.webp",
+            "title": "For \"The Skin You're In\".",
+            "description": "Our skin's needs shift with the day, season, and place. Our \"SkinNOW Solutions\" adapt in real-time to meet these changing demands.",
             "button_text": "Take Skin Quiz",
             "button_link": "https://www.aminu.life/#quiz-QYHZ7V"
           }
@@ -188,18 +269,28 @@
         "card_tRzrPe": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/INGREDIENTS_TECHNOLOGIES_460x_1_d9a8ddef-cfc8-4730-9b1f-b37327c27ccb.webp",
-            "title": "The OG formulas",
-            "description": "We carefully source ingredients (240+ on the last count) from 40+ countries to make sure our unique formulas are effective and yet gentle on skin, planet and pets.",
+            "image": "shopify://shop_images/Know_Aminu_Ingredients.webp",
+            "title": "Always effective, and gentle!",
+            "description": "We use multi-pathway ingredients and biotech to adapt to skin chemistry, environment, genetics, delivering unmatched care and healthy skin.",
             "button_text": "Know Aminu Ingredients",
             "button_link": "https://www.aminu.life/pages/our-ingredients"
+          }
+        },
+        "card_3DhmcF": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Take_Skin_Quiz.webp",
+            "title": "For People, Planet & Pets.",
+            "description": "Were all about balance! We carefully select our ingredients to make sure our formulas are gentle and easy on skin, planet and pets.",
+            "button_text": "Shop Aminu Products",
+            "button_link": "https://www.aminu.life/collections/all"
           }
         }
       },
       "block_order": [
-        "card_3DhmcF",
         "card_87wXWj",
-        "card_tRzrPe"
+        "card_tRzrPe",
+        "card_3DhmcF"
       ],
       "settings": {
         "heading": "a balanced path to healthy skin",
