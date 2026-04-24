@@ -12,8 +12,17 @@
     {% comment %} Shopflo - Load on all pages because cart drawer can appear anywhere {% endcomment %}
     <script>
       window.Shopflo = { ...(window.Shopflo ?? {}), autoOnboarding: true };
+      function loadShopflo() {
+        if (window._shopfloLoaded) return;
+        window._shopfloLoaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://bridge.shopflo.com/js/shopflo.bundle.js';
+        document.head.appendChild(s);
+      }
+      ['touchstart', 'mousemove', 'keydown', 'scroll'].forEach(function (e) {
+        window.addEventListener(e, loadShopflo, { once: true, passive: true });
+      });
     </script>
-    <script async src="https://bridge.shopflo.com/js/shopflo.bundle.js"></script>
 
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
@@ -60,12 +69,14 @@
     {%- endunless -%}
 
     {% comment %} slick Cdn LINK Start {% endcomment %}
-    <link
-      rel="preload"
-      as="style"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-      onload="this.rel='stylesheet'"
-    >
+    {% comment %}
+      <link
+        rel="preload"
+        as="style"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+        onload="this.rel='stylesheet'"
+      >
+    {% endcomment %}
     <link
       rel="preload"
       as="style"
@@ -73,8 +84,10 @@
       onload="this.rel='stylesheet'"
     >
 
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
     <!-- jQuery CDN -->
-    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% comment %} <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}
 
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -250,8 +263,14 @@
     "
   >
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W84P447"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-W84P447"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Google Tag Manager -->
@@ -316,40 +335,32 @@
     {%- endif -%}
 
     <!-- Slick JS CDN -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
     <!-- Begin Shopify–payment-cart JavaScript -->
     <script type="text/javascript">
       var mid = '4388';
     </script>
-    <script src="https://checkout-merchant.snapmint.com/js/v1/4388" defer></script>
     <!-- End Shopify-payment JavaScript -->
 
     <!-- Google tag (gtag.js) -->
     <noscript class="hs-load-onaction">
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-4S0CN9RYKF"></script>
     </noscript>
-    <script defer>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-4S0CN9RYKF');
-    </script>
-
-    <!-- Global Site Tag (gtag.js) - Google AdWords: 405870872 -->
     <noscript class="hs-load-onaction">
       <script async src="https://www.googletagmanager.com/gtag/js?id=AW-405870872"></script>
     </noscript>
     <script defer>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+      if (!window.gtag) {
+        window.gtag = function () {
+          dataLayer.push(arguments);
+        };
       }
       gtag('js', new Date());
+      gtag('config', 'G-4S0CN9RYKF');
       gtag('config', 'AW-405870872', { send_page_view: false });
     </script>
+
+    <script src="https://checkout-merchant.snapmint.com/js/v1/4388" defer></script>
 
     <script type="text/javascript">
       window.addEventListener('load', function () {
