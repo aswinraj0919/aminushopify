@@ -6,7 +6,7 @@
 
     <link rel="preconnect" href="https://bridge.shopflo.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://checkout-merchant.snapmint.com">
+    {% comment %} <link rel="preconnect" href="https://checkout-merchant.snapmint.com"> {% endcomment %}
     <link rel="preconnect" href="https://www.googletagmanager.com">
 
     {% comment %} Shopflo - Load on all pages because cart drawer can appear anywhere {% endcomment %}
@@ -52,9 +52,20 @@
 
       {%- render 'doc-head-styles' -%}
     </style>
-
-    <link rel="preload" href="{{ 'main.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="{{ 'ug-style.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+    <link
+      rel="preload"
+      href="{{ 'main.css' | asset_url }}"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'main.css' | asset_url }}"></noscript>
+    <link
+      rel="preload"
+      href="{{ 'ug-style.css' | asset_url }}"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'ug-style.css' | asset_url }}"></noscript>
     {%- if settings.swatch_source == 'theme' and settings.swatch_value_list != blank -%}
       <link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}" media="print" onload="this.media='all'">
       <noscript><link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}"></noscript>
@@ -69,14 +80,14 @@
     {%- endunless -%}
 
     {% comment %} slick Cdn LINK Start {% endcomment %}
-    {% comment %}
-      <link
-        rel="preload"
-        as="style"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-        onload="this.rel='stylesheet'"
-      >
-    {% endcomment %}
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+      onload="this.rel='stylesheet'"
+    >
+
     <link
       rel="preload"
       as="style"
@@ -241,8 +252,17 @@
         if (thisThemeFix.js) {
           var scriptTag = document.createElement('script');
           scriptTag.classList.add('jdgm-theme-fix-script');
-          scriptTag.innerHTML = thisThemeFix.js;
-          document.head.append(scriptTag);
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function () {
+              if (document.querySelector('.jdgm-rev-widg, .jdgm-shop-reviews')) {
+                scriptTag.innerHTML = thisThemeFix.js;
+                document.head.append(scriptTag);
+              }
+            });
+          } else {
+            scriptTag.innerHTML = thisThemeFix.js;
+            document.head.append(scriptTag);
+          }
         }
       })();
     </script>
@@ -364,27 +384,26 @@
 
     <script type="text/javascript">
       window.addEventListener('load', function () {
-        jQuery('body').on(
-          'click',
-          '[href*="www.aminu.life/products/correcting-concentrate?utm_content=melasma"]',
-          function () {
-            gtag('event', 'conversion', {
-              send_to: 'AW-405870872/QIuvCMLmq48YEJiyxMEB',
-            });
+        document.body.addEventListener('click', function (e) {
+          var a = e.target.closest('a');
+          if (a && a.href && a.href.includes('correcting-concentrate?utm_content=melasma')) {
+            gtag('event', 'conversion', { send_to: 'AW-405870872/QIuvCMLmq48YEJiyxMEB' });
           }
-        );
+        });
       });
     </script>
 
     <!-- google dynamic remarketing tag -->
     {% if template contains 'product' %}
-      <script type="text/javascript">
-        var json_product = {{ product | json }};
-      </script>
-      <script>
-        var ecomm_prodid = [];
-        for (var i = 0; i < json_product.variants.length; i++)
-          ecomm_prodid.push('shopify_IN_{{product.id}}_' + json_product.variants[i].id);
+      <script defer>
+        var _prod = {{ product | json }};
+        window.google_tag_params = {
+          ecomm_prodid: _prod.variants.map(function(v) {
+            return 'shopify_IN_' + _prod.id + '_' + v.id;
+          }),
+          ecomm_pagetype: 'product',
+          ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: "," }}')
+        };
       </script>
       <script type="text/javascript">
         var google_tag_params = {
@@ -431,6 +450,7 @@
         };
       </script>
     {% endif %}
+
     <script defer>
       gtag('event', 'page_view', {
         send_to: 'AW-405870872',
@@ -449,11 +469,14 @@
           el.classList.remove('section-header');
         }
       });
-      window.onload = function () {
-        setTimeout(function () {
-          document.getElementById('sl-tab-list').click();
-        }, 500);
-      };
+      window.addEventListener('load', function () {
+        var el = document.getElementById('sl-tab-list');
+        if (el) {
+          setTimeout(function () {
+            el.click();
+          }, 500);
+        }
+      });
     </script>
     <style>
       .range-radius .slider {

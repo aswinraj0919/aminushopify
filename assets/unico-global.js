@@ -1,5 +1,3 @@
-
-// ----------------------------------------------------
 const carouselWrappers = document.querySelectorAll('.unico-carousel');
 
 carouselWrappers.forEach((carouselWrapper) => {
