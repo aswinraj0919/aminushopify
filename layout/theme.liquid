@@ -6,12 +6,11 @@
 
     <link rel="preconnect" href="https://bridge.shopflo.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    {% comment %} <link rel="preconnect" href="https://checkout-merchant.snapmint.com"> {% endcomment %}
     <link rel="preconnect" href="https://www.googletagmanager.com">
 
     {% comment %} Shopflo - Load on all pages because cart drawer can appear anywhere {% endcomment %}
     <script>
-      window.Shopflo = { ...(window.Shopflo ?? {}), autoOnboarding: true };
+      window.Shopflo = { ...(window.Shopflo ?? {}), autoOnboarding: false };
       function loadShopflo() {
         if (window._shopfloLoaded) return;
         window._shopfloLoaded = true;
@@ -23,6 +22,16 @@
         window.addEventListener(e, loadShopflo, { once: true, passive: true });
       });
     </script>
+
+    {%- if request.page_type == 'index' -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ 'desktop_banner.webp' | asset_url }}"
+        fetchpriority="high"
+        type="image/webp"
+      >
+    {%- endif -%}
 
     {%- render 'doc-head-core' -%}
     {%- render 'doc-head-social' -%}
@@ -95,8 +104,15 @@
       onload="this.rel='stylesheet'"
     >
 
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    {% comment %} <script defer src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script> {% endcomment %}
 
+    <script>
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js';
+        document.head.appendChild(s);
+      });
+    </script>
     <!-- jQuery CDN -->
     {% comment %} <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}
 
@@ -199,7 +215,19 @@
       };
     </script>
 
-    <script src="{% render 'hs-cdn-script', filename: 'main.js' %}" defer></script>
+    {% comment %} <script src="{% render 'hs-cdn-script', filename: 'main.js' %}" defer></script> {% endcomment %}
+
+    {%- if request.page_type == 'index' -%}
+      <script>
+        window.addEventListener('load', function () {
+          var s = document.createElement('script');
+          s.src = "{% render 'hs-cdn-script', filename: 'main.js' %}";
+          document.head.appendChild(s);
+        });
+      </script>
+    {%- else -%}
+      <script src="{% render 'hs-cdn-script', filename: 'main.js' %}" defer></script>
+    {%- endif -%}
 
     {%- if request.design_mode -%}
       <script
@@ -214,17 +242,15 @@
       {{ 'animate-on-scroll.css' | asset_url | stylesheet_tag: preload: true }}
     {% endif %}
 
-    {{ content_for_header }}
-
     <script>
       (function () {
         var jdgmThemeFixes = {
-          171498307886: { html: '', css: 'a.jdgm-write-rev-link {\n    color: white !important;\n}', js: '' },
+          {% comment %} 171498307886: { html: '', css: 'a.jdgm-write-rev-link {\n    color: white !important;\n}', js: '' },
           181127577902: {
             html: '',
             css: 'a.jdgm-ask-question-btn {\n    color: black !important;\n}\n\n',
             js: "function initMasonryIfReady() {\n  setTimeout(function () {\n    var grid = document.querySelector('.jdgm-shop-reviews__body');\n    if (!grid) return;\n    if (grid.__masonryInit) return;\n    grid.__masonryInit = true;\n    new Masonry(grid, {\n      columnWidth: 15\n    });\n  }, 600);\n}\ndocument.addEventListener('DOMContentLoaded', function () {\n  initMasonryIfReady();\n});\ndocument.addEventListener('jdgm.doneSetup', function () {\n  initMasonryIfReady();\n});\nconst observer78 = new MutationObserver(() => {\nsetTimeout(function(){ \njdgm.$('.jdgm-rev-widg__reviews').masonry('layout');\n}, 400);\n});\nobserver78.observe(document.documentElement, { childList: true, subtree: true });\nsetTimeout(function () {\n        if (window.jdgm) {\n          jdgm.$('.jdgm-rev-widg__reviews').masonry('layout');\n        }\n      }, 2000);\n",
-          },
+          }, {% endcomment %}
           181238563118: {
             html: '',
             css: "      .jdgm-prev-badge .jdgm-prev-badge__stars .jdgm-star , .jdgm-rev-widg__summary .jdgm-rev-widg__summary-stars .jdgm-star,\n  .jdgm-form__rating-fieldset .jdgm-form__rating .jdgm-star  , .jdgm-rev .jdgm-rev__header .jdgm-rev__rating .jdgm-star {\n         font-family: 'JudgemeStar' !important;\n      }\n\n.jdgm-widget-actions-wrapper a{\n    border: none !important;\n    text-transform: uppercase;\n    font-weight: 500 !important;\n}\n.jdgm-ask-question-btn{\n    background: #F4F4F4 !important;\n}",
@@ -271,6 +297,8 @@
       {{- settings.custom_html_head -}}
       <!-- CC Custom Head End -->
     {%- endif -%}
+
+    {{ content_for_header }}
   </head>
 
   <body
@@ -295,16 +323,19 @@
 
     <!-- Google Tag Manager -->
     <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      function loadGTM() {
+        if (window._gtmLoaded) return;
+        window._gtmLoaded = true;
+        var j = document.createElement('script');
         j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-W84P447');
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-W84P447';
+        document.head.appendChild(j);
+      }
+      ['touchstart', 'mousemove', 'keydown', 'scroll'].forEach(function (e) {
+        window.addEventListener(e, loadGTM, { once: true, passive: true });
+      });
     </script>
     <!-- End Google Tag Manager -->
 
@@ -354,33 +385,32 @@
       </template>
     {%- endif -%}
 
-    <!-- Slick JS CDN -->
-    <!-- Begin Shopify–payment-cart JavaScript -->
-    <script type="text/javascript">
-      var mid = '4388';
-    </script>
-    <!-- End Shopify-payment JavaScript -->
-
     <!-- Google tag (gtag.js) -->
-    <noscript class="hs-load-onaction">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-4S0CN9RYKF"></script>
-    </noscript>
-    <noscript class="hs-load-onaction">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-405870872"></script>
-    </noscript>
-    <script defer>
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4S0CN9RYKF"></script>
+    <script>
       window.dataLayer = window.dataLayer || [];
-      if (!window.gtag) {
-        window.gtag = function () {
-          dataLayer.push(arguments);
-        };
+      function gtag() {
+        dataLayer.push(arguments);
       }
-      gtag('js', new Date());
-      gtag('config', 'G-4S0CN9RYKF');
-      gtag('config', 'AW-405870872', { send_page_view: false });
+      window.addEventListener('load', function () {
+        gtag('js', new Date());
+        gtag('config', 'G-4S0CN9RYKF');
+        gtag('config', 'AW-405870872', { send_page_view: false });
+      });
     </script>
 
-    <script src="https://checkout-merchant.snapmint.com/js/v1/4388" defer></script>
+    <script>
+      function loadSnapmint() {
+        if (window._snapmintLoaded) return;
+        window._snapmintLoaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://checkout-merchant.snapmint.com/js/v1/4388';
+        document.body.appendChild(s);
+      }
+      ['touchstart', 'mousemove', 'keydown', 'scroll'].forEach(function (e) {
+        window.addEventListener(e, loadSnapmint, { once: true, passive: true });
+      });
+    </script>
 
     <script type="text/javascript">
       window.addEventListener('load', function () {
@@ -451,14 +481,16 @@
       </script>
     {% endif %}
 
-    <script defer>
-      gtag('event', 'page_view', {
-        send_to: 'AW-405870872',
-        ecomm_prodid: window.google_tag_params.ecomm_prodid,
-        ecomm_pagetype: window.google_tag_params.ecomm_pagetype,
-        ecomm_totalvalue: window.google_tag_params.ecomm_totalvalue,
-      });
-    </script>
+    {% comment %}
+      <script defer>
+        gtag('event', 'page_view', {
+          send_to: 'AW-405870872',
+          ecomm_prodid: window.google_tag_params.ecomm_prodid,
+          ecomm_pagetype: window.google_tag_params.ecomm_pagetype,
+          ecomm_totalvalue: window.google_tag_params.ecomm_totalvalue,
+        });
+      </script>
+    {% endcomment %}
 
     {%- render 'cart-drawer-shopflo' -%}
 
